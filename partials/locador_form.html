@@ -1,0 +1,109 @@
+<h2>Editar</h2>
+
+<form role="form" class="form-horizontal" ng-submit="incluiLocador()">
+<div class="form-group">
+	<label for="cpf" class="col-lg-2 control-label">CPF</label>
+	<div class="col-lg-8">
+	<input type="text" id="cpf" required class="form-control" ng-model="locador.cpf">
+	</div>
+</div>
+<div class="form-group">
+	<label for="nome" class="col-lg-2 control-label">Nome</label>	
+	<div class="col-lg-8">
+	<input type="text" id="nome" required class="form-control" ng-model="locador.nome">	
+	</div>
+</div>
+<div class="form-group">
+	<label for="Endereços" class="col-lg-2 control-label">Endere&ccedil;os</label>
+	<div class="col-lg-8 ">
+		<div class="panel panel-default">
+			<div id="tabs" class="panel-heading"></div>
+			<div id="tab-content" class="panel-body">
+				<div class="w2ui-field">
+				    <label>Address:</label>
+				    <div>
+					<input name="address1" type="text" maxlength="100" style="width: 100%"/>
+				    </div>
+				</div>
+				<div class="w2ui-field">
+				    <label>Line 2:</label>
+				    <div>
+					<input name="address2" type="text" maxlength="100" style="width: 100%"/>
+				    </div>
+				</div>
+				<div class="w2ui-field">
+				    <label>City:</label>
+				    <div>
+					<input name="city" type="text" maxlength="50" size="25"/>
+				    </div>
+				</div>
+				<div class="w2ui-field">
+				    <label>State:</label>
+				    <div>
+					<input name="state" type="text" maxlength="2" size="2"/>
+				    </div>
+				</div>
+				<div class="w2ui-field">
+				    <label>Zip:</label>
+				    <div>
+					<input name="zip" type="text" maxlength="10" size="10"/>
+				    </div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+		
+</div>
+<div class="form-group">	
+	<label for="telefones" class="col-lg-2 control-label">Telefones</label>	
+	<div class="col-lg-8">
+		<ul class="list-group" id="lista">
+			<li class="list-group-item" >
+				<div class="input-group">
+					<div class="input-group-btn ">
+						<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-model="telefone.tipo">Celular <span class="caret"></span></a>
+						<ul class="dropdown-menu dropdown-menu-right" role="menu">
+						  <li><a onclick="">Residencial</a></li>
+						  <li><a>Trabalho</a></li>
+						  <li><a>Celular</a></li>
+						</ul>
+					</div><!-- /btn-group -->		
+					<input type="tel" class="form-control" pattern="[\(]\d{2}[\)]\d{5}[\-]\d{4}" class="form-control" ng-model="telefone.numero">
+					<span class="input-group-btn">
+						<a class="btn btn-default" onClick="incluirLinha()">+</a>
+					</span>
+				</div><!-- /input-group -->
+			</li>
+			<li class="list-group-item" ng-repeat="telefone in locadoresView.telefones">
+				<div class="input-group">
+					<div class="input-group-btn ">
+						<a class="btn btn-default dropdown-toggle form-control" data-toggle="dropdown" aria-expanded="false" ng-model="telefone.tipo">Celular<span class="caret"></span></a>
+						<ul class="dropdown-menu dropdown-menu-right" role="menu">
+						  <li><a href="#">Residencial</a></li>
+						  <li><a href="#">Trabalho</a></li>
+						  <li><a href="#">Celular</a></li>
+						</ul>
+					</div><!-- /btn-group -->		
+					<input type="tel" class="form-control" class="form-control" ng-model="telefone.numero">
+					<span class="input-group-btn">
+						<a class="btn btn-default" onClick="incluirLinha()">+</a>
+					</span>
+				</div><!-- /input-group -->
+			</li>
+		</ul>
+	</div>
+	
+</div>
+
+<div class="form-group">
+	<div class="col-lg-offset-5 col-lg-10">
+		<a class="btn btn-default" onClick="">Incluir Locador</a>		
+	</div>
+</div>
+</form>
+<!-- W2UI scripts --> 
+<script src="./js/w2ui-1.4.2.min.js"></script>
+<!-- Custom scripts --> 
+<script src="./js/home.js"></script>
+   

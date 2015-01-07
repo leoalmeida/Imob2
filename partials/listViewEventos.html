@@ -1,0 +1,194 @@
+<div class="col-sm-12 col-md-12 col-lg-12" >
+	<h3 class="sub-header">{{entidade}}</h3>
+	<div class="btn-group">
+		<button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Export Table Data</button>
+		<ul class="dropdown-menu " role="menu">
+			<li><a href="#" onclick="$('#listaValores').tableExport({type:'json',escape:'false'});"> <img src="./img/icons/json.png" width="24px"> JSON</a></li>
+			<li><a href="#" onclick="$('#listaValores').tableExport({type:'json',escape:'false',ignoreColumn:'[2,3]'});"> <img src="./img/icons/json.png" width="24px"> JSON (ignoreColumn)</a></li>
+			<li><a href="#" onclick="$('#listaValores').tableExport({type:'json',escape:'true'});"> <img src="./img/icons/json.png" width="24px"> JSON (with Escape)</a></li>
+			<li class="divider"></li>
+			<li><a href="#" onclick="$('#listaValores').tableExport({type:'xml',escape:'false'});"> <img src="./img/icons/xml.png" width="24px"> XML</a></li>
+			<li><a href="#" onclick="$('#listaValores').tableExport({type:'sql'});"> <img src="./img/icons/sql.png" width="24px"> SQL</a></li>
+			<li class="divider"></li>
+			<li><a href="#" onclick="$('#listaValores').tableExport({type:'csv',escape:'false'});"> <img src="./img/icons/csv.png" width="24px"> CSV</a></li>
+			<li><a href="#" onclick="$('#listaValores').tableExport({type:'txt',escape:'false'});"> <img src="./img/icons/txt.png" width="24px"> TXT</a></li>
+			<li class="divider"></li>				
+			
+			<li><a href="#" onclick="$('#listaValores').tableExport({type:'excel',escape:'false'});"> <img src="./img/icons/xls.png" width="24px"> XLS</a></li>
+			<li><a href="#" onclick="$('#listaValores').tableExport({type:'doc',escape:'false'});"> <img src="./img/icons/word.png" width="24px"> Word</a></li>
+			<li><a href="#" onclick="$('#listaValores').tableExport({type:'powerpoint',escape:'false'});"> <img src="./img/icons/ppt.png" width="24px"> PowerPoint</a></li>
+			<li class="divider"></li>
+			<li><a href="#" onclick="$('#listaValores').tableExport({type:'png',escape:'false'});"> <img src="./img/icons/png.png" width="24px"> PNG</a></li>
+			<li><a href="#" onclick="$('#listaValores').tableExport({type:'pdf',pdfFontSize:'7',escape:'false'});"> <img src="./img/icons/pdf.png" width="24px"> PDF</a></li>
+			
+			
+		</ul>
+	</div>
+	<table class="table table-bordered table-striped" id="listaValores" ng-init="cliente=true">
+		<thead>
+			<tr>				
+				<th class="col-lg-1">
+					Contrato 
+					<a data-ng-click="sortBy='contrato'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-contrato'" class="glyphicon glyphicon-chevron-up"></a>
+				</th>				
+				<th class="col-lg-1">
+					Tipo
+					<a data-ng-click="sortBy='tipo'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-tipo'" class="glyphicon glyphicon-chevron-up"></a>
+				</th>
+				<th class="col-lg-5">
+					Ação 
+					<a data-ng-click="sortBy='acao'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-acao'" class="glyphicon glyphicon-chevron-up"></a>
+				</th>
+				<th class="col-lg-1">
+					Status 
+					<a data-ng-click="sortBy='status'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-status'" class="glyphicon glyphicon-chevron-up"></a>
+				</th>				
+				<th class="col-lg-2">
+					Vencimento
+					<a data-ng-click="sortBy='vencimento'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-vencimento'" class="glyphicon glyphicon-chevron-up"></a>				
+				</th>	
+				<th class="col-lg-2">
+					<div class="inline">					
+						<a href="./cadastro/contratos/new" class="btn btn-success btn-lg"><i class="fa fa-pencil fa-fw fa-inverse"></i>&nbsp;Incluir</a>
+					</div>	
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<!--  <tr data-ng-repeat-start="item in listView | filter: filter | orderBy: sortBy" data-toggle="collapse"  class="listaValores-toggle" data-target="#collapse{{item.cpf}}" > -->
+			<tr data-ng-repeat="item in listView | filter: filter | orderBy: sortBy"  data-ng-class="{active : isSelected(item)}" data-ng-click="setMaster(item)">
+				
+				<td class="title" data-toggle="modal" data-target="#myModal">{{item.contrato}}</td>
+				<td data-toggle="modal" data-target="#myModal">{{item.tipo}}</td>
+				<td data-toggle="modal" data-target="#myModal">{{item.acao}}</td>				
+				<td class="title" >{{item.status}}</td>
+				<td data-toggle="modal" data-target="#myModal">{{item.vencimento | dateFormat}}</td>
+				
+				<td>
+					<a class="btn btn-primary " href="./cadastro/eventos/view/{{item.id}}"><i class="fa fa-pencil-square-o fa-fw fa-inverse"></i>&nbsp; Editar</a> 
+					<a class="btn btn-danger ng-hide" data-ng-click="removeEventos(item.id)"><i class="fa fa-trash-o fa-fw fa-inverse"></i>&nbsp; Remover</a>
+				</td>
+			</tr>
+			<!-- 
+			<tr data-ng-repeat-end>
+				<td colspan="4" class="hiddenRow">				
+				    <div class="listaValores-body collapse" id="collapse{{item.cpf}}" >
+					 <h3>Documentos:</h3>
+					 <div class="btn-group" data-ng-class="{open: open}">
+						<button class="btn">Filtrar: </button>
+						<button class="btn dropdown-toggle" data-ng-click="open=!open"><span class="caret"></span>
+				
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+						    <li><a data-ng-click="checkAll()"><i class="fa fa-check-circle"></i>  Selecionar Todos</a>
+				
+						    </li>
+						    <li><a data-ng-click="formatosSelecionados=[];"><i class="fa fa-times-circle"></i>  Remover Todos</a>
+				
+						    </li>
+						    <li class="divider"></li>
+						    <li data-ng-repeat="tipoDoc in tipoDocList"> 
+							<a data-ng-click="setSelectedDocTypes()">{{tipoDoc.tipo}}<i data-ng-class="isChecked(tipoDoc.tipo)"></i>
+							</a>	
+						    </li>
+						</ul>
+					 </div>		
+					 <table class="table table-hover table-striped">
+						<thead>
+						    <tr>
+							<th style="width:10%">#</th>
+							<th style="width:10%">Tipo</th>
+							<th style="width:30%">Nome</th>
+							<th style="width:40%">Descri&ccedil;&atilde;o</th>
+							<th style="width:10%">Link</th>
+						    </tr>
+						</thead>
+						<tbody>
+						    <tr data-ng-repeat="documento in filtered = (item.documentos | docFilter:formatosSelecionados)">
+							<td>{{documento.id}}</td>
+							<td><em>{{documento.tipo}}</em></td>
+							<td><em>{{documento.nome}}</em></td>
+							<td>{{documento.descricao}}</td>
+							<td><a href="{{documento.link}}"><i class="fa fa-file-o fa-2x"></i> </a></td>
+						    </tr>
+						</tbody>
+					 </table>			    
+				    </div>
+				</td>
+			</tr>-->
+		</tbody>
+	</table>
+</div>
+
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	<h4 class="modal-title-success" id="myModalLabel"><span class="label label-success label-lg">{{selected.cpf}} - {{selected.nome}}</span></h4>
+      </div>
+      <div class="modal-body">
+      	<div class="container-fluid">
+      		<div class="well">			
+      		<div>
+			<span class="label label-info">ID</span>
+			<br>
+			<label>{{selected.descricao}}</label>
+		</div>
+		<div>
+			<span class="label label-info">Contrato</span>
+			<br>
+			<label>{{selected.contrato}}</label>
+		</div>
+		</div>
+		
+		<div class="well">			
+		<div>
+			<span class="label label-info"><strong>Data de Vencimento</strong></span>
+			<br>
+			<label>{{selected.vencimento}}</label>
+		</div>
+		<div>
+			<span class="label label-info"><strong>Status</strong></span>
+			<br>
+			<label>{{selected.status}}</label>
+		</div>
+		</div>		
+		
+		<div class="well">			
+		<div>
+			<span class="label label-info">Tipo de Evento</span>
+			<br>
+			<label>{{selected.tipo}}</label>
+		</div>
+		</div>
+		
+		<div class="well">			
+		<div>
+			<span class="label label-info">A&ccedil;&atilde;o</span>
+			<br>
+			<label>{{selected.acao}}</label>
+		</div>
+		</div>
+		
+		<div class="well">			
+		<div>
+			<span class="label label-info">Descri&ccedil;&atilde;o detalhada</span>
+			<br>
+			<label>{{selected.descricao}}</label>
+		</div>
+		</div>
+	</div>
+      </div>
+      <div class="modal-footer">		
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="./js/tableExport.js"></script>
+<script type="text/javascript" src="./js/jquery.base64.js"></script>
+<script type="text/javascript" src="./js/html2canvas.js"></script>
+<script type="text/javascript" src="./js/jspdf/libs/sprintf.js"></script>
+<script type="text/javascript" src="./js/jspdf/jspdf.js"></script>
+<script type="text/javascript" src="./js/jspdf/libs/base64.js"></script>

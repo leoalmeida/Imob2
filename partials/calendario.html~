@@ -1,0 +1,45 @@
+<link href='../css/fullcalendar.min.css' rel='stylesheet' />
+<link href='../css/fullcalendar.print.css' rel='stylesheet' media='print' />
+<script src='../js/moment.min.js'></script>
+<script src='../js/jquery.min.js'></script>
+<script src='../js/fullcalendar.min.js'></script>
+<script src='../js/gcal.js'></script>
+<script>
+	$(document).ready(function() {
+	
+		$('#calendar').fullCalendar({
+
+			// THIS KEY WON'T WORK IN PRODUCTION!!!
+			// To make your own Google API key, follow the directions here:
+			// http://fullcalendar.io/docs/google_calendar/
+			googleCalendarApiKey: '8vmmNZaWRdB3bqZYX4vGPNVi',
+		
+			// US Holidays
+			//ical.mac.com/ical/US32Holidays.ics. 
+			events: 'mn0tvm3gbvn1gidlv4l4ec752c@group.calendar.google.com',
+			
+			calendar.google.com
+			eventClick: function(event) {
+				// opens events in a popup window
+				window.open(event.url, 'gcalevent', 'width=700,height=600');
+				return false;
+			},
+			
+			loading: function(bool) {
+				$('#loading').toggle(bool);
+			}
+			
+		});
+		
+	});
+
+</script>
+
+<div class="calendar-body">
+	<div class='loading'>loading...</div>
+	
+	<div classe='calendar'></div>
+</div>
+
+
+

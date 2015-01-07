@@ -1,0 +1,25 @@
+<input type="text" ng-model="search" class="search-query" placeholder="Search">
+<table>
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Data vencimento</th>
+			<th>Descricao</th>
+			<th>Imovel</th>
+			<th>Status</th>
+			<th><a href="#/new"><i class="icon-plus-sign"></i></a></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="atividade in atividades | filter:search | orderBy:'id'">
+			<td><a ng-href="#/edit/{{atividade.$id}">{{atividade.id}}</a></td>
+			<td>{{atividade.vencimento}}</td>
+			<td>{{atividade.descricao}}</td>
+			<td>{{atividade.imovel}}</td>
+			<td>{{atividade.status}}</td>
+			<td>
+			  <a ng-href="#/edit/{{atividade.$id}}"><i class="icon-pencil"></i></a>
+			</td>
+		</tr>
+	</tbody>
+</table>

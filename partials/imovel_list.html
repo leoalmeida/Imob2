@@ -1,0 +1,42 @@
+<h1>Im&oacute;veis</h1>
+
+<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th>
+				ID
+				<a ng-click="sortBy='cpf'" class="glyphicon glyphicon-chevron-down"></a><a ng-click="sortBy='-id'" class="glyphicon glyphicon-chevron-up"></a>
+			</th>
+			<th>
+				Bairro 
+				<a ng-click="sortBy='nome'" class="glyphicon glyphicon-chevron-down"></a><a ng-click="sortBy='-bairro'" class="glyphicon glyphicon-chevron-up"></a>
+			</th>
+			<th>
+				Locador 
+				<a ng-click="sortBy='nome'" class="glyphicon glyphicon-chevron-down"></a><a ng-click="sortBy='-nome'" class="glyphicon glyphicon-chevron-up"></a>
+			</th>
+			<th>
+				Status 
+				<a ng-click="sortBy='nome'" class="glyphicon glyphicon-chevron-down"></a><a ng-click="sortBy='-status'" class="glyphicon glyphicon-chevron-up"></a>
+			</th>
+			<th>
+				Altera&ccedil;&atilde;o
+				<a ng-click="sortBy='updated'" class="glyphicon glyphicon-chevron-down"></a><a ng-click="sortBy='-updated'" class="glyphicon glyphicon-chevron-up"></a>				
+			</th><th>&nbsp;</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="imovel in imoveisView | filter: filter | orderBy: sortBy">
+			<td class="title" ng-click="buscaLocador(locatario.id)">{{imovel.id}}</td>
+			<td>{{imovel.endereco.bairro}}</td>
+			<td>{{imovel.locador.nome}}</td>
+			<td>{{imovel.contrato.status}}</td>
+			<td>{{imovel.updated | dateFormat}}</td>
+			<td><a class="btn btn-primary" href="#/imoveis/edit/{{imovel.id}}">Edit</a> <a class="btn btn-danger" ng-click="removeImovel(imovel.id)">Delete</a></td>
+		</tr>
+	</tbody>
+</table>
+
+<div class="pull-right">
+	<a href="#/imoveis/edit" class="btn btn-success">Incluir Im&oacute;vel</a>
+</div>

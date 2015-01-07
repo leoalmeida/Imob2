@@ -1,0 +1,172 @@
+	<h3>{{entidade}}</h3>
+	
+	<div id="messages" class="alert alert-success" data-ng-show="messages" data-ng-bind="messages"></div>
+	<div data-ng-show="progress.active()" style="color: red; font-size: 50px;">Enviando&hellip;</div>
+	
+	
+	<form name="myForm" novalidate class="form-horizontal" role="form">
+	<div class="form-group">
+		<label for="tipo" class="col-lg-2 control-label">Tipo</label>
+		<div class="col-lg-8">			
+			<div class="btn-group btn-group-justified btn-group-lg" data-toggle="buttons" role="group" aria-label="Lista com os tipos de clientes dispon&iacute;veis">			
+				<label class="btn btn-primary" ng-click="cliente.tipo.locador = !cliente.tipo.locador"><input name="tipoCliente" type="checkbox" autocomplete="off" ng-model="cliente.tipo.locador" /><i class="fa fa-check fa-inverse" ng-show="locador"></i>&nbsp; Locador</label>
+				<label class="btn btn-primary" ng-click="cliente.tipo.locatario = !cliente.tipo.locatario"><input name="tipoCliente" type="checkbox" autocomplete="off" ng-model="cliente.tipo.locatario" /><i class="fa fa-check fa-inverse" ng-show="locatario"></i>&nbsp; Locat&aacute;rio</label>
+				<label class="btn btn-primary" ng-click="cliente.tipo.dono = !cliente.tipo.dono"><input name="tipoCliente" type="checkbox" autocomplete="off" ng-model="cliente.tipo.dono" /><i class="fa fa-check fa-inverse" ng-show="dono"></i>&nbsp; Dono</label>
+				<label class="btn btn-primary" ng-click="cliente.tipo.fiador = !cliente.tipo.fiador"><input name="tipoCliente" type="checkbox" autocomplete="off" ng-model="cliente.tipo.fiador" /><i class="fa fa-check fa-inverse" ng-show="fiador"></i>&nbsp; Fiador</label>			
+			</div>
+		</div>
+		<div class="col-lg-2">
+			<span class="label label-danger" data-ng-show="submitted && myForm.tipoCliente.$error.required">Obrigat&oacute;rio!</span>
+		</div>
+	</div>
+	 
+	<div class="form-group">
+		<label for="cpf" class="col-lg-2 control-label">CPF</label>
+		<div class="col-lg-8">		
+			<input type="text" name="cpf" data-ng-model="cpf" class="form-control" required="required" placeholder="CPF" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" />
+		</div>
+		<div class="col-lg-2">
+			<span class="label label-danger" data-ng-show="submitted && myForm.cpf.$error.required">Obrigat&oacute;rio!</span>
+			<span class="label label-danger" data-ng-show="submitted && myForm.$error.cpf">CPF Inv&aacute;lido!</span>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label for="nome" class="col-lg-2 control-label">Nome</label>	
+		<div class="col-lg-8">			
+			<input type="text" name="nome" data-ng-model="cliente.nome" class="form-control" required="required" placeholder="Nome" />	
+		</div>
+		<div class="col-lg-2">
+			<span class="label label-danger" data-ng-show="submitted && myForm.name.$error.required">Obrigat&oacute;rio!</span>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label for="nome" class="col-lg-2 control-label">Email</label>	
+		<div class="col-lg-8">		
+			<div class="input-group input-group">
+				<span class="input-group-addon">@</span>				
+				<input type="email" name="email" data-ng-model="email" class="form-control" required="required" placeholder="E-mail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
+			</div>
+		</div>
+		<div class="col-lg-2">
+			<span class="label label-danger" data-ng-show="submitted && myForm.email.$error.required">Obrigat&oacute;rio!</span>
+			<span class="label label-danger" data-ng-show="submitted && myForm.$error.email">Email Inv&aacute;lido!</span>
+		</div>
+	</div>
+	
+	<div class="form-group">	
+		<label for="telefones" class="col-lg-2 control-label">Telefones</label>	
+		<div class="col-lg-8">		
+			<div class="input-group margin-bottom-sm">
+				<span class="input-group-addon"><i class="fa fa-phone fa-fw"></i></span>				
+				<input type="tel" id="telTags" name="telTags" data-ng-model="telefones" class="form-control" required="required" pattern="\([0-9]{2}\) [0-9]{4,6}-[0-9]{3,4}$" />
+				<!--<span class="input-group-btn">
+					<select class="selectpicker" id="telCombo" name="telCombo">
+					<option value="Celular">Celular</option>
+					<option value="Residencial">Residencial</option>
+					<option value="Comercial">Comercial</option>
+					</select>
+				</span>-->
+			</div>		
+		</div>
+		<div class="col-lg-2">
+			<span class="label label-danger" data-ng-show="submitted && myForm.telTags.$error.required">Obrigat&oacute;rio!</span>
+			<span class="label label-danger" data-ng-show="submitted && myForm.$error.telTags">Telefones inv&aacute;lidos!</span>
+		</div>
+	</div>
+	
+	<!--<div class="form-group">
+	<span class="error" ng-show="form.telTags.$error.pattern"> 
+	<div class="navbar-fixed-down alert alert-warning alert-dismissible" role="alert">
+	<button class="close" type="button" data-dismiss="alert"data-dismiss="alert" /><span aria-hidden="true">&times;</span><span class="sr-only"></span>Close</button>
+	Telefone inserido fora do padrão! (00) 00000-0000
+	</div>
+	</span>
+	</div>-->
+	
+	<div class="form-group">		
+		<label for="Endereços" class="col-lg-2 control-label">Endere&ccedil;os</label>
+		<div class="col-lg-8 ">
+			<div class="panel panel-default">			
+				<div id="main" name="form" data-ng-model="enderecos" class="panel-body form-control" class="" style="height: 400px" >
+				<fieldset>					
+					  <!-- Form Name -->
+					  <legend>Detalhes</legend>
+				
+					  <!-- Text input-->
+					  <div class="form-group">
+					    <label class="col-sm-2 control-label" for="textinput">Rua</label>
+					    <div class="col-sm-4">
+					      <input name="rua" type="text" placeholder="Rua" class="form-control">
+					    </div>
+					    <label class="col-sm-2 control-label" for="textinput">N&uacute;mero</label>
+					    <div class="col-sm-4">
+					      <input name="numero" type="text" placeholder="N&uacute;mero" class="form-control">
+					    </div>
+					  </div>
+				
+					  <!-- Text input-->
+					  <div class="form-group">
+					    <label class="col-sm-2 control-label" for="textinput">Complemento</label>
+					    <div class="col-sm-10">
+					      <input name="complemento" type="text" placeholder="Complemento" class="form-control">
+					    </div>
+					  </div>
+				
+					  <!-- Text input-->
+					  <div class="form-group">
+					    <label class="col-sm-2 control-label" for="textinput">Bairro</label>
+					    <div class="col-sm-4">
+					      <input name="bairro" type="text" placeholder="Bairro" class="form-control">
+					    </div>
+					    <label class="col-sm-2 control-label" for="textinput">Cidade</label>
+					    <div class="col-sm-4">
+					      <input name="cidade" type="text" placeholder="Cidade" class="form-control">
+					    </div>
+					  </div>
+				
+					  <!-- Text input-->
+					  <div class="form-group">
+					    <label class="col-sm-2 control-label" for="textinput">Estado</label>
+					    <div class="col-sm-4">
+					      <input name="estado" type="text" placeholder="Estado" class="form-control">
+					    </div>
+				
+					    <label class="col-sm-2 control-label" for="textinput">CEP</label>
+					    <div class="col-sm-4">
+					      <input name="cep" type="text" placeholder="CEP" class="form-control">
+					    </div>
+					  </div>
+		
+				
+					  <!-- Text input-->
+					  <div class="form-group">
+					    <label class="col-sm-2 control-label" for="textinput">Pa&iacute;s</label>
+					    <div class="col-sm-10">
+					      <input name="pais" type="text" placeholder="Pa&iacute;s" class="form-control">
+					    </div>
+					  </div>
+					</fieldset>				
+				</div>
+			</div>		
+		</div>
+		<div class="col-lg-2">
+			<span class="label label-danger" data-ng-show="submitted && myForm.form.$error.required">Obrigat&oacute;rio!</span>			
+		</div>
+			
+	</div>
+	
+	
+	<div class="form-group">
+		<div class="col-lg-offset-2 col-lg-8">			
+			<button data-ng-disabled="progress.active()" data-ng-click="submit(myForm)" class="btn btn-success btn-lg col-lg-offset-2 col-lg-3" ><i class="fa fa-upload fa-fw fa-inverse"></i>&nbsp;Finalizar</button>
+			<button class="btn btn-danger btn-lg col-lg-offset-2 col-lg-3" ><i class="fa fa-times fa-fw fa-inverse"></i>&nbsp;Cancelar</button>
+		</div>
+	</div>
+		
+	
+	</form>
+
+<!-- Custom scripts --> 
+<script src="./js/home.js"></script>

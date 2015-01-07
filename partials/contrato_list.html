@@ -1,0 +1,46 @@
+<h1>Contratos</h1>
+
+<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th>
+				ID Contrato
+				<a ng-click="sortBy='idContrato'" class="glyphicon glyphicon-chevron-down"></a><a ng-click="sortBy='-idContrato'" class="glyphicon glyphicon-chevron-up"></a>
+			</th>
+			<th>
+				ID Im&oacute;vel 
+				<a ng-click="sortBy='idImovel'" class="glyphicon glyphicon-chevron-down"></a><a ng-click="sortBy='-idImovel'" class="glyphicon glyphicon-chevron-up"></a>
+			</th>
+			<th>
+				Nome Locador 
+				<a ng-click="sortBy='nomeLocd'" class="glyphicon glyphicon-chevron-down"></a><a ng-click="sortBy='-nomeLocd'" class="glyphicon glyphicon-chevron-up"></a>
+			</th>
+			<th>
+				Nome Locatário 
+				<a ng-click="sortBy='nomeLoct'" class="glyphicon glyphicon-chevron-down"></a><a ng-click="sortBy='-nomeLoct'" class="glyphicon glyphicon-chevron-up"></a>
+			</th>
+			<th>
+				Data Vencimento 
+				<a ng-click="sortBy='vncto'" class="glyphicon glyphicon-chevron-down"></a><a ng-click="sortBy='-vncto'" class="glyphicon glyphicon-chevron-up"></a>
+			</th>
+			<th>
+				Altera&ccedil;&atilde;o
+				<a ng-click="sortBy='updated'" class="glyphicon glyphicon-chevron-down"></a><a ng-click="sortBy='-updated'" class="glyphicon glyphicon-chevron-up"></a>				
+			</th><th>&nbsp;</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="imovel in imoveisView | filter: filter | orderBy: sortBy">
+			<td class="title" ng-click="buscaLocador(locatario.id)">{{imovel.id}}</td>
+			<td>{{imovel.endereco.bairro}}</td>
+			<td>{{imovel.locador.nome}}</td>
+			<td>{{imovel.contrato.status}}</td>
+			<td>{{imovel.updated | dateFormat}}</td>
+			<td><a class="btn btn-primary" href="#/imoveis/edit/{{imovel.id}}">Edit</a> <a class="btn btn-danger" ng-click="removeImovel(imovel.id)">Delete</a></td>
+		</tr>
+	</tbody>
+</table>
+
+<div class="pull-right">
+	<a href="#/imoveis/edit" class="btn btn-success">Incluir Im&oacute;vel</a>
+</div>

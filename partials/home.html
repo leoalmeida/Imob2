@@ -1,0 +1,73 @@
+<div class="container-fluid">
+      <div class="row">        
+        <div class="main">
+          <h1 class="page-header">Dashboard</h1>
+
+          <h2 class="sub-header">Contratos </h2>
+          
+          <div class="container-fluid">
+		<div class="dashboard col-xs-12 col-sm-4 col-md-3 col-lg-2">
+			<div ng-repeat="contrato in listViewContratos | ativosFilter | filter: filter | orderBy: sortBy" class="square img1">
+			    <a href="#" onclick="alert(1)">
+			        <div class="content">
+				    <div class="table">
+				        <div class="table-cell numbers">
+				        	<div  class="title">
+						    <span class="badge alert-info">Status: {{contrato.status}}</span>
+						</div>
+					        <i class="fa fa-home"></i>
+					        <div class="title">
+				        	<h4>Imóvel: {{contrato.imovel}}</h4>
+					        <h5>Locador: {{contrato.locador.Principal}}</h5>					        
+					        <h6>Alteração: {{contrato.updated | dateFormat}}</h6>
+					        </div>				        	
+				        </div>
+				    </div>
+			        </div>
+			    </a>
+			</div>
+		</div>
+		</div>
+	  </div>
+	  
+          <h2 class="sub-header">Pr&oacute;ximas Atividades</h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+			<tr>				
+				<th class="col-lg-1">
+					Contrato 
+					<a data-ng-click="sortBy='contrato'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-contrato'" class="glyphicon glyphicon-chevron-up"></a>
+				</th>				
+				<th class="col-lg-1">
+					Tipo
+					<a data-ng-click="sortBy='tipo'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-tipo'" class="glyphicon glyphicon-chevron-up"></a>
+				</th>
+				<th class="col-lg-5">
+					Ação 
+					<a data-ng-click="sortBy='acao'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-acao'" class="glyphicon glyphicon-chevron-up"></a>
+				</th>
+				<th class="col-lg-1">
+					Status 
+					<a data-ng-click="sortBy='status'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-status'" class="glyphicon glyphicon-chevron-up"></a>
+				</th>				
+				<th class="col-lg-2">
+					Vencimento
+					<a data-ng-click="sortBy='vencimento'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-vencimento'" class="glyphicon glyphicon-chevron-up"></a>				
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr data-ng-repeat="item in listViewEventos | ativosFilter | filter: filter | orderBy: sortBy" data-toggle="modal" data-target="#myModal" data-ng-class="{active : isSelected(item)}" data-ng-click="setMaster(item)">				
+				<td class="title">{{item.contrato}}</td>
+				<td class="title">{{item.tipo}}</td>
+				<td class="title">{{item.acao}}</td>				
+				<td class="title">{{item.status}}</td>
+				<td>{{item.vencimento | dateFormat}}</td>
+			</tr>
+		</tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>

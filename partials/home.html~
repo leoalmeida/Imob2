@@ -1,0 +1,58 @@
+<div class="container-fluid">
+      <div class="row">        
+        <div class="main">
+          <h1 class="page-header">Dashboard</h1>
+
+          <h2 class="sub-header">Contratos Ativos</h2>
+          
+          <div class="row placeholders">
+            <div ng-repeat="contrato in listViewContratos | ativosFilter | filter: filter | orderBy: sortBy" class="col-xs-6 col-sm-3 placeholder">
+              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="{{contrato.id}}"  ng-click="buscaLocador(locatario.id)" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzBEOEZEQiIvPjxnPjx0ZXh0IHg9Ijc1LjUiIHk9IjEwMCIgc3R5bGU9ImZpbGw6I0ZGRkZGRjtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMHB0O2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjIwMHgyMDA8L3RleHQ+PC9nPjwvc3ZnPg==" data-holder-rendered="true">
+              <h4>Imóvel: {{contrato.imovel}}</h4>
+              <h5>Locador: {{contrato.locador.Principal}}</h5>
+              <h5>Status: {{contrato.status}}</h5>
+              <h6>Alteração: {{contrato.updated | dateFormat}}</h6>
+            </div>           
+          </div>
+
+          <h2 class="sub-header">Pr&oacute;ximas Atividades</h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+			<tr>				
+				<th class="col-lg-1">
+					Contrato 
+					<a data-ng-click="sortBy='contrato'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-contrato'" class="glyphicon glyphicon-chevron-up"></a>
+				</th>				
+				<th class="col-lg-1">
+					Tipo
+					<a data-ng-click="sortBy='tipo'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-tipo'" class="glyphicon glyphicon-chevron-up"></a>
+				</th>
+				<th class="col-lg-5">
+					Ação 
+					<a data-ng-click="sortBy='acao'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-acao'" class="glyphicon glyphicon-chevron-up"></a>
+				</th>
+				<th class="col-lg-1">
+					Status 
+					<a data-ng-click="sortBy='status'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-status'" class="glyphicon glyphicon-chevron-up"></a>
+				</th>				
+				<th class="col-lg-2">
+					Vencimento
+					<a data-ng-click="sortBy='vencimento'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-vencimento'" class="glyphicon glyphicon-chevron-up"></a>				
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr data-ng-repeat="item in listViewEventos | ativosFilter | filter: filter | orderBy: sortBy" data-toggle="modal" data-target="#myModal" data-ng-class="{active : isSelected(item)}" data-ng-click="setMaster(item)">				
+				<td class="title">{{item.contrato}}</td>
+				<td class="title">{{item.tipo}}</td>
+				<td class="title">{{item.acao}}</td>				
+				<td class="title">{{item.status}}</td>
+				<td>{{item.vencimento | dateFormat}}</td>
+			</tr>
+		</tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
