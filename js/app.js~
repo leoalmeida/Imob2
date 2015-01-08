@@ -7,7 +7,7 @@ imoveisDbApp.config(['$routeProvider', '$locationProvider',
 		$routeProvider.
 			when('/', {
 				templateUrl: 'partials/home.html',
-				controller: 'HomeCtrl'			
+				controller: 'HomeCtrl'
 			}).
 			when('/dashboard', {  
 				templateUrl: 'partials/home.html',

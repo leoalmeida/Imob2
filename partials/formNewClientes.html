@@ -76,41 +76,57 @@
             </div>
       </div>
       
-      
       <!-- Telefone -->
       <div class="form-group">
             <div class="row">
-                <label for="telefones" class="col-lg-2 control-label">Telefones</label>	
-                <div class="col-lg-8">		
-                    <div class="btn-group">		
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-warning btn-xs" id="TpTelefone">Residencial  </button>
+                <label for="telefones" class="col-lg-2 control-label">Telefones</label>
+                <div class="col-lg-8 ">
+                    <div class="panel panel-body panel-default">
+                        <!-- Form Name -->
+                        <legend>
+                          <!-- Drop Down button -->
+                          <div class="btn-group col-lg-offset-1" role="group" aria-label="...">
+                            <div class="row">                        
+                            <div class="col-lg-12">							
+                              <div class="btn-group" role="group">	
+                                <input type="hidden" id="tel" data-ng-model="telefone.tpTelefone" /> {{telefone.tpTelefone}}								
+                              </div>
+                              <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-warning btn-xs  dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                  <span class="caret"></span>
+                                  <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul id="telList" class="dropdown-menu" role="menu">
+                                  <li><a href="#" data-value="residencial" data-ng-click="telefone.tpTelefone = 'Residencial'">Residencial</a></li>
+                                  <li><a href="#" data-value="comercial" data-ng-click="telefone.tpTelefone = 'Comercial'">Comercial</a></li>
+                                  <li><a href="#" data-value="adicional" data-ng-click="telefone.tpTelefone = 'Adicional'">Adicional</a></li>							
+                                </ul>
+                              </div>							
+                            </div>						
+                            </div>
+                          </div>
+                        </legend>
+                        <div class="col-sm-6">		                            
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-phone fa-fw"></i></span>
+                                <input type="text" data-ng-model="telefone.nrTelefone" data-ng-keypress="" class="form-control" required="required" pattern="\([0-9]{2}\) [0-9]{4,6}-[0-9]{3,4}$" />                                
+                            </div>
                         </div>
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-warning btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" data-ng-click="telListSel()">
-                            <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
-                          </button>
-                          <ul id="telList" class="dropdown-menu" role="menu">
-                            <li><a href="#" data-value="residencial">Residencial</a></li>
-                            <li><a href="#" data-value="comercial">Celular</a></li>
-                            <li><a href="#" data-value="adicional">Comercial</a></li>							
-                          </ul>
-                        </div>                        
-                    </div>
-                    <div class="input-group col-lg-12">
-                        <span class="input-group-addon"><i class="fa fa-phone fa-fw"></i></span>
-                        <input type="text" id="telTags" name="telTags" data-ng-model="telefones" class="form-control" required="required" pattern="\([0-9]{2}\) [0-9]{4,6}-[0-9]{3,4}$" />
-                        <!--<span class="input-group-btn">
-                          <select class="selectpicker" id="telCombo" name="telCombo">
-                          <option value="Celular">Celular</option>
-                          <option value="Residencial">Residencial</option>
-                          <option value="Comercial">Comercial</option>
-                          </select>
-                        </span>-->
+                        <!-- Text input-->
+                        <div div class="col-sm-6 no-float">
+                            <div class="panel panel-default ">
+                              <div class="panel-heading">Lista de Telefones</div>
+                              <div class="panel-body">
+                                  <alert ng-repeat="telefone in cliente.telefones" type="warning" close="removeTelefone($index)">{{telefone.tpTelefone}} : {{telefone.nrTelefone}}</alert>
+                                  <button data-ng-click="incluirTelefone()" class="btn btn-warning btn-xs" >
+                                      <i class="fa fa-upload fa-fw fa-inverse"></i>&nbsp;Incluir
+                                  </button>
+                              </div>
+                            </div>                    
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-sm-2">
                   <span class="label label-danger" data-ng-show="submitted && myForm.telTags.$error.required">Obrigat&oacute;rio!</span>
                   <span class="label label-danger" data-ng-show="submitted && myForm.$error.telTags">Telefones inv&aacute;lidos!</span>
                 </div>
@@ -249,8 +265,18 @@
 <!-- Custom scripts --> 
 <script>
 
-   $("#cep").mask("00000-000");
-   $("#cpf").mask("000.000.000-00");
+ // using jQuery Mask Plugin v1.7.5
+ $("#cep").mask("00000-000");
+ $("#cpf").mask("000.000.000-00");
+ 
+  var maskBehavior = function (val) {
+    return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+  },
+  options = {onKeyPress: function(val, e, field, options) {
+    field.mask(maskBehavior.apply({}, arguments), options);
+      }
+  };
+  $("#tel").mask(maskBehavior, options);
    
   function show() {
 	var fields = $( "#form" ).serializeArray();

@@ -22,11 +22,11 @@ imoveisDbApp.config(['$routeProvider', '$locationProvider',
 				templateUrl: 'partials/listViewClientes.html',
 				controller: 'ClientesCtrl'			
 			}).
-			when('/cadastro/cliente/new', {  
+			when('/cadastro/clientes/new', {  
 				templateUrl: 'partials/formNewClientes.html',
 				controller: 'ClientesEditCtrl'			
 			}).
-			when('/cadastro/cliente/view/:id', { 
+			when('/cadastro/clientes/view/:id', { 
 				templateUrl: 'partials/formNewClientes.html',
 				controller: 'ClientesEditCtrl'			
 			}).			

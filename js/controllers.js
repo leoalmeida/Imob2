@@ -3,6 +3,16 @@
 'use strict';
 
 var myVersion = 7;
+var key = {
+			backspace: 8,
+			enter: 13,
+			escape: 27,
+			left: 37,
+			up: 38,
+			right: 39,
+			down: 40,
+			comma: 188
+		};
 var OBJECT_STORE_CLIENTES = 'cliente';
 var OBJECT_STORE_EVENTOS = 'evento';
 var OBJECT_STORE_IMOVEIS = 'imovel';
@@ -534,10 +544,12 @@ imoveisDbControllers.controller('ClientesEditCtrl', ['$scope', '$log', '$rootSco
 	};
 	$scope.endereco = {};
 	$scope.endereco.tpEndereco = "Residencial";	
-	$scope.cliente.enderecos = [];	
+	$scope.telefone = {};
+	$scope.telefone.tpTelefone = "Residencial";
 	$scope.documentos = [];
+	$scope.cliente.enderecos = [];	
+	$scope.cliente.telefones = [];	
 	$scope.cliente.documentos = [];
-	$scope.cliente.telefones = [];
 		
 	var clientesObjectStore = $indexedDB.objectStore(OBJECT_STORE_CLIENTES);
 	
@@ -546,14 +558,23 @@ imoveisDbControllers.controller('ClientesEditCtrl', ['$scope', '$log', '$rootSco
       $scope.endereco = {};
       $scope.endereco.tpEndereco = "Residencial";
 	};
-	
+
 	$scope.removeEndereco = function($index){
 		  $scope.cliente.enderecos.splice(index, 1);		
 	};
 	
-	$scope.telListeSel = function(){
-		$("#TpTelefone:first-child").text($(this).text() + "  ");
-		$("#TpTelefone:first-child").val($(this).val());
+	$scope.incluirTelefone = function(){
+	    //if (tapButton !== key.enter) return;
+	   
+	    if ($scope.telefone.nrTelefone !== ''){
+          $scope.cliente.telefones.push($scope.telefone);
+          $scope.telefone = {};
+          $scope.telefone.tpTelefone = "Residencial";
+      }
+	};
+	
+	$scope.removeTelefone = function($index){
+	    $scope.cliente.telefones.splice(index, 1);
 	};
 	
 	$scope.cancel = function() {
@@ -566,15 +587,13 @@ imoveisDbControllers.controller('ClientesEditCtrl', ['$scope', '$log', '$rootSco
       
       $scope.cliente.updated = new Date();
       
-      $scope.cliente.telefones = $scope.telefones.split(','); 
-      
       alert(JSON.stringify($scope.cliente));
       
       clientesObjectStore
       .upsert($scope.cliente)
       .then(function(e){
           $log.info('Cliente' + $scope.cliente.nome + 'included with CPF:'+  $scope.cliente.cpf +  ' at:' + new Date());
-          $location.path('/')
+          $location.path('/cadastro/cliente')
       });
 		
 	};
