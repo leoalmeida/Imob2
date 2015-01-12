@@ -20,7 +20,7 @@ var OBJECT_STORE_CONTRATOS = 'contrato';
 var OBJECT_STORE_DOCUMENTOS = 'documento';
 var OBJECT_STORE_TIPODOC = 'tipoDocumento';
 //var imoveisDbControllers = angular.module('imoveisDbControllers', ['imoveisDbServices']);
-var imoveisDbControllers = angular.module('imoveisDbControllers', ['ngResource', 'ngAnimate', 'xc.indexedDB']);
+var imoveisDbControllers = angular.module('imoveisDbControllers', ['ui.bootstrap', 'ngResource', 'ngAnimate', 'xc.indexedDB']);
 
 imoveisDbControllers.config(function ($indexedDBProvider) {
 	$indexedDBProvider
@@ -385,7 +385,7 @@ imoveisDbControllers.controller('HomeCtrl', ['$scope', '$indexedDB',
 			
 		ObjectStore
 			.insert({	"contrato": "1",
-				"tipo": "PAGAMENTO",
+				"tipo": "",
 				"descricao": "Contrato próximo da data de expiração.", 
 				"title": "Enviar renovação para locador e locatário",
 				"status": "Fechado",
@@ -525,7 +525,6 @@ imoveisDbControllers.controller('ClientesCtrl', ['$scope', '$indexedDB',
 
 }]);
 
-
 imoveisDbControllers.controller('ClientesEditCtrl', ['$scope', '$log', '$rootScope', '$routeParams', '$location',  '$indexedDB',  
 		function($scope, $log, $rootScope, $routeParams, $location, $indexedDB) {
 		
@@ -559,7 +558,7 @@ imoveisDbControllers.controller('ClientesEditCtrl', ['$scope', '$log', '$rootSco
       $scope.endereco.tpEndereco = "Residencial";
 	};
 
-	$scope.removeEndereco = function($index){
+	$scope.removeEndereco = function(index){
 		  $scope.cliente.enderecos.splice(index, 1);		
 	};
 	
@@ -573,7 +572,7 @@ imoveisDbControllers.controller('ClientesEditCtrl', ['$scope', '$log', '$rootSco
       }
 	};
 	
-	$scope.removeTelefone = function($index){
+	$scope.removeTelefone = function(index){
 	    $scope.cliente.telefones.splice(index, 1);
 	};
 	
@@ -791,12 +790,11 @@ imoveisDbControllers.controller('EventosCtrl', ['$scope', '$indexedDB',
 	*/
 	var eventosObjectStore = $indexedDB.objectStore(OBJECT_STORE_EVENTOS);
 	
-    	function buscaEventos() {
-		eventosObjectStore.getAll().then(function(eventosList) {  
-		//persistanceService.buscaImoveis().then(function(imoveisList) {
-			$scope.listView = eventosList;
-		});		
-	};	
+  function buscaEventos() {
+      eventosObjectStore.getAll().then(function(eventosList) {  
+           $scope.listView = eventosList;        
+      });		
+  };	
 	
 	$scope.setMaster = function(section) {
 	    $scope.selected = section;
@@ -814,10 +812,115 @@ imoveisDbControllers.controller('EventosCtrl', ['$scope', '$indexedDB',
 	
 	if($indexedDB.onDatabaseError) {
 		$location.path('/unsupported');
-	} else {
+	} else {	  
+    /*eventosObjectStore.insert({	
+          "relacoes":[{"tipoEntidade": "cliente", "identificador":"051.710.627-22"},{"tipoEntidade": "contrato", "identificador":"1"}],			  
+          "tipoEvento": "BOLETO",
+          "descricao": "Envio de boleto de cobrança ao locatario", 
+          "titulo": "Emitir boleto e envio por email",
+          "situacao": "Ativo",
+          "dataInicio": new Date()+10,
+          "dataVencimento": new Date()+10,					
+          "updated":new Date()
+          });*/
 		buscaEventos();
 	};
 			
+}]);
+
+imoveisDbControllers.controller('EventosEditCtrl', ['$scope', '$log', '$rootScope', '$routeParams', '$location',  '$indexedDB',
+    function($scope, $log, $rootScope, $routeParams, $location, $indexedDB) {
+      
+    if ($rootScope == "view") $scope.entidade = "Alterar evento";
+    else $scope.entidade = "Incluir evento";
+    /**
+    * @type {ObjectStore}
+    */
+    
+    
+    $scope.novoevento = {};
+    
+    //$scope.relacao = {};
+    $scope.tiposEvento = [ "boleto","contrato", "renovacao", "pagamento"];
+    $scope.tiposRelacao = ["cliente","imovel","contrato"];
+    $scope.tiposSituacao = ["Ativo","Vencido","Liquidado"];
+    $scope.format = 'dd/MM/yyyy';
+    $scope.today= function() {
+        $scope.dt = new Date();
+    }
+    $scope.today();
+
+    $scope.clear = function () {
+        $scope.dt = null;
+    };
+
+    $scope.dateOptions = {
+      format: 'dd/MM/yyyy',
+      startingDay: 1
+    };
+    
+    $scope.incluirRelacao = function(){
+      if ($scope.relacao !== ''){
+          $scope.novoevento.relacao.push($scope.relacao);
+          $scope.relacao = {};
+      }
+    };
+    
+    $scope.removeRelacao = function(index){
+        $scope.novoevento.relacao.splice(index, 1);
+    };
+    
+    $scope.cancel = function() {
+        
+    };
+  
+    $scope.submit = function() {
+        
+        $scope.novoevento.updated = new Date();
+        $scope.novoevento.dataInicio = $filter('date')(new Date() , "dd/MM/yyyy");       
+        $scope.novoevento.dataVencimento = $filter('date')(new Date($scope.dt), "dd/MM/yyyy");
+        
+        alert(JSON.stringify($scope.novoevento));
+        
+        /*eventosObjectStore
+          .upsert($scope.novoevento)
+              .then(function(e){
+                   $log.info('Evento' + $scope.novoevento.id + 'incluído com vencimento em:'+  $scope.novoevento.dataVencimento +  ' at:' + new Date());
+                   $location.path('/cadastro/eventos')
+        });*/
+      
+    };
+  
+    function buscaInfo(key) {
+      
+      if(key) {
+        var myQuery = $indexedDB.queryBuilder().$eq(key).$asc().compile();
+        clientesObjectStore.each(
+          function(cliente){
+            $scope.cpf = cliente.value.cpf;
+            if (_.contains(cliente.value.tipo,"Eventos"))
+              $scope.locador.active
+            $scope.locatario = _.contains(cliente.value.tipo,"Locatario");
+            $scope.dono = _.contains(cliente.value.tipo,"Dono");
+            $scope.fiador = _.contains(cliente.value.tipo,"Fiador");
+            $scope.nome = cliente.value.nome;
+            $scope.email = cliente.value.email;
+            //$scope.telefones = _.(cliente.value.telefones))
+            $scope.enderecos = cliente.value.enderecos;
+            //$scope.locadorSelected=true;
+            //$location.path('#/locadores/edit/'+key);
+          }
+        ,myQuery);
+      }
+    };
+    
+  
+  
+    if($indexedDB.onDatabaseError) {
+      $location.path('/unsupported');
+    } else {
+      buscaInfo($routeParams.id);
+    };      
 }]);
 
 imoveisDbControllers.controller('CalendarCtrl', ['$scope', '$indexedDB',
@@ -915,3 +1018,4 @@ imoveisDbControllers.controller('CalendarCtrl', ['$scope', '$indexedDB',
 		*/
 	//});		
 }]);
+

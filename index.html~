@@ -17,9 +17,12 @@
     
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="./css/dashboard.css"/>    
-    <link rel="stylesheet" href="./css/fm.tagator.jquery.css"/>
-    <link rel="icon" type="./image/ico" href="./img/patinhas.png" />
+    
     <link rel="shortcut icon" href="./img/patinhas.png" />
+    <link rel="icon" type="./image/ico" href="./img/patinhas.png" />
+    <link rel="apple-touch-icon" type="image/png" href="./img/patinhas.png"><!-- iPhone -->
+    <link rel="apple-touch-icon" type="image/png" sizes="72x72" href="./img/gato.png"><!-- iPad -->
+    <link rel="apple-touch-icon" type="image/png" sizes="114x114" href="./img/gato.png"><!-- iPhone4 -->
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -60,13 +63,11 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">			
 				<ul class="nav navbar-nav">					
-					<li class="active"><a href="./"><i class="fa fa-home fa-fw"></i>&nbsp; Home <span class="sr-only">(current)</span></a></li>
-					<li><a href="#!/dashboard" target="_self"><i class="fa fa-dashboard fa-fw"></i>&nbsp; Dashboard</a></li>
+					<li class="active"><a href="./"><i class="fa fa-home fa-fw"></i>&nbsp; Dashboard <span class="sr-only">(current)</span></a></li>					
 					<li class="dropdown">
 					  <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-archive fa-fw"></i>&nbsp; Cadastro <span class="caret"></span></a>					  
 					  <ul class="dropdown-menu" role="menu">
-					    <li><a href="#!/cadastro/clientes" target="_self">Locadores</a></li>
-					    <li><a href="#!/cadastro/locatarios" target="_self">Locat&aacute;rios</a></li>
+					    <li><a href="#!/cadastro/clientes" target="_self">Clientes</a></li>					    
 					    <li><a href="#!/cadastro/imoveis" target="_self">Im&oacute;veis</a></li>
 					    <li><a href="#!/cadastro/contratos" target="_self">Contratos</a></li>
 					    <li class="divider"></li>
@@ -74,9 +75,8 @@
 					  </ul>
 					</li>
 					<li><a href="#!/calendario" target="_self"><i class="fa fa-calendar fa-fw"></i>&nbsp; Pr&oacute;ximas atividades</a></li>
-					<li><a href="./relatorios" target="_self"><i class="fa fa-file-pdf-o fa-fw"></i>&nbsp; Relat&oacute;rios</a></li>
-					<li><a href="./exportacao" target="_self"><i class="fa fa-file-excel-o fa-fw"></i>&nbsp; Exportar</a></li>
-					<li><a href="./profile" target="_self"><i class="fa fa-users fa-fw"></i>&nbsp; Profile</a></li>		   
+					<li><a href="#!/relatorios" target="_self"><i class="fa fa-file-pdf-o fa-fw"></i>&nbsp; Relat&oacute;rios</a></li>					
+					<li><a href="#!/profile" target="_self"><i class="fa fa-users fa-fw"></i>&nbsp; Profile</a></li>		   
 				</ul>
 				<form class="navbar-form navbar-left" role="search">
 					<div class="form-group">

@@ -24,32 +24,47 @@
 			
 		</ul>
 	</div>
-	<table class="table table-bordered table-striped" id="listaValores" ng-init="cliente=true">
+	<table class="table table-bordered table-striped" id="listaValores" ng-init="evento=true">
 		<thead>
 			<tr>				
-				<th class="col-lg-1">
-					Contrato 
-					<a data-ng-click="sortBy='contrato'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-contrato'" class="glyphicon glyphicon-chevron-up"></a>
+				<th class="col-xs-1 col-md-1 text-center">
+				  <h4>
+					<a data-ng-click="sortBy='rel'; reverse=!reverse" role="button">
+            Respons&aacute;vel
+          </a><a data-ng-show="sortBy=='rel'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+          </h4>					
 				</th>				
-				<th class="col-lg-1">
-					Tipo
-					<a data-ng-click="sortBy='tipo'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-tipo'" class="glyphicon glyphicon-chevron-up"></a>
+				<th class="col-xs-1 col-md-1 text-center">
+				  <h4>
+					<a data-ng-click="sortBy='tipoEvento'; reverse=!reverse" role="button">
+            Tipo Evento          
+          </a><a data-ng-show="sortBy=='tipoEvento'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+          </h4>
 				</th>
-				<th class="col-lg-5">
-					Ação 
-					<a data-ng-click="sortBy='acao'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-acao'" class="glyphicon glyphicon-chevron-up"></a>
+				<th class="col-xs-5 col-md-5 text-center">
+				  <h4>
+				  <a data-ng-click="sortBy='descricao'; reverse=!reverse" role="button">
+					Ação
+					</a><a data-ng-show="sortBy=='descricao'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+					<h4>					
 				</th>
-				<th class="col-lg-1">
-					Status 
-					<a data-ng-click="sortBy='status'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-status'" class="glyphicon glyphicon-chevron-up"></a>
+				<th class="col-xs-1 col-md-1 text-center">
+				  <h4>
+				  <a data-ng-click="sortBy='situacao'; reverse=!reverse" role="button">
+					Situa&ccedil;&atilde;o
+					</a><a data-ng-show="sortBy=='situacao'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+					<h4>
 				</th>				
-				<th class="col-lg-2">
-					Vencimento
-					<a data-ng-click="sortBy='vencimento'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-vencimento'" class="glyphicon glyphicon-chevron-up"></a>				
+				<th class="col-xs-2 col-md-2 text-center">
+				  <h4>
+				  <a data-ng-click="sortBy='dataVencimento'; reverse=!reverse" role="button">
+					Dt. Vencimento
+					</a><a data-ng-show="sortBy=='dataVencimento'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+					<h4>
 				</th>	
-				<th class="col-lg-2">
+				<th class="col-xs-2 col-md-2 text-center">
 					<div class="inline">					
-						<a href="./cadastro/contratos/new" class="btn btn-success btn-lg"><i class="fa fa-pencil fa-fw fa-inverse"></i>&nbsp;Incluir</a>
+						<a href="./cadastro/eventos/new" class="btn btn-success btn-lg"><i class="fa fa-pencil fa-fw fa-inverse"></i>&nbsp;Incluir</a>
 					</div>	
 				</th>
 			</tr>
@@ -58,14 +73,16 @@
 			<!--  <tr data-ng-repeat-start="item in listView | filter: filter | orderBy: sortBy" data-toggle="collapse"  class="listaValores-toggle" data-target="#collapse{{item.cpf}}" > -->
 			<tr data-ng-repeat="item in listView | filter: filter | orderBy: sortBy"  data-ng-class="{active : isSelected(item)}" data-ng-click="setMaster(item)">
 				
-				<td class="title" data-toggle="modal" data-target="#myModal">{{item.contrato}}</td>
-				<td data-toggle="modal" data-target="#myModal">{{item.tipo}}</td>
-				<td data-toggle="modal" data-target="#myModal">{{item.acao}}</td>				
-				<td class="title" >{{item.status}}</td>
-				<td data-toggle="modal" data-target="#myModal">{{item.vencimento | dateFormat}}</td>
+				<td class="title text-center	text-capitalize" data-toggle="modal" data-target="#myModal">				    
+				    <h4><strong>{{item.relacoes[0].tipoEntidade}}</strong></h4> 
+				    <h5>{{item.relacoes[0].identificador}}</h5></td>
+				<td class="text-center	text-capitalize" data-toggle="modal" data-target="#myModal"><h5>{{item.tipoEvento}}</h5></td>
+				<td class="text-center" data-toggle="modal" data-target="#myModal"><h5>{{item.descricao}}</h5></td>				
+				<td class="text-center	text-capitalize" data-toggle="modal" data-target="#myModal"><h5>{{item.situacao}}</h5></td>
+				<td class="text-center	text-capitalize" data-toggle="modal" data-target="#myModal"><h5>{{item.dataVencimento | dateFormat}}</h5></td>
 				
-				<td>
-					<a class="btn btn-primary " href="./cadastro/eventos/view/{{item.id}}"><i class="fa fa-pencil-square-o fa-fw fa-inverse"></i>&nbsp; Editar</a> 
+				<td class="text-center">
+					<a class="btn btn-primary" href="./cadastro/eventos/view/{{item.id}}"><i class="fa fa-pencil-square-o fa-fw fa-inverse"></i>&nbsp; Editar</a> 
 					<a class="btn btn-danger ng-hide" data-ng-click="removeEventos(item.id)"><i class="fa fa-trash-o fa-fw fa-inverse"></i>&nbsp; Remover</a>
 				</td>
 			</tr>
@@ -124,64 +141,51 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	<h4 class="modal-title-success" id="myModalLabel"><span class="label label-success label-lg">{{selected.cpf}} - {{selected.nome}}</span></h4>
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title-success" id="myModalLabel"><span class="label label-success label-lg">{{selected.id}} - {{selected.tipoEvento}}</span></h4>
       </div>
       <div class="modal-body">
       	<div class="container-fluid">
-      		<div class="well">			
-      		<div>
-			<span class="label label-info">ID</span>
-			<br>
-			<label>{{selected.descricao}}</label>
-		</div>
-		<div>
-			<span class="label label-info">Contrato</span>
-			<br>
-			<label>{{selected.contrato}}</label>
-		</div>
-		</div>
-		
-		<div class="well">			
-		<div>
-			<span class="label label-info"><strong>Data de Vencimento</strong></span>
-			<br>
-			<label>{{selected.vencimento}}</label>
-		</div>
-		<div>
-			<span class="label label-info"><strong>Status</strong></span>
-			<br>
-			<label>{{selected.status}}</label>
-		</div>
-		</div>		
-		
-		<div class="well">			
-		<div>
-			<span class="label label-info">Tipo de Evento</span>
-			<br>
-			<label>{{selected.tipo}}</label>
-		</div>
-		</div>
-		
-		<div class="well">			
-		<div>
-			<span class="label label-info">A&ccedil;&atilde;o</span>
-			<br>
-			<label>{{selected.acao}}</label>
-		</div>
-		</div>
-		
-		<div class="well">			
-		<div>
-			<span class="label label-info">Descri&ccedil;&atilde;o detalhada</span>
-			<br>
-			<label>{{selected.descricao}}</label>
-		</div>
-		</div>
-	</div>
-      </div>
-      <div class="modal-footer">		
-      </div>
+          <div class="well">			
+              <div>
+                <span class="label label-info">A&ccedil;&atilde;o</span>
+                <br>
+                <label>{{selected.titulo}}</label>
+              </div>
+          </div>
+      	  <div class="well">			
+            <div>
+                <span class="label label-info"><strong>Data de Vencimento</strong></span>
+                <br>
+                <label>{{selected.dataVencimento}}</label>
+            </div>
+            <div>
+                <span class="label label-info"><strong>Data de Cria&ccedil;&atilde;o</strong></span>
+                <br>
+                <label>{{selected.dataInicio}}</label>
+            </div>
+            <div>
+                <span class="label label-info"><strong>Situa&ccedil;&atilde;o</strong></span>
+                <br>
+                <label>{{selected.situacao}}</label>
+            </div>
+          </div>          
+          <div class="well">			
+              <div>
+                <span class="label label-info">Descri&ccedil;&atilde;o detalhada</span>
+                <br>
+                <label>{{selected.descricao}}</label>
+              </div>
+          </div>          
+          <div class="well">			
+		        <div>
+                <span class="label label-info">Relacionados</span>
+                <br>
+                <p data-ng-repeat="rel in selected.relacoes"><label>{{rel.tipoEntidade}}: {{rel.identificador}} <span class="badge">{{$index}}</span></label></p>
+            </div>
+          </div>		
+        </div>
+      </div>      
     </div>
   </div>
 </div>

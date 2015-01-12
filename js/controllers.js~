@@ -3,6 +3,16 @@
 'use strict';
 
 var myVersion = 7;
+var key = {
+			backspace: 8,
+			enter: 13,
+			escape: 27,
+			left: 37,
+			up: 38,
+			right: 39,
+			down: 40,
+			comma: 188
+		};
 var OBJECT_STORE_CLIENTES = 'cliente';
 var OBJECT_STORE_EVENTOS = 'evento';
 var OBJECT_STORE_IMOVEIS = 'imovel';
@@ -516,8 +526,8 @@ imoveisDbControllers.controller('ClientesCtrl', ['$scope', '$indexedDB',
 }]);
 
 
-imoveisDbControllers.controller('ClientesEditCtrl', ['$scope', '$rootScope', '$routeParams', '$location',  '$indexedDB',  
-		function($scope, $rootScope, $routeParams, $location, $indexedDB) {
+imoveisDbControllers.controller('ClientesEditCtrl', ['$scope', '$log', '$rootScope', '$routeParams', '$location',  '$indexedDB',  
+		function($scope, $log, $rootScope, $routeParams, $location, $indexedDB) {
 		
 	if ($rootScope == "view") $scope.entidade = "Alterar cliente";
 	else $scope.entidade = "Incluir cliente";
@@ -525,57 +535,66 @@ imoveisDbControllers.controller('ClientesEditCtrl', ['$scope', '$rootScope', '$r
 	* @type {ObjectStore}
 	*/
 	
-	var objEndereco = {};
-	
-	$scope.cliente = [];
-	$scope.cliente.enderecos = [];
-	$scope.endereco = [];
-	$scope.tpEndereco = "Residencial";	
-	$scope.documentos = [];
+	$scope.cliente = {};
 	$scope.cliente.tipo = {
-		locador: false,
-		locatario: false,
-		dono: false,
-		fiador: false
+      locador: false,
+      locatario: false,
+      dono: false,
+      fiador: false
 	};
-	
+	$scope.endereco = {};
+	$scope.endereco.tpEndereco = "Residencial";	
+	$scope.telefone = {};
+	$scope.telefone.tpTelefone = "Residencial";
+	$scope.documentos = [];
+	$scope.cliente.enderecos = [];	
+	$scope.cliente.telefones = [];	
+	$scope.cliente.documentos = [];
+		
 	var clientesObjectStore = $indexedDB.objectStore(OBJECT_STORE_CLIENTES);
 	
-	$scope.incluirEndereco = function(){		
-		objEndereco[$scope.tpEndereco] = $scope.endereco;
-		$scope.cliente.enderecos.push(objEndereco);
-		$scope.endereco = [];
-	}
+	$scope.incluirEndereco = function(){
+      $scope.cliente.enderecos.push($scope.endereco);
+      $scope.endereco = {};
+      $scope.endereco.tpEndereco = "Residencial";
+	};
+
+	$scope.removeEndereco = function($index){
+		  $scope.cliente.enderecos.splice(index, 1);		
+	};
 	
-	$scope.telListeSel = function(){
-		$("#TpTelefone:first-child").text($(this).text() + "  ");
-		$("#TpTelefone:first-child").val($(this).val());
-	}
+	$scope.incluirTelefone = function(){
+	    //if (tapButton !== key.enter) return;
+	   
+	    if ($scope.telefone.nrTelefone !== ''){
+          $scope.cliente.telefones.push($scope.telefone);
+          $scope.telefone = {};
+          $scope.telefone.tpTelefone = "Residencial";
+      }
+	};
+	
+	$scope.removeTelefone = function($index){
+	    $scope.cliente.telefones.splice(index, 1);
+	};
 	
 	$scope.cancel = function() {
 			
 	};
 	
 	$scope.submit = function() {
-		//if($scope.cpf == "") $scope.cpf = 1;
-		//alert($scope.myForm.serializeArray());
-		
-		$scope.cliente.updated = new Date();
-		
-		if ($scope.endereco != []){
-			objEndereco[$scope.tpEndereco] = $scope.endereco;
-			$scope.cliente.enderecos.push(objEndereco);
-			$scope.endereco = [];
-		}
-		
-		
-		alert($scope.cliente.serializeArray());
-		
-		clientesObjectStore
-		.insert($scope.cliente)
-		.then(function(e){			
-			$location.path('/')
-		});
+      //if($scope.cpf == "") $scope.cpf = 1;
+      //alert($scope.myForm.serializeArray());
+      
+      $scope.cliente.updated = new Date();
+      
+      alert(JSON.stringify($scope.cliente));
+      
+      clientesObjectStore
+      .upsert($scope.cliente)
+      .then(function(e){
+          $log.info('Cliente' + $scope.cliente.nome + 'included with CPF:'+  $scope.cliente.cpf +  ' at:' + new Date());
+          $location.path('/cadastro/cliente')
+      });
 		
 	};
 	

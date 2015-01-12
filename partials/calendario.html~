@@ -1,44 +1,41 @@
-<link href='../css/fullcalendar.min.css' rel='stylesheet' />
-<link href='../css/fullcalendar.print.css' rel='stylesheet' media='print' />
-<script src='../js/moment.min.js'></script>
-<script src='../js/jquery.min.js'></script>
-<script src='../js/fullcalendar.min.js'></script>
-<script src='../js/gcal.js'></script>
-<script>
-	$(document).ready(function() {
+<script src='./js/moment.min.js'></script>
+<script src='./js/jquery.min.js'></script>
+<script src='./js/fullcalendar.min.js'></script>
+<script src='./js/gcal.js'></script>
+
+<div id="calendar-body">
+	<div id='loading' >loading...</div>
 	
-		$('#calendar').fullCalendar({
-
-			// THIS KEY WON'T WORK IN PRODUCTION!!!
-			// To make your own Google API key, follow the directions here:
-			// http://fullcalendar.io/docs/google_calendar/
-			googleCalendarApiKey: '8vmmNZaWRdB3bqZYX4vGPNVi',
-		
-			// US Holidays
-			//ical.mac.com/ical/US32Holidays.ics. 
-			events: 'mn0tvm3gbvn1gidlv4l4ec752c@group.calendar.google.com',
-			
-			calendar.google.com
-			eventClick: function(event) {
-				// opens events in a popup window
-				window.open(event.url, 'gcalevent', 'width=700,height=600');
-				return false;
-			},
-			
-			loading: function(bool) {
-				$('#loading').toggle(bool);
-			}
-			
-		});
-		
-	});
-
-</script>
-
-<div class="calendar-body">
-	<div class='loading'>loading...</div>
+	<div id='calendar' ></div>
 	
-	<div classe='calendar'></div>
+	<div id="createEventModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+	    <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+		<h3 id="myModalLabel1">Create Appointment</h3>
+	    </div>
+	    <div class="modal-body">
+	    <form id="createAppointmentForm" class="form-horizontal">
+		<div class="control-group">
+		    <label class="control-label" for="inputPatient">Patient:</label>
+		    <div class="controls">
+			<input type="text" name="patientName" id="patientName" tyle="margin: 0 auto;" data-provide="typeahead" data-items="4" data-source="[&quot;Value 1&quot;,&quot;Value 2&quot;,&quot;Value 3&quot;]">
+			  <input type="hidden" id="apptStartTime"/>
+			  <input type="hidden" id="apptEndTime"/>
+			  <input type="hidden" id="apptAllDay" />
+		    </div>
+		</div>
+		<div class="control-group">
+		    <label class="control-label" for="when">When:</label>
+		    <div class="controls controls-row" id="when" style="margin-top:5px;">
+		    </div>
+		</div>
+	    </form>
+	    </div>
+	    <div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+		<button type="submit" class="btn btn-primary" id="submitButton">Save</button>
+	    </div>
+	</div><!-- /.modal -->
 </div>
 
 

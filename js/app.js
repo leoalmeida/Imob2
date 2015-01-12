@@ -20,28 +20,16 @@ imoveisDbApp.config(['$routeProvider', '$locationProvider',
 			}).
 			when('/cadastro/clientes', { 
 				templateUrl: 'partials/listViewClientes.html',
-				controller: 'ClientesCtrl'			
+				controller: 'ClientesCtrl'
 			}).
 			when('/cadastro/clientes/new', {  
 				templateUrl: 'partials/formNewClientes.html',
 				controller: 'ClientesEditCtrl'			
 			}).
-			when('/cadastro/clientes/view/:id', { 
+			when('/cadastro/clientes/edit/:id', { 
 				templateUrl: 'partials/formNewClientes.html',
 				controller: 'ClientesEditCtrl'			
-			}).			
-			/*when('/cadastro/locatario/view/:id', { 
-				templateUrl: 'partials/listView.html',
-				controller: 'ClientesCtrl'			
 			}).
-			when('/cadastro/locatario/new', {  
-				templateUrl: 'partials/formNew.html',
-				controller: 'ClientesEditCtrl'			
-			}).
-			when('/cadastro/locatarios/edit/:key', {
-				templateUrl: 'partials/locatario_form.html',
-				controller: 'ClientesEditCtrl'
-			}).*/
 			when('/cadastro/imoveis', { 
 				templateUrl: 'partials/listViewImoveis.html',
 				controller: 'ImoveisCtrl'			
@@ -50,7 +38,7 @@ imoveisDbApp.config(['$routeProvider', '$locationProvider',
 				templateUrl: 'partials/formNewImoveis.html',
 				controller: 'ImoveisEditCtrl'			
 			}).
-			when('/cadastro/imoveis/view/:key', {
+			when('/cadastro/imoveis/edit/:key', {
 				templateUrl: 'partials/formNewImoveis.html',
 				controller: 'ImoveisEditCtrl'
 			}).
@@ -58,7 +46,7 @@ imoveisDbApp.config(['$routeProvider', '$locationProvider',
 				templateUrl: 'partials/listViewContratos.html',
 				controller: 'ContratosCtrl'			
 			}).
-			when('/cadastro/contratos/edit', {  
+			when('/cadastro/contratos/new', {  
 				templateUrl: 'partials/formNewContratos.html',
 				controller: 'ContratosEditCtrl'			
 			}).
@@ -70,7 +58,7 @@ imoveisDbApp.config(['$routeProvider', '$locationProvider',
 				templateUrl: 'partials/listViewEventos.html',
 				controller: 'EventosCtrl'			
 			}).
-			when('/cadastro/eventos/edit', {  
+			when('/cadastro/eventos/new', {  
 				templateUrl: 'partials/formNewEventos.html',
 				controller: 'EventosEditCtrl'			
 			}).

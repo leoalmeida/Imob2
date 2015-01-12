@@ -1,0 +1,160 @@
+	<h3>{{entidade}}</h3>
+	
+	<div id="messages" class="alert alert-success" data-ng-show="messages" data-ng-bind="messages"></div>
+	<div data-ng-show="progress.active()" style="color: red; font-size: 50px;">Enviando&hellip;</div>
+	
+	<form name="myForm" novalidate class="form-horizontal" role="form">
+	    <div class="row">
+          <div class="col-xs-8 col-md-8">
+                <!-- RELAÇÃO DO EVENTO -->
+                <div class="form-group">
+                      <div class="row">
+                      <label for="tipo" class="col-xs-2 col-md-2 control-label">Relacionados</label>
+                      <div class="col-xs-9 col-md-9">
+                          <div class="btn-group">
+                              <label data-ng-repeat="tprelac in tiposRelacao" class="btn btn-success text-capitalize" ng-model="novoevento.tprelac" btn-radio="{{tprelac}}" uncheckable>{{tprelac}}</label>                    
+                          </div>
+                      </div>
+                      <div class="col-xs-1 col-md-1">
+                          <span class="label label-danger" data-ng-show="submitted && myForm.novoevento.tprelac.$error.required">Obrigat&oacute;rio!</span>
+                      </div>
+                      </div>
+                </div>
+                
+                <!-- ESCOLHA DE MULTIPLAS RELAÇÕES DE EVENTOS -->
+                <!-- <div class="form-group">
+                      <div class="row">
+                          <label for="telefones" class="col-xs-2 col-md-2 control-label">Telefones</label>
+                          <div class="col-xs-9 col-md-9">
+                              <div class="panel panel-body panel-default">
+                                 
+                                  <legend>
+                                 
+                                    <div class="btn-group" role="group" aria-label="...">
+                                      <div class="row">                        
+                                      <div class="col-xs-12 col-md-12">							
+                                        <div class="btn-group" role="group">	
+                                          <input type="hidden" data-ng-model="telefone.tpTelefone" /> {{telefone.tpTelefone}}								
+                                        </div>                              				
+                                      </div>						
+                                      </div>
+                                    </div>
+                                  </legend>
+                                  <div class="col-xs-6 col-md-6">		                            
+                                      <div class="input-group">
+                                          <span class="input-group-addon" ><i class="fa fa-phone fa-fw"></i></span>
+                                          <input type="text" id="tel" data-ng-model="telefone.nrTelefone" class="form-control" required="required" pattern="\([0-9]{2}\) [0-9]{4,6}-[0-9]{3,4}$" />
+                                          <div class="input-group-btn" role="group">                                    
+                                              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                <span class="caret"></span>
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                              </button>
+                                              <ul id="telList" class="dropdown-menu" role="menu">
+                                                <li><a href="#" data-value="residencial" data-ng-click="telefone.tpTelefone = 'Residencial'">Residencial</a></li>
+                                                <li><a href="#" data-value="comercial" data-ng-click="telefone.tpTelefone = 'Comercial'">Comercial</a></li>
+                                                <li><a href="#" data-value="adicional" data-ng-click="telefone.tpTelefone = 'Adicional'">Adicional</a></li>							
+                                              </ul>
+                                              <button data-ng-click="incluirTelefone()" class="btn btn-warning" >
+                                                <i class="fa fa-upload fa-fw fa-inverse"></i>&nbsp;Incluir
+                                              </button>
+                                          </div>                                
+                                      </div>
+                                  </div>
+                                 
+                                  <div div class="col-xs-6 col-md-6 no-float">
+                                      <div class="panel panel-default ">
+                                        <div class="panel-heading">Lista de Telefones</div>
+                                        <div class="panel-body">
+                                            <alert ng-repeat="tel in cliente.telefones" type="warning" close="removeTelefone($index)">{{tel.tpTelefone}} : {{tel.nrTelefone}}</alert>                                  
+                                        </div>
+                                      </div>                    
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-xs-1 col-md-1">
+                            <span class="label label-danger" data-ng-show="submitted && myForm.telTags.$error.required">Obrigat&oacute;rio!</span>
+                            <span class="label label-danger" data-ng-show="submitted && myForm.$error.telTags">Telefones inv&aacute;lidos!</span>
+                          </div>
+                      </div>
+                </div>-->
+      
+      
+              <!-- TIPO DE EVENTO -->
+              <div class="form-group">
+                    <div class="row">
+                    <label for="tipo" class="col-xs-2 col-md-2 control-label">Tipo de Evento</label>
+                    <div class="col-xs-9 col-md-9">
+                        <div class="btn-group">
+                            <label data-ng-repeat="tpevento in tiposEvento" class="btn btn-success text-capitalize" ng-model="novoevento.tpevento" btn-radio="{{tpevento}}" uncheckable>{{tpevento}}</label>                    
+                        </div>
+                    </div>
+                    <div class="col-xs-1 col-md-1">
+                        <span class="label label-danger" data-ng-show="submitted && myForm.novoevento.tpevento.$error.required">Obrigat&oacute;rio!</span>
+                    </div>
+                    </div>
+              </div>
+              
+              <!-- SITUAÇÃO DO EVENTO -->
+              <div class="form-group">
+                    <div class="row">
+                    <label for="tipo" class="col-xs-2 col-md-2 control-label">Situa&ccedil;&atilde;o</label>
+                    <div class="col-xs-9 col-md-9">
+                        <div class="btn-group">
+                            <label data-ng-repeat="tpsituac in tiposSituacao" class="btn btn-success text-capitalize" ng-model="novoevento.tpsituac" btn-radio="{{tpsituac}}" uncheckable>{{tpsituac}}</label>                    
+                        </div>
+                    </div>
+                    <div class="col-xs-1 col-md-1">
+                        <span class="label label-danger" data-ng-show="submitted && myForm.novoevento.tpsituac.$error.required">Obrigat&oacute;rio!</span>
+                    </div>
+                    </div>
+              </div>
+              <!-- TITULO DO EVENTO -->
+              <div class="form-group">
+                <div class="row">
+                <label for="nome" class="col-xs-2 col-md-2 control-label">T&iacute;tulo</label>	
+                <div class="col-xs-9 col-md-9">			
+                  <input type="text" id="titulo" name="titulo" data-ng-model="novoevento.titulo" class="form-control" required="required" placeholder="Titulo" />	
+                </div>
+                <div class="col-xs-1 col-md-1">
+                  <span class="label label-danger" data-ng-show="submitted && myForm.novoevento.titulo.$error.required">Obrigat&oacute;rio!</span>
+                </div>
+                </div>
+              </div>      
+              
+              <!-- DESCRICAO DO EVENTO -->
+              <div class="form-group">
+                <div class="row">
+                  <label for="nome" class="col-xs-2 col-md-2 control-label">Descri&ccedil;&atilde;o</label>	
+                  <div class="col-xs-9 col-md-9">
+                    <textarea id="descricao" name="descricao" format data-ng-model="novoevento.descricao" class="form-control" required="required" placeholder="Descrição" rows="3"></textarea>
+                  </div>
+                  <div class="col-xs-1 col-md-1">
+                    <span class="label label-danger" data-ng-show="submitted && myForm.novoevento.descricao.$error.required">Obrigat&oacute;rio!</span>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="col-xs-4 col-md-4">    
+               <!-- DATA DE VENCIMENTO DO EVENTO -->
+              <div class="form-group">                
+                  <div><label for="nome" class="control-label">Data de Vencimento</label></div>                  
+                  <div style="display:inline-block; min-height:290px;">
+                       <datepicker ng-model="dt"  min-date="minDate" show-weeks="true" class="well well-sm"></datepicker>
+                  </div>
+                  <span class="label label-danger" data-ng-show="submitted && myForm.novoevento.dataVencimento.$error.required">Obrigat&oacute;rio!</span>
+              </div>
+          </div>
+      </div>
+      
+      <pre>{{novoevento | json}}</pre>
+      
+      <div class="form-group">
+            <div class="row">
+            <div class="col-xs-offset-2 col-md-offset-2 col-xs-10 col-md-8">			
+              <button data-ng-disabled="progress.active()" data-ng-click="submit(myForm)" class="btn btn-success btn-lg col-xs-offset-2 col-md-offset-2 col-xs-3 col-md-3" ><i class="fa fa-upload fa-fw fa-inverse"></i>&nbsp;Finalizar</button>
+              <button class="btn btn-danger btn-lg col-xs-offset-2 col-md-offset-2 col-xs-3 col-md-3" ><i class="fa fa-times fa-fw fa-inverse"></i>&nbsp;Cancelar</button>
+            </div>
+            </div>
+      </div>
+	
+	</form>
