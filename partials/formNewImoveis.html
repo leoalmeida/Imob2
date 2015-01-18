@@ -1,172 +1,224 @@
-	<h3>{{entidade}}</h3>
+	<h1 class="sub-header">{{entidade}}</h1>
 	
 	<div id="messages" class="alert alert-success" data-ng-show="messages" data-ng-bind="messages"></div>
 	<div data-ng-show="progress.active()" style="color: red; font-size: 50px;">Enviando&hellip;</div>
 	
-	
 	<form name="myForm" novalidate class="form-horizontal" role="form">
-	<div class="form-group">
-		<label for="tipo" class="col-lg-2 control-label">Tipo</label>
-		<div class="col-lg-8">			
-			<div class="btn-group btn-group-justified btn-group-lg" data-toggle="buttons" role="group" aria-label="Lista com os tipos de clientes dispon&iacute;veis">			
-				<label class="btn btn-primary" ng-click="cliente.tipo.locador = !cliente.tipo.locador"><input name="tipoCliente" type="checkbox" autocomplete="off" ng-model="cliente.tipo.locador" /><i class="fa fa-check fa-inverse" ng-show="locador"></i>&nbsp; Locador</label>
-				<label class="btn btn-primary" ng-click="cliente.tipo.locatario = !cliente.tipo.locatario"><input name="tipoCliente" type="checkbox" autocomplete="off" ng-model="cliente.tipo.locatario" /><i class="fa fa-check fa-inverse" ng-show="locatario"></i>&nbsp; Locat&aacute;rio</label>
-				<label class="btn btn-primary" ng-click="cliente.tipo.dono = !cliente.tipo.dono"><input name="tipoCliente" type="checkbox" autocomplete="off" ng-model="cliente.tipo.dono" /><i class="fa fa-check fa-inverse" ng-show="dono"></i>&nbsp; Dono</label>
-				<label class="btn btn-primary" ng-click="cliente.tipo.fiador = !cliente.tipo.fiador"><input name="tipoCliente" type="checkbox" autocomplete="off" ng-model="cliente.tipo.fiador" /><i class="fa fa-check fa-inverse" ng-show="fiador"></i>&nbsp; Fiador</label>			
-			</div>
-		</div>
-		<div class="col-lg-2">
-			<span class="label label-danger" data-ng-show="submitted && myForm.tipoCliente.$error.required">Obrigat&oacute;rio!</span>
-		</div>
-	</div>
-	 
-	<div class="form-group">
-		<label for="cpf" class="col-lg-2 control-label">CPF</label>
-		<div class="col-lg-8">		
-			<input type="text" name="cpf" data-ng-model="cpf" class="form-control" required="required" placeholder="CPF" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" />
-		</div>
-		<div class="col-lg-2">
-			<span class="label label-danger" data-ng-show="submitted && myForm.cpf.$error.required">Obrigat&oacute;rio!</span>
-			<span class="label label-danger" data-ng-show="submitted && myForm.$error.cpf">CPF Inv&aacute;lido!</span>
-		</div>
-	</div>
-	
-	<div class="form-group">
-		<label for="nome" class="col-lg-2 control-label">Nome</label>	
-		<div class="col-lg-8">			
-			<input type="text" name="nome" data-ng-model="cliente.nome" class="form-control" required="required" placeholder="Nome" />	
-		</div>
-		<div class="col-lg-2">
-			<span class="label label-danger" data-ng-show="submitted && myForm.name.$error.required">Obrigat&oacute;rio!</span>
-		</div>
-	</div>
-	
-	<div class="form-group">
-		<label for="nome" class="col-lg-2 control-label">Email</label>	
-		<div class="col-lg-8">		
-			<div class="input-group input-group">
-				<span class="input-group-addon">@</span>				
-				<input type="email" name="email" data-ng-model="email" class="form-control" required="required" placeholder="E-mail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
-			</div>
-		</div>
-		<div class="col-lg-2">
-			<span class="label label-danger" data-ng-show="submitted && myForm.email.$error.required">Obrigat&oacute;rio!</span>
-			<span class="label label-danger" data-ng-show="submitted && myForm.$error.email">Email Inv&aacute;lido!</span>
-		</div>
-	</div>
-	
-	<div class="form-group">	
-		<label for="telefones" class="col-lg-2 control-label">Telefones</label>	
-		<div class="col-lg-8">		
-			<div class="input-group margin-bottom-sm">
-				<span class="input-group-addon"><i class="fa fa-phone fa-fw"></i></span>				
-				<input type="tel" id="telTags" name="telTags" data-ng-model="telefones" class="form-control" required="required" pattern="\([0-9]{2}\) [0-9]{4,6}-[0-9]{3,4}$" />
-				<!--<span class="input-group-btn">
-					<select class="selectpicker" id="telCombo" name="telCombo">
-					<option value="Celular">Celular</option>
-					<option value="Residencial">Residencial</option>
-					<option value="Comercial">Comercial</option>
-					</select>
-				</span>-->
-			</div>		
-		</div>
-		<div class="col-lg-2">
-			<span class="label label-danger" data-ng-show="submitted && myForm.telTags.$error.required">Obrigat&oacute;rio!</span>
-			<span class="label label-danger" data-ng-show="submitted && myForm.$error.telTags">Telefones inv&aacute;lidos!</span>
-		</div>
-	</div>
-	
-	<!--<div class="form-group">
-	<span class="error" ng-show="form.telTags.$error.pattern"> 
-	<div class="navbar-fixed-down alert alert-warning alert-dismissible" role="alert">
-	<button class="close" type="button" data-dismiss="alert"data-dismiss="alert" /><span aria-hidden="true">&times;</span><span class="sr-only"></span>Close</button>
-	Telefone inserido fora do padrão! (00) 00000-0000
-	</div>
-	</span>
-	</div>-->
-	
-	<div class="form-group">		
-		<label for="Endereços" class="col-lg-2 control-label">Endere&ccedil;os</label>
-		<div class="col-lg-8 ">
-			<div class="panel panel-default">			
-				<div id="main" name="form" data-ng-model="enderecos" class="panel-body form-control" class="" style="height: 400px" >
-				<fieldset>					
-					  <!-- Form Name -->
-					  <legend>Detalhes</legend>
-				
-					  <!-- Text input-->
-					  <div class="form-group">
-					    <label class="col-sm-2 control-label" for="textinput">Rua</label>
-					    <div class="col-sm-4">
-					      <input name="rua" type="text" placeholder="Rua" class="form-control">
-					    </div>
-					    <label class="col-sm-2 control-label" for="textinput">N&uacute;mero</label>
-					    <div class="col-sm-4">
-					      <input name="numero" type="text" placeholder="N&uacute;mero" class="form-control">
-					    </div>
-					  </div>
-				
-					  <!-- Text input-->
-					  <div class="form-group">
-					    <label class="col-sm-2 control-label" for="textinput">Complemento</label>
-					    <div class="col-sm-10">
-					      <input name="complemento" type="text" placeholder="Complemento" class="form-control">
-					    </div>
-					  </div>
-				
-					  <!-- Text input-->
-					  <div class="form-group">
-					    <label class="col-sm-2 control-label" for="textinput">Bairro</label>
-					    <div class="col-sm-4">
-					      <input name="bairro" type="text" placeholder="Bairro" class="form-control">
-					    </div>
-					    <label class="col-sm-2 control-label" for="textinput">Cidade</label>
-					    <div class="col-sm-4">
-					      <input name="cidade" type="text" placeholder="Cidade" class="form-control">
-					    </div>
-					  </div>
-				
-					  <!-- Text input-->
-					  <div class="form-group">
-					    <label class="col-sm-2 control-label" for="textinput">Estado</label>
-					    <div class="col-sm-4">
-					      <input name="estado" type="text" placeholder="Estado" class="form-control">
-					    </div>
-				
-					    <label class="col-sm-2 control-label" for="textinput">CEP</label>
-					    <div class="col-sm-4">
-					      <input name="cep" type="text" placeholder="CEP" class="form-control">
-					    </div>
-					  </div>
-		
-				
-					  <!-- Text input-->
-					  <div class="form-group">
-					    <label class="col-sm-2 control-label" for="textinput">Pa&iacute;s</label>
-					    <div class="col-sm-10">
-					      <input name="pais" type="text" placeholder="Pa&iacute;s" class="form-control">
-					    </div>
-					  </div>
-					</fieldset>				
-				</div>
-			</div>		
-		</div>
-		<div class="col-lg-2">
-			<span class="label label-danger" data-ng-show="submitted && myForm.form.$error.required">Obrigat&oacute;rio!</span>			
-		</div>
-			
-	</div>
-	
-	
-	<div class="form-group">
-		<div class="col-lg-offset-2 col-lg-8">			
-			<button data-ng-disabled="progress.active()" data-ng-click="submit(myForm)" class="btn btn-success btn-lg col-lg-offset-2 col-lg-3" ><i class="fa fa-upload fa-fw fa-inverse"></i>&nbsp;Finalizar</button>
-			<button class="btn btn-danger btn-lg col-lg-offset-2 col-lg-3" ><i class="fa fa-times fa-fw fa-inverse"></i>&nbsp;Cancelar</button>
-		</div>
-	</div>
-		
+	    <div class="row">
+          <div class="col-xs-8 col-md-8">
+                <!-- RELAÇÃO DO EVENTO -->
+                <div class="form-group">
+                    <div class="row">
+                    <label for="tipo" class="col-xs-2 col-md-2 control-label">Propriet&aacute;rios</label>
+                    <div class="col-xs-9 col-md-9">
+                        <div class="row">
+                          <div class="col-xs-5 col-md-5">
+                              <div class="input-group" >
+                                 <div class="input-group-btn">
+                                    <input type="text" class="form-control text-capitalize" data-ng-model="proprietario.tipo" required="required" readonly />                                    
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                      <span class="caret"></span>
+                                      <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul id="telList" class="dropdown-menu" role="menu">
+                                      <li><a href="#" data-value="residencial" data-ng-click="proprietario.tipo = 'principal'">Principal</a></li>
+                                      <li><a href="#" data-value="comercial" data-ng-click="proprietario.tipo = 'adicional'">Adicional</a></li>					
+                                    </ul>
+                                 </div>
+                              </div>
+                          </div>
+                          <div class="col-xs-offset-1 col-xs-6 col-md-offset-1 col-md-6 pull-right" role="group">                              
+                              <div class="input-group" role="group">	
+                                <input type="text" class="form-control" data-ng-model="proprietario.identificador" required="required" readonly />
+                                <div class="input-group-btn" role="group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                      <span class="caret"></span>
+                                      <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul id="propList" class="dropdown-menu" role="menu">
+                                      <li><a href="#" data-ng-repeat="item in itemsList" data-value="teste" data-ng-click="proprietario.identificador = item.cpf">{{item.cpf}}</a></li>
+                                    </ul>
+                                    <button data-ng-click="incluirProprietario()" class="btn btn-info" >
+                                      <i class="fa fa-upload fa-fw fa-inverse"></i>&nbsp;Incluir
+                                    </button>
+                                </div>
+                              </div>
+                          </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                          <div class="col-xs-12 col-md-12"> 
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Lista de Propriet&aacute;rios</div>
+                                <div class="panel-body">
+                                    <alert ng-repeat="prop in novoimovel.proprietarios" type="info" close="removeProprietario($index)" class="text-capitalize">{{prop.tipo}} : {{prop.identificador}}</alert>                                      
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-1 col-md-1">
+                        <span class="label label-danger" data-ng-show="submitted && myForm.novoimovel.tprelac.$error.required">Obrigat&oacute;rio!</span>
+                    </div>
+                    </div>
+              </div>
+            
+              <!-- TIPO DE IMOVEL -->
+              <div class="form-group">
+                    <div class="row">
+                    <label for="tipo" class="col-xs-2 col-md-2 control-label">Tipo de Im&oacute;vel</label>
+                    <div class="col-xs-9 col-md-9">
+                        <div class="btn-group">
+                            <label data-ng-repeat="tipo in tipoImovel" class="btn btn-primary text-capitalize" ng-model="novoimovel.tipoImovel" btn-radio="'{{tipo}}'">{{tipo}}</label>                    
+                        </div>
+                    </div>
+                    <div class="col-xs-1 col-md-1">
+                        <span class="label label-danger" data-ng-show="submitted && myForm.novoimovel.tipo.$error.required">Obrigat&oacute;rio!</span>
+                    </div>
+                    </div>
+              </div>
+              
+              <!-- SITUAÇÃO DO IMOVEL -->
+              <div class="form-group">
+                    <div class="row">
+                    <label for="tipo" class="col-xs-2 col-md-2 control-label">Situa&ccedil;&atilde;o</label>
+                    <div class="col-xs-9 col-md-9">
+                        <div class="btn-group">
+                            <label data-ng-repeat="tipoSituacacao in tiposSituacao" class="btn btn-primary text-capitalize" ng-model="novoimovel.tipoSituacacao" btn-radio="'{{tipoSituacacao}}'">{{tipoSituacacao}}</label>                    
+                        </div>
+                    </div>
+                    <div class="col-xs-1 col-md-1">
+                        <span class="label label-danger" data-ng-show="submitted && myForm.novoimovel.tipoSituacacao.$error.required">Obrigat&oacute;rio!</span>
+                    </div>
+                    </div>
+              </div>
+              
+              <!-- TITULO DO IMOVEL -->
+              <div class="form-group">
+                <div class="row">
+                <label for="nome" class="col-xs-2 col-md-2 control-label">T&iacute;tulo</label>	
+                <div class="col-xs-9 col-md-9">			
+                  <input type="text" id="titulo" name="titulo" data-ng-model="novoimovel.titulo" class="form-control" required="required" placeholder="Titulo" />	
+                </div>
+                <div class="col-xs-1 col-md-1">
+                  <span class="label label-danger" data-ng-show="submitted && myForm.novoimovel.titulo.$error.required">Obrigat&oacute;rio!</span>
+                </div>
+                </div>
+              </div>      
+              
+              <!-- DESCRICAO DO IMOVEL -->
+              <div class="form-group">
+                <div class="row">
+                  <label for="nome" class="col-xs-2 col-md-2 control-label">Descri&ccedil;&atilde;o</label>	
+                  <div class="col-xs-9 col-md-9">
+                    <textarea id="descricao" name="descricao" format data-ng-model="novoimovel.descricao" class="form-control" required="required" placeholder="Descrição" rows="3"></textarea>
+                  </div>
+                  <div class="col-xs-1 col-md-1">
+                    <span class="label label-danger" data-ng-show="submitted && myForm.novoimovel.descricao.$error.required">Obrigat&oacute;rio!</span>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <!-- Endereço -->
+          <div class="form-group">
+            <div class="row">
+            <div class="col-xs-12 col-md-offset-1 col-md-10">
+                <div id="main" class="panel panel-body panel-default">
+                    <!-- Form Name -->
+                    <legend>
+                      <!-- Drop Down button -->
+                      <div class="btn-group col-xs-offset-1 col-md-offset-1" role="group" aria-label="...">
+                        <div class="row">                        
+                        <div class="col-xs-10 col-md-10">							
+                          	<label for="Endereços" class="control-label">Endere&ccedil;o</label>		
+                        </div>
+                        <div class="col-xs-2 col-md-2">
+                            <span class="label label-danger" data-ng-show="submitted && myForm.form.$error.required">Obrigat&oacute;rio!</span>
+                        </div>
+                        </div>
+                      </div>
+                    </legend>
+                
+                    <div div class="col-xs-10 col-md-10">
+                        <!-- Text input-->
+                        <div class="form-group has-success has-feedback">
+                          <label class="col-xs-2 col-md-2 control-label" for="textinput">Rua</label>
+                          <div class="col-xs-10 col-md-10">
+                            <input name="rua" type="text" placeholder="Rua" class="form-control" data-ng-model="novoimovel.endereco.rua">
+                          </div>
+                        </div>
+                        
+                        <!-- Text input-->
+                        <div class="form-group has-success has-feedback">
+                            <label class="col-xs-2 col-md-2 control-label" for="textinput">N&uacute;mero</label>
+                            <div class="col-xs-10 col-md-10">
+                              <input name="numero" type="text" placeholder="N&uacute;mero" class="form-control" data-ng-model="novoimovel.endereco.numero">
+                            </div>
+                        </div>
+                        
+                        <!-- Text input-->
+                        <div class="form-group has-success has-feedback">
+                            <label class="col-xs-2 col-md-2 control-label" for="textinput">Complemento</label>
+                            <div class="col-xs-10 col-md-10">
+                              <input id="complemento" name="complemento" type="text" placeholder="Complemento" class="form-control" data-ng-model="novoimovel.endereco.complemento">
+                            </div>
+                        </div>
+                        
+                        <!-- Text input-->
+                        <div class="form-group has-success has-feedback">
+                            <label class="col-xs-2 col-md-2 control-label" for="textinput">Bairro</label>
+                            <div class="col-xs-10 col-md-10">
+                              <input id="bairro" name="bairro" type="text" placeholder="Bairro" class="form-control" data-ng-model="novoimovel.endereco.bairro">
+                            </div>
+                        </div>
+                        
+                        <!-- Text input-->
+                        <div class="form-group has-success has-feedback">                
+                            <label class="col-xs-2 col-md-2 control-label" for="textinput">Cidade</label>
+                            <div class="col-xs-10 col-md-10">
+                              <input id="cidade" name="cidade" type="text" placeholder="Cidade" class="form-control" data-ng-model="novoimovel.endereco.cidade">
+                            </div>
+                        </div>
+                        
+                        <!-- Text input-->
+                        <div class="form-group has-success has-feedback">
+                            <label class="col-xs-2 col-md-2 control-label" for="textinput">Estado</label>
+                            <div class="col-xs-10 col-md-10">
+                              <input id="uf" name="uf" type="text" placeholder="Estado" class="form-control" data-ng-model="novoimovel.endereco.estado">
+                            </div>
+                        </div>
+                        
+                        <!-- Text input-->
+                        <div class="form-group has-success has-feedback">
+                            <label class="col-xs-2 col-md-2 control-label" for="textinput">CEP</label>
+                            <div class="col-xs-10 col-md-10">
+                              <input id="cep" name="cep" type="text" placeholder="CEP" class="form-control" data-ng-model="novoimovel.endereco.cep">
+                            </div>
+                        </div>
+                        
+                        <!-- Text input-->
+                        <div class="form-group has-success has-feedback">
+                            <label class="col-xs-2 col-md-2 control-label" for="textinput">Pa&iacute;s</label>
+                            <div class="col-xs-10 col-md-10">
+                              <input name="pais" type="text" placeholder="Pa&iacute;s" class="form-control" data-ng-model="novoimovel.endereco.pais">
+                            </div>
+                        </div>                
+                    </div>                    
+                </div>
+            </div>
+            </div>
+         </div>
+      </div>
+      
+      <pre>{{novoimovel | json}}</pre>
+      
+      <div class="form-group">
+            <div class="row">
+            <div class="col-xs-offset-2 col-md-offset-2 col-xs-10 col-md-8">			
+              <button data-ng-disabled="progress.active()" data-ng-click="submit(myForm)" class="btn btn-success btn-lg col-xs-offset-2 col-md-offset-2 col-xs-3 col-md-3" ><i class="fa fa-upload fa-fw fa-inverse"></i>&nbsp;Finalizar</button>
+              <button class="btn btn-danger btn-lg col-xs-offset-2 col-md-offset-2 col-xs-3 col-md-3" ><i class="fa fa-times fa-fw fa-inverse"></i>&nbsp;Cancelar</button>
+            </div>
+            </div>
+      </div>
 	
 	</form>
-
-<!-- Custom scripts --> 
-<script src="./js/home.js"></script>

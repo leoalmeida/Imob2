@@ -1,5 +1,5 @@
 /* global angular,window */
-var imoveisDbApp = angular.module('imoveisDbApp', ['ngRoute', 'ngResource', 'imoveisDbControllers', 'imoveisDbFilters', 'imoveisDbEvents']);
+var imoveisDbApp = angular.module('imoveisDbApp', ['ngRoute', 'ngResource', 'imoveisDbControllers', 'imoveisDbFilters']);
 
 imoveisDbApp.config(['$routeProvider', '$locationProvider', 
 	function($routeProvider ,$locationProvider)
@@ -8,15 +8,6 @@ imoveisDbApp.config(['$routeProvider', '$locationProvider',
 			when('/', {
 				templateUrl: 'partials/home.html',
 				controller: 'HomeCtrl'
-			}).
-			when('/dashboard', {  
-				templateUrl: 'partials/home.html',
-				controller: 'ClientesCtrl'			
-			}).
-			when('/calendario', {  
-				templateUrl: 'partials/calendario.html',
-				controller: 'CalendarCtrl',
-				css: 'css/fullcalendar.min.css'			
 			}).
 			when('/cadastro/clientes', { 
 				templateUrl: 'partials/listViewClientes.html',
@@ -68,6 +59,15 @@ imoveisDbApp.config(['$routeProvider', '$locationProvider',
 			}).						
 			when('/unsupported', {
 				templateUrl: 'partials/unsupported.html'
+			}).
+			when('/dashboard', {  
+				templateUrl: 'partials/home.html',
+				controller: 'ClientesCtrl'			
+			}).
+			when('/calendario', {  
+				templateUrl: 'partials/calendario.html',
+				controller: 'CalendarCtrl',
+				css: 'css/fullcalendar.min.css'			
 			}).
 			otherwise({
 				redirectTo: '/'
@@ -125,7 +125,7 @@ imoveisDbApp.directive('contentItem', function ($compile) {
 
     var linker = function(scope, element, attrs) {
         // DO SOMETHING
-    }
+    };
 
     var getTemplate = function(contentType) {
         var template = '';
@@ -143,7 +143,7 @@ imoveisDbApp.directive('contentItem', function ($compile) {
         }
 
         return template;
-    }
+    };
     
     return {
         restrict: "E",

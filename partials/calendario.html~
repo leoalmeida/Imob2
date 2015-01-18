@@ -3,40 +3,70 @@
 <script src='./js/fullcalendar.min.js'></script>
 <script src='./js/gcal.js'></script>
 
-<div id="calendar-body">
-	<div id='loading' >loading...</div>
-	
-	<div id='calendar' ></div>
-	
-	<div id="createEventModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-	    <div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-		<h3 id="myModalLabel1">Create Appointment</h3>
-	    </div>
-	    <div class="modal-body">
-	    <form id="createAppointmentForm" class="form-horizontal">
-		<div class="control-group">
-		    <label class="control-label" for="inputPatient">Patient:</label>
-		    <div class="controls">
-			<input type="text" name="patientName" id="patientName" tyle="margin: 0 auto;" data-provide="typeahead" data-items="4" data-source="[&quot;Value 1&quot;,&quot;Value 2&quot;,&quot;Value 3&quot;]">
-			  <input type="hidden" id="apptStartTime"/>
-			  <input type="hidden" id="apptEndTime"/>
-			  <input type="hidden" id="apptAllDay" />
-		    </div>
-		</div>
-		<div class="control-group">
-		    <label class="control-label" for="when">When:</label>
-		    <div class="controls controls-row" id="when" style="margin-top:5px;">
-		    </div>
-		</div>
-	    </form>
-	    </div>
-	    <div class="modal-footer">
-		<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-		<button type="submit" class="btn btn-primary" id="submitButton">Save</button>
-	    </div>
-	</div><!-- /.modal -->
-</div>
-
+  <div id="list">
+    <div div class="col-xs-3 col-md-3 no-float">
+        <div class="panel panel-default" ng-init="eventos = [
+                        {name:'evento1', tipo:'boleto', vencimento:'10'},
+                        {name:'evento2', tipo:'boleto', vencimento:'10'},
+                        {name:'evento3', tipo:'boleto', vencimento:'10'},
+                        {name:'evento4', tipo:'boleto', vencimento:'10'},
+                        {name:'evento5', tipo:'boleto', vencimento:'10'},
+                        {name:'evento6', tipo:'boleto', vencimento:'10'},
+                        {name:'evento7', tipo:'boleto', vencimento:'10'},
+                        {name:'evento8', tipo:'boleto', vencimento:'10'},
+                        {name:'evento9', tipo:'boleto', vencimento:'10'},
+                        {name:'evento10', tipo:'boleto', vencimento:'10'}
+                      ]">                      
+          <div class="panel-heading">            
+            <label>Lista de Eventos <span class="badge">{{eventos.length}}</span></label>
+            <button class="btn btn-default btn-xs pull-right">&nbsp;&nbsp;<i class="fa fa-plus"></i>&nbsp;&nbsp;</button>            
+            <div class="input-group input-group-sm">                
+                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                <input type="search" class="form-control" data-ng-model="q" placeholder="filtrar eventos..." />                
+            </div>            
+          </div>
+          <div class="panel-body" class="example-animate-container">
+              <tabset vertical="true" type="pills">
+                <tab class="animate-repeat" ng-repeat="evento in eventos | filter:q as results" heading="{{evento.name}}: {{evento.tipo}}: {{evento.vencimento}}"></tab>
+              </tabset>
+          </div>
+        </div>                    
+    </div>  
+    
+    <div id="calendar-body" class="col-xs-9 col-md-9">
+      <div id='loading' >loading...</div>
+      
+      <div id='calendar' ></div>
+      
+      <div id="createEventModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+          <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+        <h3 id="myModalLabel1">Create Appointment</h3>
+          </div>
+          <div class="modal-body">
+          <form id="createAppointmentForm" class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label" for="inputPatient">Patient:</label>
+            <div class="controls">
+          <input type="text" name="patientName" id="patientName" tyle="margin: 0 auto;" data-provide="typeahead" data-items="4" data-source="[&quot;Value 1&quot;,&quot;Value 2&quot;,&quot;Value 3&quot;]">
+            <input type="hidden" id="apptStartTime"/>
+            <input type="hidden" id="apptEndTime"/>
+            <input type="hidden" id="apptAllDay" />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="when">When:</label>
+            <div class="controls controls-row" id="when" style="margin-top:5px;">
+            </div>
+        </div>
+          </form>
+          </div>
+          <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
+          </div>
+      </div><!-- /.modal -->
+    </div>
+  </div>
 
 

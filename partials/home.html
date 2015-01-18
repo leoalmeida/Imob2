@@ -28,44 +28,58 @@
 			</div>
 		</div>
 		</div>
-	  </div>
-	  
+	  </div>	  
           <h2 class="sub-header">Pr&oacute;ximas Atividades</h2>
           <div class="table-responsive">
             <table class="table table-striped">
-              <thead>
-			<tr>				
-				<th class="col-lg-1">
-					Contrato 
-					<a data-ng-click="sortBy='contrato'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-contrato'" class="glyphicon glyphicon-chevron-up"></a>
-				</th>				
-				<th class="col-lg-1">
-					Tipo
-					<a data-ng-click="sortBy='tipo'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-tipo'" class="glyphicon glyphicon-chevron-up"></a>
-				</th>
-				<th class="col-lg-5">
-					Ação 
-					<a data-ng-click="sortBy='acao'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-acao'" class="glyphicon glyphicon-chevron-up"></a>
-				</th>
-				<th class="col-lg-1">
-					Status 
-					<a data-ng-click="sortBy='status'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-status'" class="glyphicon glyphicon-chevron-up"></a>
-				</th>				
-				<th class="col-lg-2">
-					Vencimento
-					<a data-ng-click="sortBy='vencimento'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-vencimento'" class="glyphicon glyphicon-chevron-up"></a>				
-				</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr data-ng-repeat="item in listViewEventos | ativosFilter | filter: filter | orderBy: sortBy" data-toggle="modal" data-target="#myModal" data-ng-class="{active : isSelected(item)}" data-ng-click="setMaster(item)">				
-				<td class="title">{{item.contrato}}</td>
-				<td class="title">{{item.tipo}}</td>
-				<td class="title">{{item.acao}}</td>				
-				<td class="title">{{item.status}}</td>
-				<td>{{item.vencimento | dateFormat}}</td>
-			</tr>
-		</tbody>
+                <thead>
+                  <tr>
+                    <th class="col-xs-1 col-md-1 text-center">
+                      <h4>
+                      <a data-ng-click="sortBy='contrato'; reverse=!reverse" role="button">
+                      Contrato 
+                      </a><a data-ng-show="sortBy=='contrato'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+                      </h4>					
+                    </th>				
+                    <th class="col-xs-1 col-md-1 text-center">
+                      <h4>
+                      <a data-ng-click="sortBy='tipo'; reverse=!reverse" role="button">
+                      Tipo
+                      </a><a data-ng-show="sortBy=='tipo'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+                      </h4>					
+                    </th>				
+                    <th class="col-xs-5 col-md-5 text-center">
+                      <h4>
+                      <a data-ng-click="sortBy='acao'; reverse=!reverse" role="button">
+                      A&ccedil;&atilde;o 
+                      </a><a data-ng-show="sortBy=='acao'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+                      </h4>					
+                    </th>				
+                    <th class="col-xs-1 col-md-1 text-center">
+                      <h4>
+                      <a data-ng-click="sortBy='status'; reverse=!reverse" role="button">
+                      Status 
+                      </a><a data-ng-show="sortBy=='status'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+                      </h4>					
+                    </th>				
+                    <th class="col-xs-2 col-md-2 text-center">
+                      <h4>
+                      <a data-ng-click="sortBy='vencimento'; reverse=!reverse" role="button">
+                      Vencimento
+                      </a><a data-ng-show="sortBy=='vencimento'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+                      </h4>							
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-ng-repeat="item in listViewEventos | filter: filter | orderBy: sortBy" data-toggle="modal" data-target="#myModal" data-ng-class="{active : isSelected(item)}" data-ng-click="setMaster(item)">				
+                    <td class="title text-center"><h5>{{item.relacionados[0].relacionado}}</h5></td>
+                    <td class="text-center	text-capitalize"><h5>{{item.tipo}}</h5></td>
+                    <td class="text-center	text-capitalize"><h5>{{item.titulo}}</h5></td>				
+                    <td class="text-center	text-capitalize"><h5>{{item.situacao}}</h5></td>
+                    <td class="text-center"><h5>{{item.dataVencimento }}</h5></td>
+                  </tr>
+                </tbody>
             </table>
           </div>
         </div>

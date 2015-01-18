@@ -1,4 +1,4 @@
-	<h3>{{entidade}}</h3>
+	<h1 class="sub-header">{{entidade}}</h1>
 	
 	<div id="messages" class="alert alert-success" data-ng-show="messages" data-ng-bind="messages"></div>
 	<div data-ng-show="progress.active()" style="color: red; font-size: 50px;">Enviando&hellip;</div>
@@ -11,18 +11,17 @@
             <label for="tipo" class="col-xs-2 col-md-2 control-label">Tipo</label>
             <div class="col-xs-10 col-md-8">
                 <div class="btn-group btn-group-justified btn-group-lg" role="group" data-toggle="buttons-checkbox" >			    
-                    <checkbox type="button" data-ng-model="cliente.tipo.locador" class="btn btn-primary active">
-                  <i class="fa fa-check fa-inverse" data-ng-show="cliente.tipo.locador"></i>&nbsp; Locador
+                    <checkbox type="button" data-ng-model="cliente.tipo.locador" name="locador" class="btn btn-primary active" ngChange="">
+                        <i class="fa fa-check fa-inverse" data-ng-show="cliente.tipo.locador"></i>&nbsp; Locador
+                    </checkbox>                    
+                    <checkbox type="button" data-ng-model="cliente.tipo.locatario"  name="locatario" class="btn btn-primary active" ngChange="">
+                        <i class="fa fa-check fa-inverse" data-ng-show="cliente.tipo.locatario"></i>&nbsp; Locatario
                     </checkbox>
-                    
-                    <checkbox type="button" data-ng-model="cliente.tipo.locatario" class="btn btn-primary active">
-                  <i class="fa fa-check fa-inverse" data-ng-show="cliente.tipo.locatario"></i>&nbsp; Locatario
+                    <checkbox type="button" data-ng-model="cliente.tipo.dono" name="dono" class="btn btn-primary active" ngChange="">
+                        <i class="fa fa-check fa-inverse" data-ng-show="cliente.tipo.dono"></i>&nbsp; Dono
                     </checkbox>
-                    <checkbox type="button" data-ng-model="cliente.tipo.dono" class="btn btn-primary active">
-                  <i class="fa fa-check fa-inverse" data-ng-show="cliente.tipo.dono"></i>&nbsp; Dono
-                    </checkbox>
-                     <checkbox type="button" data-ng-model="cliente.tipo.fiador" class="btn btn-primary active">
-                  <i class="fa fa-check fa-inverse" data-ng-show="cliente.tipo.fiador"></i>&nbsp; Fiador
+                    <checkbox type="button" data-ng-model="cliente.tipo.fiador" name="fiador" class="btn btn-primary active" ngChange="">
+                        <i class="fa fa-check fa-inverse" data-ng-show="cliente.tipo.fiador"></i>&nbsp; Fiador
                     </checkbox>			    
                 </div>
             </div>

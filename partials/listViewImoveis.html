@@ -1,5 +1,5 @@
 <div class="col-sm-12 col-md-12 col-lg-12" >
-	<h3 class="sub-header">{{entidade}}</h3>
+	<h1 class="sub-header">{{entidade}}</h1>
 	<div class="btn-group">
 		<button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Export Table Data</button>
 		<ul class="dropdown-menu " role="menu">
@@ -24,32 +24,47 @@
 			
 		</ul>
 	</div>
-	<table class="table table-bordered table-striped" id="accordion" ng-init="cliente=true">
+	<table class="table table-bordered table-striped" ng-init="cliente=true">
 		<thead>
 			<tr>
-				<th class="col-lg-1">
-					Tipo 
-					<a data-ng-click="sortBy='tipoimovel'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-tipoimovel'" class="glyphicon glyphicon-chevron-up"></a>
-				</th>
-				<th class="col-lg-1">
+			  <th class="col-xs-1 col-md-1 text-center">
+				  <h4>
+					<a data-ng-click="sortBy='id'; reverse=!reverse" role="button">
 					ID 
-					<a data-ng-click="sortBy='id'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-id'" class="glyphicon glyphicon-chevron-up"></a>
-				</th>
-				<th class="col-lg-5">
+					</a><a data-ng-show="sortBy=='id'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+          </h4>					
+				</th>				
+				<th class="col-xs-1 col-md-1 text-center">
+				  <h4>
+					<a data-ng-click="sortBy='tipoimovel'; reverse=!reverse" role="button">
+					Tipo
+					</a><a data-ng-show="sortBy=='tipoimovel'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+          </h4>					
+				</th>				
+				<th class="col-xs-5 col-md-5 text-center">
+				  <h4>
+					<a data-ng-click="sortBy='endereco'; reverse=!reverse" role="button">
 					Endere&ccedil;o 
-					<a data-ng-click="sortBy='endereco'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-endereco'" class="glyphicon glyphicon-chevron-up"></a>
-				</th>
-				<th class="col-lg-1">
-					Status 
-					<a data-ng-click="sortBy='proprietario'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-proprietario'" class="glyphicon glyphicon-chevron-up"></a>
-				</th>	
-				<th class="col-lg-2">
+					</a><a data-ng-show="sortBy=='endereco'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+          </h4>					
+				</th>				
+				<th class="col-xs-2 col-md-2 text-center">
+				  <h4>
+					<a data-ng-click="sortBy='proprietario'; reverse=!reverse" role="button">
+					Propriet&aacute;rio 
+					</a><a data-ng-show="sortBy=='proprietario'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+          </h4>					
+				</th>				
+				<th class="col-xs-1 col-md-1 text-center">
+				  <h4>
+					<a data-ng-click="sortBy='updated'; reverse=!reverse" role="button">
 					Altera&ccedil;&atilde;o
-					<a data-ng-click="sortBy='updated'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-updated'" class="glyphicon glyphicon-chevron-up"></a>				
+					</a><a data-ng-show="sortBy=='proprietario'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+          </h4>					
 				</th>	
-				<th class="col-lg-2">
+				<th class="col-xs-2 col-md-2 text-center">
 					<div class="inline">					
-						<a href="./cadastro/imovel/new" class="btn btn-success btn-lg"><i class="fa fa-pencil fa-fw fa-inverse"></i>&nbsp;Incluir</a>
+						<a href="./cadastro/imoveis/new" class="btn btn-success btn-lg"><i class="fa fa-pencil fa-fw fa-inverse"></i>&nbsp;Incluir</a>
 					</div>	
 				</th>
 			</tr>
@@ -57,13 +72,16 @@
 		<tbody>
 			<!--  <tr data-ng-repeat-start="item in listView | filter: filter | orderBy: sortBy" data-toggle="collapse"  class="accordion-toggle" data-target="#collapse{{item.cpf}}" > -->
 			<tr data-ng-repeat="item in listView | filter: filter | orderBy: sortBy" data-toggle="modal" data-target="#myModal" data-ng-class="{active : isSelected(item)}" data-ng-click="setMaster(item)">
-				
-				<td class="title">{{item.tipoimovel}}</td>
-				<td class="title">{{item.id}}</td>
-				<td class="title">{{item.endereco | enderecoFormat}}</td>
-				<td class="title">{{item.status}}</td>
-				<td>{{item.updated | dateFormat}}</td>
-				<td>
+								
+				<td class="title text-center">{{item.id}}</td>
+				<td class="text-center text-capitalize">{{item.tipoImovel}}</td>
+				<td class="text-center">{{item.endereco | enderecoFormat}}</td>
+				<td class="text-center text-capitalize" >
+				  <h4><strong>{{item.proprietarios[0].tipo}}</strong></h4>
+				  <h5>{{item.proprietarios[0].identificador}}</h5>
+				</td>
+				<td class="text-center" >{{item.updated}}</td>
+				<td class="text-center">
 					<a class="btn btn-primary " href="./cadastro/imovel/view/{{item.id}}"><i class="fa fa-pencil-square-o fa-fw fa-inverse"></i>&nbsp; Editar</a> 
 					<a class="btn btn-danger ng-hide" data-ng-click="removeImovel(item.id)"><i class="fa fa-trash-o fa-fw fa-inverse"></i>&nbsp; Remover</a>
 				</td>

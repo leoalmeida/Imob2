@@ -1,5 +1,5 @@
 <div class="col-sm-12 col-md-12 col-lg-12" >
-	<h3 class="sub-header">{{entidade}}</h3>
+	<h1 class="sub-header">{{entidade}}</h1>
 	<div class="btn-group">
 		<button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Export Table Data</button>
 		<ul class="dropdown-menu " role="menu">
@@ -25,19 +25,28 @@
 	<table class="table table-bordered table-striped" id="accordion" ng-init="cliente=true">
 		<thead>
 			<tr>
-				<th class="col-lg-2">
-					CPF 
-					<a data-ng-click="sortBy='cpf'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-cpf'" class="glyphicon glyphicon-chevron-up"></a>
+			  <th class="col-xs-2 col-md-2 text-center">
+				  <h4>
+					<a data-ng-click="sortBy='cpf'; reverse=!reverse" role="button">
+            CPF
+          </a><a data-ng-show="sortBy=='cpf'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+          </h4>					
+				</th>				
+				<th class="col-xs-6 col-md-6 text-center">
+				  <h4>
+					<a data-ng-click="sortBy='nome'; reverse=!reverse" role="button">
+            Nome
+          </a><a data-ng-show="sortBy=='nome'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+          </h4>					
+				</th>				
+				<th class="col-xs-2 col-md-2 text-center">
+				  <h4>
+					<a data-ng-click="sortBy='updated'; reverse=!reverse" role="button">
+            Altera&ccedil;&atilde;o
+          </a><a data-ng-show="sortBy=='updated'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
+          </h4>					
 				</th>
-				<th class="col-lg-6">
-					Nome 
-					<a data-ng-click="sortBy='nome'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-nome'" class="glyphicon glyphicon-chevron-up"></a>
-				</th>
-				<th class="col-lg-2">
-					Altera&ccedil;&atilde;o
-					<a data-ng-click="sortBy='updated'" class="glyphicon glyphicon-chevron-down"></a><a data-ng-click="sortBy='-updated'" class="glyphicon glyphicon-chevron-up"></a>				
-				</th>
-				<th class="col-lg-2">
+				<th class="col-xs-2 col-md-2 text-center">
 					<div class="inline">					
 						<a href="./cadastro/clientes/new" class="btn btn-success btn-lg"><i class="fa fa-pencil fa-fw fa-inverse"></i>&nbsp;Incluir</a>
 					</div>	
@@ -47,11 +56,11 @@
 		<tbody>
 			<!--  <tr data-ng-repeat-start="item in listView | filter: filter | orderBy: sortBy" data-toggle="collapse"  class="accordion-toggle" data-target="#collapse{{item.cpf}}" > -->
 			<tr data-ng-repeat="item in listView | filter: filter | orderBy: sortBy" data-ng-class="{active : isSelected(item)}" data-ng-click="setMaster(item)">							  
-          <td class="title" data-toggle="modal" data-target="#myModal">{{item.cpf}}</td>				
-          <td data-toggle="modal" data-target="#myModal">{{item.nome}}</td>				
-          <td data-toggle="modal" data-target="#myModal">{{item.updated | dateFormat}}</td>
-          <td>            
-            <a class="btn btn-primary " href="./cadastro/cliente/view/{{item.cpf}}"><i class="fa fa-pencil-square-o fa-fw fa-inverse"></i>&nbsp; Editar</a>
+          <td class="text-center"  class="title" data-toggle="modal" data-target="#myModal"><h5>{{item.cpf}}</h5></td>				
+          <td class="text-center	text-capitalize"  data-toggle="modal" data-target="#myModal"><h5>{{item.nome}}</h5></td>				
+          <td class="text-center	text-capitalize"  data-toggle="modal" data-target="#myModal"><h5>{{item.updated | dateFormat}}</h5></td>
+          <td class="text-center">
+            <a class="btn btn-primary " href="./cadastro/cliente/edit/{{item.cpf}}"><i class="fa fa-pencil-square-o fa-fw fa-inverse"></i>&nbsp; Editar</a>
             <a class="btn btn-danger ng-hide" data-ng-click="removeCliente(item.cpf)"><i class="fa fa-trash-o fa-fw fa-inverse"></i>&nbsp; Remover</a>					
           </td>
 			</tr>
@@ -108,7 +117,7 @@
     <div class="modal-content">
       <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-          <h4 class="modal-title-success" id="myModalLabel">{{selected.cpf}} - {{selected.nome}}</span></h4>
+          <h4 class="modal-title-success text-capitalize" id="myModalLabel"><span class="label label-success">{{selected.cpf}}</span> {{selected.nome}}</span></h4>
       </div>
       <div class="modal-body">
           <div class="container-fluid">
@@ -117,7 +126,7 @@
                       <span class="label label-info">Tipo</span>
                       <br>
                       <ul class="list-inline">
-                        <li data-ng-repeat="type in selected.tipo"><span class="badge">{{type}}</span></li>
+                        <li data-ng-repeat="tp in selected.tipo"><span class="badge">{{tp}}</span></li>
                       </ul>
                   </div>
                   <div>
@@ -131,7 +140,7 @@
                     <span class="label label-info">Telefones</span>
                     <ul class="list-group">
                       <li class="list-group-item list-group-item-default" data-ng-repeat="telefone in selected.telefones">
-                        <p class="bg-default">{{telefone.tipo}}: <span class="badge">{{telefone.numero}}</span></p>				
+                        <p class="bg-default">{{telefone.tpTelefone}}: <span class="badge">{{telefone.nrTelefone}}</span></p>				
                       </li>
                     </ul>
                   </div>
@@ -142,10 +151,8 @@
                   <br>
                   <ul class="list-group">
                       <li class="list-group-item list-group-item-default" data-ng-repeat="endereco in selected.enderecos">
-                          <address>
-                          <strong>{{endereco.tpEndereco}} - {{key+1}}</strong>
-                          <br>
-                          <label></label>
+                          <address class="well">
+                          <p class="lead	text-capitalize">{{endereco.tpEndereco}} - {{key+1}}</p>                          
                           <label>{{endereco.rua}}</label>
                           <label>{{endereco.numero}}</label>
                           <label>/{{endereco.complemento}}</label>
@@ -153,9 +160,9 @@
                           <label>,{{endereco.bairro}}</label>
                           <br>
                           <label>{{endereco.cidade}}</label>
-                          <label>/{{endereco.estado}}</label>
-                          <label>- {{endereco.pais}}</label>
-                          <label>    CEP: {{endereco.cep}}</label>
+                          <label>/{{endereco.estado}}</label>                          
+                          <label>, {{endereco.cep}}</label>
+                          <label> - {{endereco.pais}}</label>
                           </address>
                       </li>
                   </ul>

@@ -70,12 +70,12 @@ imoveisDbControllers.controller('HomeCtrl', ['$scope', '$indexedDB',
 	
 	
 	
-    	function buscaContratos() {
+  function buscaContratos() {
 		contratosObjectStore.getAll().then(function(contratosList) {  
 		//persistanceService.buscaImoveis().then(function(imoveisList) {
 			$scope.listViewContratos = contratosList;
 		});		
-	};		
+	}
 	
 	/**
 	* @type Eventos
@@ -87,7 +87,7 @@ imoveisDbControllers.controller('HomeCtrl', ['$scope', '$indexedDB',
 		//persistanceService.buscaImoveis().then(function(imoveisList) {
 			$scope.listViewEventos = eventosList;
 		});		
-	};	
+	}	
 	
 	   
 	function init() {
@@ -283,7 +283,7 @@ imoveisDbControllers.controller('HomeCtrl', ['$scope', '$indexedDB',
 		* @type {ObjectStore} IMOVEIS
 		*/
 		
-		var ObjectStore = $indexedDB.objectStore(OBJECT_STORE_IMOVEIS);
+		ObjectStore = $indexedDB.objectStore(OBJECT_STORE_IMOVEIS);
 		ObjectStore.clear();		
 		
 		ObjectStore
@@ -337,7 +337,7 @@ imoveisDbControllers.controller('HomeCtrl', ['$scope', '$indexedDB',
 		* @type {ObjectStore} CONTRATOS
 		*/
 		
-		var ObjectStore = $indexedDB.objectStore(OBJECT_STORE_CONTRATOS);
+		ObjectStore = $indexedDB.objectStore(OBJECT_STORE_CONTRATOS);
 		ObjectStore.clear();
 		
 		ObjectStore
@@ -352,7 +352,7 @@ imoveisDbControllers.controller('HomeCtrl', ['$scope', '$indexedDB',
 		* @type {ObjectStore} ATIVIDADES/EVENTOS
 		*/
 		
-		var ObjectStore = $indexedDB.objectStore(OBJECT_STORE_EVENTOS);
+		ObjectStore = $indexedDB.objectStore(OBJECT_STORE_EVENTOS);
 		ObjectStore.clear();
 		
 		ObjectStore
@@ -397,7 +397,7 @@ imoveisDbControllers.controller('HomeCtrl', ['$scope', '$indexedDB',
 		* @type {ObjectStore} TIPOS DE DOCUMENTOS
 		*/
 		
-		var ObjectStore = $indexedDB.objectStore(OBJECT_STORE_TIPODOC);
+		ObjectStore = $indexedDB.objectStore(OBJECT_STORE_TIPODOC);
 		ObjectStore.clear();		
 		
 		ObjectStore
@@ -422,7 +422,7 @@ imoveisDbControllers.controller('HomeCtrl', ['$scope', '$indexedDB',
 			    });
 		ObjectStore 
 			.insert({
-				tipo: 'VÃ­deo',
+				tipo: 'Vídeo',
 				icon: "fa-file-video-o"				
 			    });
 		ObjectStore 
@@ -441,14 +441,14 @@ imoveisDbControllers.controller('HomeCtrl', ['$scope', '$indexedDB',
 				icon: "fa-file-word-o"				                                                              
 			    });
 	
-	};
+	}
 	
 	if($indexedDB.onDatabaseError) {
 		$location.path('/unsupported');
 	} else {
 		buscaContratos();
 		buscaEventos();
-	};
+	}
 			
 }]);
 
@@ -456,7 +456,7 @@ imoveisDbControllers.controller('ClientesCtrl', ['$scope', '$indexedDB',
 		function($scope,  $indexedDB) {
 	
 	$scope.objects = [];
-	$scope.entidade = "Lista de clientes";
+	$scope.entidade = "Clientes";
 	$scope.formatosSelecionados = [];	
 	 	
 	var documentosObjectStore = $indexedDB.objectStore(OBJECT_STORE_TIPODOC);
@@ -479,7 +479,7 @@ imoveisDbControllers.controller('ClientesCtrl', ['$scope', '$indexedDB',
 		//persistanceService.buscaImoveis().then(function(imoveisList) {
 			$scope.listView = clientesList;
 		});		
-	};	
+	}
 	
 	$scope.setSelectedDocTypes = function () {
 		var tipo = this.tipoDoc.tipo;
@@ -504,15 +504,15 @@ imoveisDbControllers.controller('ClientesCtrl', ['$scope', '$indexedDB',
 	
 	$scope.setMaster = function(section) {
 	    $scope.selected = section;
-	}
+	};
 	
 	$scope.isSelected = function(section) {
 	    return $scope.selected === section;
-	}
+	};
 		
 	
 	$scope.removeCliente = function(key) {
-		locObjectStore.delete(key).then(function() {			
+		clientesObjectStore.delete(key).then(function() {			
 			buscaLocadores();
 		});
 	};
@@ -521,59 +521,56 @@ imoveisDbControllers.controller('ClientesCtrl', ['$scope', '$indexedDB',
 		$location.path('/unsupported');
 	} else {
 		buscaClientes();
-	};
+	}
 
 }]);
 
 imoveisDbControllers.controller('ClientesEditCtrl', ['$scope', '$log', '$rootScope', '$routeParams', '$location',  '$indexedDB',  
 		function($scope, $log, $rootScope, $routeParams, $location, $indexedDB) {
 		
-	if ($rootScope == "view") $scope.entidade = "Alterar cliente";
-	else $scope.entidade = "Incluir cliente";
+	if ($rootScope == "view") {$scope.entidade = "Alterar cliente";}
+	else {$scope.entidade = "Incluir cliente";}
 	/**
 	* @type {ObjectStore}
 	*/
 	
-	$scope.cliente = {};
-	$scope.cliente.tipo = {
-      locador: false,
-      locatario: false,
-      dono: false,
-      fiador: false
-	};
+	$scope.novocliente = {};
+	$scope.novocliente.tipoCliente = [{titulo:"Proprietário", situacao:false, tipo:"proprietario"}, {titulo:"Locatário", situacao:false, tipo:"locatario"}, {titulo:"Fiador", situacao:false, tipo:"fiador"}];
+	
+	
 	$scope.endereco = {};
 	$scope.endereco.tpEndereco = "Residencial";	
 	$scope.telefone = {};
 	$scope.telefone.tpTelefone = "Residencial";
 	$scope.documentos = [];
-	$scope.cliente.enderecos = [];	
-	$scope.cliente.telefones = [];	
-	$scope.cliente.documentos = [];
+	$scope.novocliente.enderecos = [];	
+	$scope.novocliente.telefones = [];	
+	$scope.novocliente.documentos = [];
 		
 	var clientesObjectStore = $indexedDB.objectStore(OBJECT_STORE_CLIENTES);
 	
 	$scope.incluirEndereco = function(){
-      $scope.cliente.enderecos.push($scope.endereco);
+      $scope.novocliente.enderecos.push($scope.endereco);
       $scope.endereco = {};
       $scope.endereco.tpEndereco = "Residencial";
 	};
 
 	$scope.removeEndereco = function(index){
-		  $scope.cliente.enderecos.splice(index, 1);		
+		  $scope.novocliente.enderecos.splice(index, 1);		
 	};
 	
 	$scope.incluirTelefone = function(){
 	    //if (tapButton !== key.enter) return;
 	   
 	    if ($scope.telefone.nrTelefone !== ''){
-          $scope.cliente.telefones.push($scope.telefone);
+          $scope.novocliente.telefones.push($scope.telefone);
           $scope.telefone = {};
           $scope.telefone.tpTelefone = "Residencial";
       }
 	};
 	
 	$scope.removeTelefone = function(index){
-	    $scope.cliente.telefones.splice(index, 1);
+	    $scope.novocliente.telefones.splice(index, 1);
 	};
 	
 	$scope.cancel = function() {
@@ -584,15 +581,16 @@ imoveisDbControllers.controller('ClientesEditCtrl', ['$scope', '$log', '$rootSco
       //if($scope.cpf == "") $scope.cpf = 1;
       //alert($scope.myForm.serializeArray());
       
-      $scope.cliente.updated = new Date();
-      
-      alert(JSON.stringify($scope.cliente));
+      $scope.novocliente.updated = new Date();
+            
+      alert($scope.novocliente.tipoCliente);
+      alert(JSON.stringify($scope.novocliente));
       
       clientesObjectStore
-      .upsert($scope.cliente)
+      .upsert($scope.novocliente)
       .then(function(e){
-          $log.info('Cliente' + $scope.cliente.nome + 'included with CPF:'+  $scope.cliente.cpf +  ' at:' + new Date());
-          $location.path('/cadastro/cliente')
+          $log.info('Cliente' + $scope.novocliente.nome + 'included with CPF:'+  $scope.novocliente.cpf +  ' at:' + new Date());
+          $location.path('/cadastro/cliente').replace();
       });
 		
 	};
@@ -604,8 +602,7 @@ imoveisDbControllers.controller('ClientesEditCtrl', ['$scope', '$log', '$rootSco
 			clientesObjectStore.each(
 				function(cliente){
 					$scope.cpf = cliente.value.cpf;
-					if (_.contains(cliente.value.tipo,"Locador"))
-						$scope.locador.active
+					//if (_.contains(cliente.value.tipo,"Locador")) {$scope.locador.active}
 					$scope.locatario = _.contains(cliente.value.tipo,"Locatario");
 					$scope.dono = _.contains(cliente.value.tipo,"Dono");
 					$scope.fiador = _.contains(cliente.value.tipo,"Fiador");
@@ -618,7 +615,7 @@ imoveisDbControllers.controller('ClientesEditCtrl', ['$scope', '$log', '$rootSco
 				}
 			,myQuery);
 		}
-	};
+	}
 		
 	
 	
@@ -626,7 +623,7 @@ imoveisDbControllers.controller('ClientesEditCtrl', ['$scope', '$log', '$rootSco
 		$location.path('/unsupported');
 	} else {
 		buscaInfo($routeParams.id);
-	};
+	}
 	
 }]);
 
@@ -635,7 +632,7 @@ imoveisDbControllers.controller('ImoveisCtrl', ['$scope', '$indexedDB',
 
 	
 	$scope.objects = [];
-	$scope.entidade = "Lista de imóveis";
+	$scope.entidade = "Imóveis";
 	$scope.formatosSelecionados = [];
 	
 	var documentosObjectStore = $indexedDB.objectStore(OBJECT_STORE_TIPODOC);
@@ -651,12 +648,12 @@ imoveisDbControllers.controller('ImoveisCtrl', ['$scope', '$indexedDB',
 	
 	
 	
-    	function buscaImoveis() {
+  function buscaImoveis() {
 		imoveisObjectStore.getAll().then(function(imoveisList) {  
 		//persistanceService.buscaImoveis().then(function(imoveisList) {
 			$scope.listView = imoveisList;
 		});		
-	};	
+	}	
 	
 	$scope.setSelectedDocTypes = function () {
 		var tipo = this.tipoDoc.tipo;
@@ -682,11 +679,11 @@ imoveisDbControllers.controller('ImoveisCtrl', ['$scope', '$indexedDB',
 	  
 	$scope.setMaster = function(section) {
 	    $scope.selected = section;
-	}
+	};
 	
 	$scope.isSelected = function(section) {
 	    return $scope.selected === section;
-	}
+	};
 		
 	
 	$scope.removeImovel = function(key) {
@@ -699,8 +696,110 @@ imoveisDbControllers.controller('ImoveisCtrl', ['$scope', '$indexedDB',
 		$location.path('/unsupported');
 	} else {
 		buscaImoveis();
-	};
+	}
 
+			
+}]);
+
+
+imoveisDbControllers.controller('ImoveisEditCtrl', ['$scope', '$log', '$rootScope', '$routeParams', '$location',  '$indexedDB', '$filter',
+    function($scope, $log, $rootScope, $routeParams, $location, $indexedDB, $filter) {
+      
+    if ($rootScope == "view") {$scope.entidade = "Alterar imóvel";}
+    else {$scope.entidade = "Incluir imóvel";}
+    /**
+    * @type {ObjectStore}
+    */
+    var clientesObjectStore = $indexedDB.objectStore(OBJECT_STORE_CLIENTES);    
+    var imoveisObjectStore = $indexedDB.objectStore(OBJECT_STORE_IMOVEIS);
+    
+    $scope.novoimovel = {};
+    $scope.novoimovel.proprietarios = [];
+    $scope.novoimovel.documentos = [];
+    $scope.itemsList = [];
+    $scope.proprietario = {};
+    $scope.proprietario.tipo = 'principal';
+    
+    $scope.tipoImovel = [ "casa","apartamento", "kitnet", "ponto comercial"];    
+    $scope.tiposSituacao = ["aliberar","liberado","alugado"];
+    $scope.tiposProprietario = ["principal","adicional"];
+    
+    
+    $scope.today= function() {
+        $scope.dt = new Date();
+    };
+    
+    $scope.today();
+    
+    $scope.incluirProprietario = function(){
+        if ($scope.proprietario.identificador !== ''){
+            $scope.novoimovel.proprietarios.push($scope.proprietario);
+            $scope.proprietario = {};
+            $scope.proprietario.tipo = 'principal';
+        }
+    };
+    
+    $scope.removeProprietario = function(index){
+        $scope.novoimovel.proprietarios.splice(index, 1);
+    };
+    
+    function buscarClientes(){
+          clientesObjectStore.getAll().then(function(itemsList) {
+            $scope.itemsList = itemsList;
+          });
+    }
+      
+    $scope.cancel = function() {
+        
+    };
+  
+    $scope.submit = function() {
+        
+        $scope.novoimovel.updated = $filter('dateFormat')(new Date(),false);
+        
+       
+        alert($filter('json')($scope.novoimovel));
+        
+        imoveisObjectStore
+          .upsert($scope.novoimovel)
+              .then(function(e){
+                   $log.info('Evento' + $scope.novoimovel.id + 'incluído em:'+  $scope.novoimovel.updated +  ' at:' + new Date());
+                   $location.path('/cadastro/imoveis').replace();
+        });
+      
+    };
+	
+	
+    function buscaInfo(key) {
+      
+      if(key) {
+        var myQuery = $indexedDB.queryBuilder().$eq(key).$asc().compile();
+        clientesObjectStore.each(
+          function(cliente){
+            $scope.cpf = cliente.value.cpf;
+            //if (_.contains(cliente.value.tipo,"Eventos")) $scope.locador.active
+            $scope.locatario = _.contains(cliente.value.tipo,"Locatario");
+            $scope.dono = _.contains(cliente.value.tipo,"Dono");
+            $scope.fiador = _.contains(cliente.value.tipo,"Fiador");
+            $scope.nome = cliente.value.nome;
+            $scope.email = cliente.value.email;
+            //$scope.telefones = _.(cliente.value.telefones))
+            $scope.enderecos = cliente.value.enderecos;
+            //$scope.locadorSelected=true;
+            //$location.path('#/locadores/edit/'+key);
+          }
+        ,myQuery);
+      }
+    }
+    
+  
+  
+    if($indexedDB.onDatabaseError) {
+      $location.path('/unsupported');
+    } else {
+      buscaInfo($routeParams.id);
+      buscarClientes();
+    }
 			
 }]);
 
@@ -709,7 +808,7 @@ imoveisDbControllers.controller('ContratosCtrl', ['$scope', '$indexedDB',
 
 	
 	$scope.objects = [];
-	$scope.entidade = "Lista de contratos";
+	$scope.entidade = "Contratos";
 	$scope.formatosSelecionados = [];
 	
 	var documentosObjectStore = $indexedDB.objectStore(OBJECT_STORE_TIPODOC);
@@ -725,12 +824,12 @@ imoveisDbControllers.controller('ContratosCtrl', ['$scope', '$indexedDB',
 	
 	
 	
-    	function buscaContratos() {
+  function buscaContratos() {
 		contratosObjectStore.getAll().then(function(contratosList) {  
 		//persistanceService.buscaImoveis().then(function(imoveisList) {
 			$scope.listView = contratosList;
 		});		
-	};	
+	}
 	
 	$scope.setSelectedDocTypes = function () {
 		var tipo = this.tipoDoc.tipo;
@@ -756,11 +855,11 @@ imoveisDbControllers.controller('ContratosCtrl', ['$scope', '$indexedDB',
 	  
 	$scope.setMaster = function(section) {
 	    $scope.selected = section;
-	}
+	};
 	
 	$scope.isSelected = function(section) {
 	    return $scope.selected === section;
-	}
+	};
 		
 	
 	$scope.removeContrato = function(key) {
@@ -773,102 +872,86 @@ imoveisDbControllers.controller('ContratosCtrl', ['$scope', '$indexedDB',
 		$location.path('/unsupported');
 	} else {
 		buscaContratos();
-	};
+	}
 
 			
 }]);
 
-
-imoveisDbControllers.controller('EventosCtrl', ['$scope', '$indexedDB',
-		function($scope,  $indexedDB) {
-
-	
-	$scope.entidade = "Lista de eventos";
-	
-	/**
-	* @type {ObjectStore}
-	*/
-	var eventosObjectStore = $indexedDB.objectStore(OBJECT_STORE_EVENTOS);
-	
-  function buscaEventos() {
-      eventosObjectStore.getAll().then(function(eventosList) {  
-           $scope.listView = eventosList;        
-      });		
-  };	
-	
-	$scope.setMaster = function(section) {
-	    $scope.selected = section;
-	}
-	
-	$scope.isSelected = function(section) {
-	    return $scope.selected === section;
-	}
-		
-	$scope.removeEvento = function(key) {
-		eventosObjectStore.delete(key).then(function() {			
-			buscaEventos();
-		});
-	};
-	
-	if($indexedDB.onDatabaseError) {
-		$location.path('/unsupported');
-	} else {	  
-    /*eventosObjectStore.insert({	
-          "relacoes":[{"tipoEntidade": "cliente", "identificador":"051.710.627-22"},{"tipoEntidade": "contrato", "identificador":"1"}],			  
-          "tipoEvento": "BOLETO",
-          "descricao": "Envio de boleto de cobrança ao locatario", 
-          "titulo": "Emitir boleto e envio por email",
-          "situacao": "Ativo",
-          "dataInicio": new Date()+10,
-          "dataVencimento": new Date()+10,					
-          "updated":new Date()
-          });*/
-		buscaEventos();
-	};
-			
-}]);
-
-imoveisDbControllers.controller('EventosEditCtrl', ['$scope', '$log', '$rootScope', '$routeParams', '$location',  '$indexedDB',
-    function($scope, $log, $rootScope, $routeParams, $location, $indexedDB) {
+imoveisDbControllers.controller('ContratosEditCtrl', ['$scope', '$log', '$rootScope', '$routeParams', '$location',  '$indexedDB', '$filter',
+    function($scope, $log, $rootScope, $routeParams, $location, $indexedDB, $filter) {
       
-    if ($rootScope == "view") $scope.entidade = "Alterar evento";
-    else $scope.entidade = "Incluir evento";
+    if ($rootScope == "view") {$scope.entidade = "Alterar Contrato";}
+    else {$scope.entidade = "Incluir Contrato";}
     /**
     * @type {ObjectStore}
     */
+    var contratosObjectStore = $indexedDB.objectStore(OBJECT_STORE_CONTRATOS);    
+    var clientesObjectStore = $indexedDB.objectStore(OBJECT_STORE_CLIENTES);    
+    var imoveisObjectStore = $indexedDB.objectStore(OBJECT_STORE_IMOVEIS);
     
-    
-    $scope.novoevento = {};
+    $scope.novocontrato = {};
+    $scope.locatario = {};
+    $scope.fiador = {};
+    $scope.imovel = {};
+    $scope.novocontrato.imovel = {};
+    $scope.novocontrato.locatarios = [];
+    $scope.novocontrato.fiadores = [];
     
     //$scope.relacao = {};
-    $scope.tiposEvento = [ "boleto","contrato", "renovacao", "pagamento"];
-    $scope.tiposRelacao = ["cliente","imovel","contrato"];
-    $scope.tiposSituacao = ["Ativo","Vencido","Liquidado"];
-    $scope.format = 'dd/MM/yyyy';
+    $scope.tiposContrato = [ "locacao","venda","administracao"];
+    $scope.tiposSituacao = ["ativo","avencer","vencido","finalizado"];
+    $scope.novocontrato.situacao = "ativo";
+    
     $scope.today= function() {
         $scope.dt = new Date();
-    }
+    };
+    
     $scope.today();
-
+    
     $scope.clear = function () {
         $scope.dt = null;
     };
 
     $scope.dateOptions = {
-      format: 'dd/MM/yyyy',
-      startingDay: 1
+        formatDay: 'dd',
+        formatMonth: 'MM',
+        formatYear: 'yyyy',
+        startingDay: 1
     };
     
-    $scope.incluirRelacao = function(){
-      if ($scope.relacao !== ''){
-          $scope.novoevento.relacao.push($scope.relacao);
-          $scope.relacao = {};
-      }
+    $scope.incluirLocatario = function(){
+        if ($scope.locatario !== ''){
+            $scope.novocontrato.locatarios.push($scope.locatario);
+            $scope.locatario = {};
+        }
     };
     
-    $scope.removeRelacao = function(index){
-        $scope.novoevento.relacao.splice(index, 1);
+    $scope.removeLocatario = function(index){
+        $scope.novocontrato.locatarios.splice(index, 1);
     };
+        
+    $scope.incluirFiador = function(){
+        if ($scope.fiador !== ''){
+            $scope.novocontrato.fiadores.push($scope.fiador);
+            $scope.fiador = {};
+        }
+    };
+    
+    $scope.removeFiador = function(index){
+        $scope.novocontrato.fiadores.splice(index, 1);
+    };
+    
+    function buscarClientes(){    
+        clientesObjectStore.getAll().then(function(itemsList) {
+            $scope.clientesList = itemsList;
+        });
+    }
+    
+    function buscarImoveis(){
+         imoveisObjectStore.getAll().then(function(itemsList) {
+            $scope.imoveisList = itemsList;
+         });		
+    }
     
     $scope.cancel = function() {
         
@@ -876,21 +959,27 @@ imoveisDbControllers.controller('EventosEditCtrl', ['$scope', '$log', '$rootScop
   
     $scope.submit = function() {
         
-        $scope.novoevento.updated = new Date();
-        $scope.novoevento.dataInicio = $filter('date')(new Date() , "dd/MM/yyyy");       
-        $scope.novoevento.dataVencimento = $filter('date')(new Date($scope.dt), "dd/MM/yyyy");
+        $scope.novocontrato.updated = new Date();
         
-        alert(JSON.stringify($scope.novoevento));
+        $scope.novocontrato.situacao = "pendente";       
         
-        /*eventosObjectStore
-          .upsert($scope.novoevento)
+        $scope.novocontrato.dataInicio = $filter('dateFormat')($scope.novocontrato.updated, true);
+        $scope.novocontrato.dataVencimento = $filter('dateFormat')($scope.picker, true);
+        
+        $scope.novocontrato.locadores = $scope.imovel.proprietarios;
+        $scope.novocontrato.imovel = $scope.imovel.id;        
+        
+        alert($filter('json')($scope.novocontrato));
+        
+        /*contratosObjectStore
+          .upsert($scope.novocontrato)
               .then(function(e){
-                   $log.info('Evento' + $scope.novoevento.id + 'incluído com vencimento em:'+  $scope.novoevento.dataVencimento +  ' at:' + new Date());
-                   $location.path('/cadastro/eventos')
+                   $log.info('Evento' + $scope.novocontrato.id + 'incluído com vencimento em:'+  $scope.novocontrato.dataVencimento +  ' at:' + new Date());
+                   $location.path('/cadastro/contratos').replace();
         });*/
       
     };
-  
+	
     function buscaInfo(key) {
       
       if(key) {
@@ -898,8 +987,7 @@ imoveisDbControllers.controller('EventosEditCtrl', ['$scope', '$log', '$rootScop
         clientesObjectStore.each(
           function(cliente){
             $scope.cpf = cliente.value.cpf;
-            if (_.contains(cliente.value.tipo,"Eventos"))
-              $scope.locador.active
+            //if (_.contains(cliente.value.tipo,"Eventos")) $scope.locador.active
             $scope.locatario = _.contains(cliente.value.tipo,"Locatario");
             $scope.dono = _.contains(cliente.value.tipo,"Dono");
             $scope.fiador = _.contains(cliente.value.tipo,"Fiador");
@@ -912,110 +1000,336 @@ imoveisDbControllers.controller('EventosEditCtrl', ['$scope', '$log', '$rootScop
           }
         ,myQuery);
       }
-    };
+    }
     
-  
-  
     if($indexedDB.onDatabaseError) {
       $location.path('/unsupported');
     } else {
-      buscaInfo($routeParams.id);
-    };      
+      //buscaInfo($routeParams.id);
+      buscarClientes();
+      buscarImoveis();
+    }
+			
 }]);
 
-imoveisDbControllers.controller('CalendarCtrl', ['$scope', '$indexedDB',
+imoveisDbControllers.controller('EventosCtrl', ['$scope', '$indexedDB',
 		function($scope,  $indexedDB) {
-			
+
 	
-	$scope.entidade = "Lista de eventos";
+	$scope.entidade = "Eventos";
 	
 	/**
 	* @type {ObjectStore}
 	*/
 	var eventosObjectStore = $indexedDB.objectStore(OBJECT_STORE_EVENTOS);
 	
-    			
-	//$(this).ready(function() {
+  function buscaEventos() {
+      eventosObjectStore.getAll().then(function(eventosList) {  
+           $scope.listView = eventosList;        
+      });		
+  }
 	
-		var calendar = $('#calendar').fullCalendar({
-			
-			header: {
-				left: 'prev,next today',
-				center: 'title',
-				right: 'month,agendaWeek,agendaDay'
-			},
-			eventLimit: true, // allow "more" link when too many events
-			allDayDefault: true,
-			selectable: true,
-			selectHelper: true,
-			select: function(start, end) {
-				endtime = $.fullCalendar.formatDate(end,'h:mm tt');
-				starttime = $.fullCalendar.formatDate(start,'ddd, MMM d, h:mm tt');
-				var mywhen = starttime + ' - ' + endtime;
-				$('#createEventModal #apptStartTime').val(start);
-				$('#createEventModal #apptEndTime').val(end);
-				$('#createEventModal #apptAllDay').val(allDay);
-				$('#createEventModal #when').text(mywhen);
-				$('#createEventModal').modal('show');
-		        },		        
-			editable: true,	
-			events: function(start, end, timezone, callback) {
-				eventosObjectStore.getAll().then(function(eventosList) {  
-					//persistanceService.buscaImoveis().then(function(imoveisList) {
-					
-					var events = [];
-					var obj;
-					eventosList.forEach(function(obj){					
-					//eventosList.forEach(function(obj) {
-					    events.push({
-						title: obj.contrato + ": " + obj.title,
-						start: obj.start // will be parsed
-					    });
-					});
-					callback(events);					
-				});	
-			},
-			loading: function(bool) {
-				$('#loading').toggle(bool);
-			}
-			
-			/*
-			googleCalendarApiKey: 'AIzaSyA1PV7T8RZBnVHhEEPi_cFvpBacY8liJVY',
-			googleCalendarId: 'e1cpgfuqlpbk78ru2u8085fluk@group.calendar.google.com',
-			
-			editable: true,
-			
-			loading: function(bool) {
-				$('#loading').toggle(bool);
-			}
-			*/
-		});	
+	$scope.setMaster = function(section) {
+	    $scope.selected = section;
+	};
+	
+	$scope.isSelected = function(section) {
+	    return $scope.selected === section;
+	};
 		
-	/*	
-		$('#submitButton').on('click', function(e){
-		    // We don't want this to act as a link so cancel the link action
-		    e.preventDefault();
-		
-		    doSubmit();
+	$scope.removeEvento = function(key) {
+		eventosObjectStore.delete(key).then(function() {			
+			buscaEventos();
 		});
-		
-		function doSubmit(){
-		    $("#createEventModal").modal('hide');
-		    console.log($('#apptStartTime').val());
-		    console.log($('#apptEndTime').val());
-		    console.log($('#apptAllDay').val());
-		    alert("form submitted");
+	};
+	
+	if($indexedDB.onDatabaseError) {
+		$location.path('/unsupported');
+	} else {	
+		buscaEventos();
+	}
 			
-		    $("#calendar").fullCalendar('renderEvent',
-			{
-			    title: $('#patientName').val(),
-			    start: new Date($('#apptStartTime').val()),
-			    end: new Date($('#apptEndTime').val()),
-			    allDay: ($('#apptAllDay').val() == "true"),
-			},
-			true);
-		}
-		*/
-	//});		
 }]);
+
+imoveisDbControllers.controller('EventosEditCtrl', ['$scope', '$log', '$rootScope', '$routeParams', '$location',  '$indexedDB', '$filter',
+    function($scope, $log, $rootScope, $routeParams, $location, $indexedDB, $filter) {
+      
+    if ($rootScope == "view") {$scope.entidade = "Alterar evento";}
+    else {$scope.entidade = "Incluir evento";}
+      
+    /**
+    * @type {ObjectStore}
+    */
+    var eventosObjectStore = $indexedDB.objectStore(OBJECT_STORE_EVENTOS);    
+    var contratosObjectStore = $indexedDB.objectStore(OBJECT_STORE_CONTRATOS);    
+    var clientesObjectStore = $indexedDB.objectStore(OBJECT_STORE_CLIENTES);    
+    var imoveisObjectStore = $indexedDB.objectStore(OBJECT_STORE_IMOVEIS);
+    
+    $scope.novoevento = {};
+    $scope.relacao = {};
+    $scope.novoevento.relacionados = [];
+    $scope.itemsList = [];
+    
+    //$scope.relacao = {};
+    $scope.tiposEvento = [ "boleto","contrato", "renovacao", "pagamento"];
+    $scope.tiposRelacao = ["cliente","imovel","contrato"];
+    $scope.tiposSituacao = ["ativo","avencer","vencido","liquidado"];
+    $scope.novoevento.situacao = "ativo";
+    
+    $scope.today= function() {
+        $scope.dt = new Date();
+    };
+    
+    $scope.today();
+
+    $scope.clear = function () {
+        $scope.dt = null;
+    };
+
+    $scope.dateOptions = {
+        formatDay: 'dd',
+        formatMonth: 'MM',
+        formatYear: 'yyyy',
+        startingDay: 1
+    };
+    
+    $scope.incluirRelacionado = function(){
+        if ($scope.relacao.relacionado !== ''){
+            $scope.novoevento.relacionados.push($scope.relacao);
+            $scope.relacao = {};
+        }
+    };
+    
+    $scope.removeRelacao = function(index){
+        $scope.novoevento.relacionados.splice(index, 1);
+    };
+    
+    $scope.buscarRelacoes = function(escolha){
+      
+      switch (escolha){
+          case "cliente":
+            clientesObjectStore.getAll().then(function(itemsList) {
+              $scope.itemsList = itemsList;
+            });		
+            break;
+          case "imovel":
+            imoveisObjectStore.getAll().then(function(itemsList) {
+              $scope.itemsList = itemsList;
+            });		
+            break;
+          case "contrato":
+            contratosObjectStore.getAll().then(function(itemsList) {
+              $scope.itemsList = itemsList;
+            });		
+            break;
+          default:
+            return;
+      }
+      
+    };
+    
+    $scope.cancel = function() {
+        
+    };
+  
+    $scope.submit = function() {
+        
+        $scope.novoevento.updated = new Date();
+        
+        var dtAvencer = new Date();
+        dtAvencer.setDate(dtAvencer + 7);
+        
+        if ($scope.picker < $scope.novoevento.updated) {
+          $scope.novoevento.situacao = "vencido";
+        }
+        else if ($scope.picker < dtAvencer) {
+          $scope.novoevento.situacao = "avencer";
+        }
+        else {
+          $scope.novoevento.situacao = "ativo";
+        }
+        
+        $scope.novoevento.dataInicio = $filter('dateFormat')($scope.novoevento.updated, true);
+        $scope.novoevento.dataVencimento = $filter('dateFormat')($scope.picker, true);
+        
+        //alert($filter('json')($scope.novoevento));
+        
+        eventosObjectStore
+          .upsert($scope.novoevento)
+              .then(function(e){
+                   $log.info('Evento' + $scope.novoevento.id + 'incluído com vencimento em:'+  $scope.novoevento.dataVencimento +  ' at:' + new Date());
+                   $location.path('/cadastro/eventos').replace();
+        });
+      
+    };
+  
+    function buscaInfo(key) {
+      
+      if(key) {
+        var myQuery = $indexedDB.queryBuilder().$eq(key).$asc().compile();
+        clientesObjectStore.each(
+          function(cliente){
+            $scope.cpf = cliente.value.cpf;
+            //if (_.contains(cliente.value.tipo,"Eventos")) $scope.locador.active
+            $scope.locatario = _.contains(cliente.value.tipo,"Locatario");
+            $scope.dono = _.contains(cliente.value.tipo,"Dono");
+            $scope.fiador = _.contains(cliente.value.tipo,"Fiador");
+            $scope.nome = cliente.value.nome;
+            $scope.email = cliente.value.email;
+            //$scope.telefones = _.(cliente.value.telefones))
+            $scope.enderecos = cliente.value.enderecos;
+            //$scope.locadorSelected=true;
+            //$location.path('#/locadores/edit/'+key);
+          }
+        ,myQuery);
+      }
+    }
+    
+    if($indexedDB.onDatabaseError) {
+      $location.path('/unsupported');
+    } else {
+      buscaInfo($routeParams.id);
+    }
+}]);
+
+
+imoveisDbControllers.controller('CalendarCtrl', ['$scope', '$indexedDB',
+		function($scope,  $indexedDB) {
+		  
+	$scope.entidade = "Calendário";
+	
+	/**
+	* @type {ObjectStore}
+	*/
+	var eventosObjectStore = $indexedDB.objectStore(OBJECT_STORE_EVENTOS);
+		
+	$scope.events = [];
+	
+	function buscaEventos() {
+      eventosObjectStore.getAll().then(function(eventosList) {          
+					angular.forEach(eventosList, function(value, key){					    
+              this.push({
+                  title: value.relacionados[0].relacionado + ": " + value.titulo,
+                  start: value.dataVencimento // will be parsed
+              });
+					}, $scope.events);
+      });		
+  }	
+  
+  if($indexedDB.onDatabaseError) {
+    $location.path('/unsupported');
+  } else {
+     buscaEventos();
+  }
+					
+}]);
+
+ 
+function CalendarModuleCtrl($scope,$compile,uiCalendarConfig) {
+    			
+	var date = new Date();
+  var d = date.getDate();
+  var m = date.getMonth();
+  var y = date.getFullYear();
+    
+  $scope.changeTo = 'Portuguese';
+  $scope.eventos = [];
+    
+  $scope.calEventsExt = {
+       color: '#f00',
+       textColor: 'yellow',
+       events: [ 
+          {type:'party',title: 'Lunch',start: new Date(y, m, d, 12, 0),end: new Date(y, m, d, 14, 0),allDay: false},
+          {type:'party',title: 'Lunch 2',start: new Date(y, m, d, 12, 0),end: new Date(y, m, d, 14, 0),allDay: false},
+          {type:'party',title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
+        ]
+    };
+    /* alert on eventClick */
+    $scope.alertOnEventClick = function( date, jsEvent, view){
+        $scope.alertMessage = (date.title + ' was clicked ');
+    };
+    /* alert on Drop */
+     $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
+       $scope.alertMessage = ('Event Droped to make dayDelta ' + delta);
+    };
+    /* alert on Resize */
+    $scope.alertOnResize = function(event, delta, revertFunc, jsEvent, ui, view ){
+       $scope.alertMessage = ('Event Resized to make dayDelta ' + delta);
+    };
+    /* add and removes an event source of choice */
+    $scope.addRemoveEventSource = function(sources,source) {
+      var canAdd = 0;
+      angular.forEach(sources,function(value, key){
+        if(sources[key] === source){
+          sources.splice(key,1);
+          canAdd = 1;
+        }
+      });
+      if(canAdd === 0){
+        sources.push(source);
+      }
+    };
+    /* add custom event*/
+    $scope.addEvent = function() {
+      $scope.events.push({
+        title: 'Open Sesame',
+        start: new Date(y, m, 28),
+        end: new Date(y, m, 29),
+        className: ['openSesame']
+      });
+    };
+    /* remove event */
+    $scope.remove = function(index) {
+      $scope.eventos.splice(index,1);		
+    };
+    /* Change View */
+    $scope.changeView = function(view,calendar) {
+      uiCalendarConfig.calendars[calendar].fullCalendar('changeView',view);
+    };
+    /* Change View */
+    $scope.renderCalender = function(calendar) {
+      if(uiCalendarConfig.calendars[calendar]){
+        uiCalendarConfig.calendars[calendar].fullCalendar('render');
+      }
+    };
+     /* Render Tooltip */
+    $scope.eventRender = function( event, element, view ) { 
+        element.attr({'tooltip': event.title,
+                     'tooltip-append-to-body': true});
+        $compile(element)($scope);
+    };
+    /* config object */
+    $scope.uiConfig = {
+      calendar:{
+        height: 450,
+        editable: true,
+        header:{
+          left: 'prev,next today',
+          center: 'title',
+          right: 'month,agendaWeek,agendaDay'
+        },
+        eventClick: $scope.alertOnEventClick,
+        eventDrop: $scope.alertOnDrop,
+        eventResize: $scope.alertOnResize,
+        eventRender: $scope.eventRender
+      }
+    };
+
+    $scope.changeLang = function() {
+      if($scope.changeTo === 'Portuguese'){
+        $scope.uiConfig.calendar.dayNames = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
+        $scope.uiConfig.calendar.dayNamesShort = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+        $scope.changeTo= 'English';
+      } else {
+        $scope.uiConfig.calendar.dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        $scope.uiConfig.calendar.dayNamesShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        $scope.changeTo = 'Portuguese';
+      }
+    };
+    /* event sources array*/
+    $scope.eventSources = [$scope.events, $scope.eventos];
+    
+} 
+/* EOF */
+
 
