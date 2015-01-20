@@ -535,7 +535,7 @@ imoveisDbControllers.controller('ClientesEditCtrl', ['$scope', '$log', '$rootSco
 	*/
 	
 	$scope.novocliente = {};
-	$scope.novocliente.tipoCliente = [{titulo:"Locador", situacao:false, tipo:"locador"},{titulo:"Locatário", situacao:false, tipo:"locatario"}, {titulo:"Proprietário", situacao:false, tipo:"proprietario"}, {titulo:"Fiador", situacao:false, tipo:"fiador"}];
+	$scope.novocliente.tipoCliente = [{titulo:"Proprietário", situacao:false, tipo:"proprietario"}, {titulo:"Locatário", situacao:false, tipo:"locatario"}, {titulo:"Fiador", situacao:false, tipo:"fiador"}];
 	
 	
 	$scope.endereco = {};
@@ -824,7 +824,7 @@ imoveisDbControllers.controller('ContratosCtrl', ['$scope', '$indexedDB',
 	
 	
 	
-    	function buscaContratos() {
+  function buscaContratos() {
 		contratosObjectStore.getAll().then(function(contratosList) {  
 		//persistanceService.buscaImoveis().then(function(imoveisList) {
 			$scope.listView = contratosList;
@@ -880,32 +880,105 @@ imoveisDbControllers.controller('ContratosCtrl', ['$scope', '$indexedDB',
 imoveisDbControllers.controller('ContratosEditCtrl', ['$scope', '$log', '$rootScope', '$routeParams', '$location',  '$indexedDB', '$filter',
     function($scope, $log, $rootScope, $routeParams, $location, $indexedDB, $filter) {
       
-    if ($rootScope == "view") {$scope.entidade = "Alterar evento";}
-    else {$scope.entidade = "Incluir evento";}
+    if ($rootScope == "view") {$scope.entidade = "Alterar Contrato";}
+    else {$scope.entidade = "Incluir Contrato";}
     /**
     * @type {ObjectStore}
     */
-    var eventosObjectStore = $indexedDB.objectStore(OBJECT_STORE_EVENTOS);    
     var contratosObjectStore = $indexedDB.objectStore(OBJECT_STORE_CONTRATOS);    
     var clientesObjectStore = $indexedDB.objectStore(OBJECT_STORE_CLIENTES);    
     var imoveisObjectStore = $indexedDB.objectStore(OBJECT_STORE_IMOVEIS);
     
-    $scope.novoevento = {};
-    $scope.relacao = {};
-    $scope.novoevento.relacionados = [];
-    $scope.itemsList = [];
+    $scope.novocontrato = {};
+    $scope.locatario = {};
+    $scope.fiador = {};
+    $scope.imovel = {};
+    $scope.novocontrato.imovel = {};
+    $scope.novocontrato.locatarios = [];
+    $scope.novocontrato.fiadores = [];
     
     //$scope.relacao = {};
-    $scope.tiposEvento = [ "boleto","contrato", "renovacao", "pagamento"];
-    $scope.tiposRelacao = ["cliente","imovel","contrato"];
-    $scope.tiposSituacao = ["ativo","avencer","vencido","liquidado"];
-    $scope.novoevento.situacao = "ativo";
+    $scope.tiposContrato = [ "locacao","venda","administracao"];
+    $scope.tiposSituacao = ["ativo","avencer","vencido","finalizado"];
+    $scope.novocontrato.situacao = "ativo";
     
     $scope.today= function() {
         $scope.dt = new Date();
     };
     
     $scope.today();
+    
+    $scope.clear = function () {
+        $scope.dt = null;
+    };
+
+    $scope.dateOptions = {
+        formatDay: 'dd',
+        formatMonth: 'MM',
+        formatYear: 'yyyy',
+        startingDay: 1
+    };
+    
+    $scope.incluirLocatario = function(){
+        if ($scope.locatario !== ''){
+            $scope.novocontrato.locatarios.push($scope.locatario);
+            $scope.locatario = {};
+        }
+    };
+    
+    $scope.removeLocatario = function(index){
+        $scope.novocontrato.locatarios.splice(index, 1);
+    };
+        
+    $scope.incluirFiador = function(){
+        if ($scope.fiador !== ''){
+            $scope.novocontrato.fiadores.push($scope.fiador);
+            $scope.fiador = {};
+        }
+    };
+    
+    $scope.removeFiador = function(index){
+        $scope.novocontrato.fiadores.splice(index, 1);
+    };
+    
+    function buscarClientes(){    
+        clientesObjectStore.getAll().then(function(itemsList) {
+            $scope.clientesList = itemsList;
+        });
+    }
+    
+    function buscarImoveis(){
+         imoveisObjectStore.getAll().then(function(itemsList) {
+            $scope.imoveisList = itemsList;
+         });		
+    }
+    
+    $scope.cancel = function() {
+        
+    };
+  
+    $scope.submit = function() {
+        
+        $scope.novocontrato.updated = new Date();
+        
+        $scope.novocontrato.situacao = "pendente";       
+        
+        $scope.novocontrato.dataInicio = $filter('dateFormat')($scope.novocontrato.updated, true);
+        $scope.novocontrato.dataVencimento = $filter('dateFormat')($scope.picker, true);
+        
+        $scope.novocontrato.locadores = $scope.imovel.proprietarios;
+        $scope.novocontrato.imovel = $scope.imovel.id;        
+        
+        alert($filter('json')($scope.novocontrato));
+        
+        /*contratosObjectStore
+          .upsert($scope.novocontrato)
+              .then(function(e){
+                   $log.info('Evento' + $scope.novocontrato.id + 'incluído com vencimento em:'+  $scope.novocontrato.dataVencimento +  ' at:' + new Date());
+                   $location.path('/cadastro/contratos').replace();
+        });*/
+      
+    };
 	
     function buscaInfo(key) {
       
@@ -932,7 +1005,9 @@ imoveisDbControllers.controller('ContratosEditCtrl', ['$scope', '$log', '$rootSc
     if($indexedDB.onDatabaseError) {
       $location.path('/unsupported');
     } else {
-      buscaInfo($routeParams.id);
+      //buscaInfo($routeParams.id);
+      buscarClientes();
+      buscarImoveis();
     }
 			
 }]);

@@ -1,5 +1,5 @@
 <div class="col-sm-12 col-md-12 col-lg-12" >
-	<h3 class="sub-header">{{entidade}}</h3>
+	<h1 class="sub-header">{{entidade}}</h1>
 	<div class="btn-group">
 		<button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Export Table Data</button>
 		<ul class="dropdown-menu " role="menu">

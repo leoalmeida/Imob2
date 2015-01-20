@@ -921,7 +921,7 @@ imoveisDbControllers.controller('ContratosEditCtrl', ['$scope', '$log', '$rootSc
     
     $scope.incluirLocatario = function(){
         if ($scope.locatario !== ''){
-            $scope.novocontrato.locatarios.push($scope.locatario);
+            $scope.novocontrato.locatarios.push($scope.listviewcliente[index]);
             $scope.locatario = {};
         }
     };

@@ -6,148 +6,162 @@
 	<form name="myForm" novalidate class="form-horizontal" role="form">
 	    <div class="row">
           <div class="col-xs-8 col-md-8">
-                <!-- RELAÇÃO DO EVENTO -->
-                <div class="form-group">
-                      <div class="row">
-                      <label for="tipo" class="col-xs-2 col-md-2 control-label">Relacionados</label>
-                      <div class="col-xs-9 col-md-9">
-                          <div class="btn-group">
-                              <label data-ng-repeat="tprelac in tiposRelacao" class="btn btn-success text-capitalize" ng-model="novoevento.tprelac" btn-radio="{{tprelac}}" uncheckable>{{tprelac}}</label>                    
-                          </div>
-                      </div>
-                      <div class="col-xs-1 col-md-1">
-                          <span class="label label-danger" data-ng-show="submitted && myForm.novoevento.tprelac.$error.required">Obrigat&oacute;rio!</span>
-                      </div>
-                      </div>
-                </div>
-                
-                <!-- ESCOLHA DE MULTIPLAS RELAÇÕES DE EVENTOS -->
-                <!-- <div class="form-group">
-                      <div class="row">
-                          <label for="telefones" class="col-xs-2 col-md-2 control-label">Telefones</label>
-                          <div class="col-xs-9 col-md-9">
-                              <div class="panel panel-body panel-default">
-                                 
-                                  <legend>
-                                 
-                                    <div class="btn-group" role="group" aria-label="...">
-                                      <div class="row">                        
-                                      <div class="col-xs-12 col-md-12">							
-                                        <div class="btn-group" role="group">	
-                                          <input type="hidden" data-ng-model="telefone.tpTelefone" /> {{telefone.tpTelefone}}								
-                                        </div>                              				
-                                      </div>						
-                                      </div>
-                                    </div>
-                                  </legend>
-                                  <div class="col-xs-6 col-md-6">		                            
-                                      <div class="input-group">
-                                          <span class="input-group-addon" ><i class="fa fa-phone fa-fw"></i></span>
-                                          <input type="text" id="tel" data-ng-model="telefone.nrTelefone" class="form-control" required="required" pattern="\([0-9]{2}\) [0-9]{4,6}-[0-9]{3,4}$" />
-                                          <div class="input-group-btn" role="group">                                    
-                                              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                              </button>
-                                              <ul id="telList" class="dropdown-menu" role="menu">
-                                                <li><a href="#" data-value="residencial" data-ng-click="telefone.tpTelefone = 'Residencial'">Residencial</a></li>
-                                                <li><a href="#" data-value="comercial" data-ng-click="telefone.tpTelefone = 'Comercial'">Comercial</a></li>
-                                                <li><a href="#" data-value="adicional" data-ng-click="telefone.tpTelefone = 'Adicional'">Adicional</a></li>							
-                                              </ul>
-                                              <button data-ng-click="incluirTelefone()" class="btn btn-warning" >
-                                                <i class="fa fa-upload fa-fw fa-inverse"></i>&nbsp;Incluir
-                                              </button>
-                                          </div>                                
-                                      </div>
-                                  </div>
-                                 
-                                  <div div class="col-xs-6 col-md-6 no-float">
-                                      <div class="panel panel-default ">
-                                        <div class="panel-heading">Lista de Telefones</div>
-                                        <div class="panel-body">
-                                            <alert ng-repeat="tel in cliente.telefones" type="warning" close="removeTelefone($index)">{{tel.tpTelefone}} : {{tel.nrTelefone}}</alert>                                  
-                                        </div>
-                                      </div>                    
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="col-xs-1 col-md-1">
-                            <span class="label label-danger" data-ng-show="submitted && myForm.telTags.$error.required">Obrigat&oacute;rio!</span>
-                            <span class="label label-danger" data-ng-show="submitted && myForm.$error.telTags">Telefones inv&aacute;lidos!</span>
-                          </div>
-                      </div>
-                </div>-->
-      
-      
-              <!-- TIPO DE EVENTO -->
+              <!-- TIPO DE CONTRATO -->
               <div class="form-group">
                     <div class="row">
-                    <label for="tipo" class="col-xs-2 col-md-2 control-label">Tipo de Evento</label>
+                    <label for="tipo" class="col-xs-2 col-md-2 control-label">Tipo de Contrato</label>
                     <div class="col-xs-9 col-md-9">
-                        <div class="btn-group">
-                            <label data-ng-repeat="tpevento in tiposEvento" class="btn btn-success text-capitalize" ng-model="novoevento.tpevento" btn-radio="{{tpevento}}" uncheckable>{{tpevento}}</label>                    
+                        <div class="btn-group btn-group-justified">
+                            <label data-ng-repeat="tpcontrato in tiposContrato" class="btn btn-primary text-capitalize" ng-model="novocontrato.tipoContrato" btn-radio="'{{tpcontrato}}'">{{tpcontrato}}</label>                    
                         </div>
                     </div>
                     <div class="col-xs-1 col-md-1">
-                        <span class="label label-danger" data-ng-show="submitted && myForm.novoevento.tpevento.$error.required">Obrigat&oacute;rio!</span>
+                        <span class="label label-danger" data-ng-show="submitted && myForm.novocontrato.tipoContrato.$error.required">Obrigat&oacute;rio!</span>
                     </div>
                     </div>
               </div>
-              
-              <!-- SITUAÇÃO DO EVENTO -->
+              <!-- RELAÇÕES DO CONTRATO -->
+              <!-- IMÓVEL -->
+              <div class="form-group">
+                    <div class="row">
+                    <label for="tipo" class="col-xs-2 col-md-2 control-label">Imóvel</label>
+                    <div class="col-xs-9 col-md-9">
+                        <div class="row">                          
+                          <div class="col-xs-6 col-md-6" role="group">                              
+                              <div class="input-group" role="group">	
+                                <input type="text" class="form-control" data-ng-model="imovel.id" required="required" readonly />
+                                <div class="input-group-btn" role="group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                      <span class="caret"></span>
+                                      <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul id="imovelList" class="dropdown-menu" role="menu">
+                                      <li data-ng-repeat="imvl in imoveisList"><a href="#"  data-value="" data-ng-click="imovel.id = imvl.id;  imovel.proprietarios =  imvl.proprietarios" >{{imvl.id}}: {{imvl.proprietarios[0].identificador}}</a></li>                                     
+                                    </ul>
+                                </div>
+                              </div>
+                          </div>
+                          
+                          <!-- LOCADORES -->
+                          <div class="col-xs-6 col-md-6"> 
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Lista de Locadores</div>
+                                <div class="panel-body">
+                                    <alert ng-repeat="locad in imovel.proprietarios" type="info">{{locad.tipo}} : {{locad.identificador}}</alert>                                      
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-1 col-md-1">
+                        <span class="label label-danger" data-ng-show="submitted && myForm.novocontrato.proprietarios.$error.required">Obrigat&oacute;rio!</span>
+                    </div>
+                    </div>
+              </div>
+              <!-- LOCATÁRIOS -->
+              <div class="form-group">
+                    <div class="row">
+                    <label for="tipo" class="col-xs-2 col-md-2 control-label">Locatários</label>
+                    <div class="col-xs-9 col-md-9">
+                        <div class="row">                          
+                          <div class="col-xs-6 col-md-6" role="group">                              
+                              <div class="input-group" role="group">	
+                                <input type="text" class="form-control" data-ng-model="locatario.cpf" required="required" readonly />
+                                <div class="input-group-btn" role="group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                      <span class="caret"></span>
+                                      <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul id="locList" class="dropdown-menu" role="menu">
+                                      <li  data-ng-repeat="itemLocatario in clientesList | filter:filter"  data-ng-click="locatario.cpf = itemLocatario.cpf" ><a href="#"data-value="teste">{{itemLocatario.cpf}}</a></li>                                      
+                                    </ul>
+                                    <button data-ng-click="incluirLocatario()" class="btn btn-info" >
+                                      <i class="fa fa-upload fa-fw fa-inverse"></i>&nbsp;Incluir
+                                    </button>
+                                </div>
+                              </div>
+                          </div>
+                          <div class="col-xs-6 col-md-6"> 
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Lista de Locatários</div>
+                                <div class="panel-body">
+                                      <alert ng-repeat="locat in novocontrato.locatarios" type="info" close="removeLocatario($index)">{{$index}} : {{locat.cpf}}</alert>                                      
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-1 col-md-1">
+                        <span class="label label-danger" data-ng-show="submitted && myForm.novocontrato.locatarios.$error.required">Obrigat&oacute;rio!</span>
+                    </div>
+                    </div>
+              </div>
+              <!-- FIADORES -->
+              <div class="form-group">
+                    <div class="row">
+                    <label for="tipo" class="col-xs-2 col-md-2 control-label">Fiadores</label>
+                    <div class="col-xs-9 col-md-9">
+                        <div class="row">                          
+                          <div class="col-xs-6 col-md-6" role="group">                              
+                              <div class="input-group" role="group">
+                                <input type="text" class="form-control" data-ng-model="fiador.cpf" required="required" readonly />
+                                <div class="input-group-btn" role="group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                      <span class="caret"></span>
+                                      <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul id="fiaList" class="dropdown-menu" role="menu">
+                                     <li><a href="#"  data-ng-repeat="itemFiador in clientesList | filter:filter"  data-value="teste" data-ng-click="fiador.cpf = itemFiador.cpf">{{itemFiador.cpf}}</a></li>                                                                          
+                                    </ul>
+                                    <button data-ng-click="incluirFiador()" class="btn btn-info" >
+                                      <i class="fa fa-upload fa-fw fa-inverse"></i>&nbsp;Incluir
+                                    </button>
+                                </div>
+                              </div>
+                          </div>
+                          <div class="col-xs-6 col-md-6"> 
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Lista de Fiadores</div>
+                                <div class="panel-body">
+                                      <alert ng-repeat="fia in novocontrato.fiadores" type="info" close="removeFiador($index)">{{$index}} : {{fia.cpf}}</alert>                                      
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-1 col-md-1">
+                        <span class="label label-danger" data-ng-show="submitted && myForm.novocontrato.fiadores.$error.required">Obrigat&oacute;rio!</span>
+                    </div>
+                    </div>
+              </div>
+                
+              <!-- SITUAÇÃO DO EVENTO 
               <div class="form-group">
                     <div class="row">
                     <label for="tipo" class="col-xs-2 col-md-2 control-label">Situa&ccedil;&atilde;o</label>
                     <div class="col-xs-9 col-md-9">
-                        <div class="btn-group">
-                            <label data-ng-repeat="tpsituac in tiposSituacao" class="btn btn-success text-capitalize" ng-model="novoevento.tpsituac" btn-radio="{{tpsituac}}" uncheckable>{{tpsituac}}</label>                    
+                        <div class="btn-group btn-group-justified" >
+                            <label data-ng-repeat="tpsituac in tiposSituacao" class="btn btn-primary text-capitalize" ng-model="novocontrato.situacao" btn-radio="'{{tpsituac}}'">{{tpsituac}}</label>                    
                         </div>
                     </div>
                     <div class="col-xs-1 col-md-1">
-                        <span class="label label-danger" data-ng-show="submitted && myForm.novoevento.tpsituac.$error.required">Obrigat&oacute;rio!</span>
+                        <span class="label label-danger" data-ng-show="submitted && myForm.novocontrato.tpsituac.$error.required">Obrigat&oacute;rio!</span>
                     </div>
                     </div>
-              </div>
-              <!-- TITULO DO EVENTO -->
-              <div class="form-group">
-                <div class="row">
-                <label for="nome" class="col-xs-2 col-md-2 control-label">T&iacute;tulo</label>	
-                <div class="col-xs-9 col-md-9">			
-                  <input type="text" id="titulo" name="titulo" data-ng-model="novoevento.titulo" class="form-control" required="required" placeholder="Titulo" />	
-                </div>
-                <div class="col-xs-1 col-md-1">
-                  <span class="label label-danger" data-ng-show="submitted && myForm.novoevento.titulo.$error.required">Obrigat&oacute;rio!</span>
-                </div>
-                </div>
-              </div>      
+              </div>-->
               
-              <!-- DESCRICAO DO EVENTO -->
-              <div class="form-group">
-                <div class="row">
-                  <label for="nome" class="col-xs-2 col-md-2 control-label">Descri&ccedil;&atilde;o</label>	
-                  <div class="col-xs-9 col-md-9">
-                    <textarea id="descricao" name="descricao" format data-ng-model="novoevento.descricao" class="form-control" required="required" placeholder="Descrição" rows="3"></textarea>
-                  </div>
-                  <div class="col-xs-1 col-md-1">
-                    <span class="label label-danger" data-ng-show="submitted && myForm.novoevento.descricao.$error.required">Obrigat&oacute;rio!</span>
-                  </div>
-                </div>
-              </div>
-          </div>
+          </div>         
           <div class="col-xs-4 col-md-4">    
-               <!-- DATA DE VENCIMENTO DO EVENTO -->
-              <div class="form-group">                
-                  <div><label for="nome" class="control-label">Data de Vencimento</label></div>                  
-                  <div style="display:inline-block; min-height:290px;">
-                       <datepicker ng-model="dt"  min-date="minDate" show-weeks="true" class="well well-sm"></datepicker>
+                   <!-- DATA DE VENCIMENTO DO EVENTO -->
+                  <div class="form-group">                
+                      <div><label for="nome" class="control-label">Data de Vencimento</label></div>                  
+                      <div style="display:inline-block; min-height:290px;">
+                           <datepicker ng-model="picker" show-weeks="false" class="well well-sm"></datepicker>                       
+                      </div>
+                      <span class="label label-danger" data-ng-show="submitted && myForm.novocontrato.dataVencimento.$error.required">Obrigat&oacute;rio!</span>
                   </div>
-                  <span class="label label-danger" data-ng-show="submitted && myForm.novoevento.dataVencimento.$error.required">Obrigat&oacute;rio!</span>
-              </div>
           </div>
       </div>
-      
-      <pre>{{novoevento | json}}</pre>
-      
       <div class="form-group">
             <div class="row">
             <div class="col-xs-offset-2 col-md-offset-2 col-xs-10 col-md-8">			

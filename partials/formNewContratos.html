@@ -47,7 +47,7 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">Lista de Locadores</div>
                                 <div class="panel-body">
-                                    <alert ng-repeat="locad in imovel.proprietarios" type="info">{{locad.tipo}} : {{locad.identificador}}</alert>                                      
+                                    <alert class="text-capitalize" ng-repeat="locad in imovel.proprietarios" type="info">{{locad.tipo}} : {{locad.identificador}}</alert>                                      
                                 </div>
                             </div>
                           </div>
@@ -66,14 +66,14 @@
                         <div class="row">                          
                           <div class="col-xs-6 col-md-6" role="group">                              
                               <div class="input-group" role="group">	
-                                <input type="text" class="form-control" data-ng-model="locatario.cpf" required="required" readonly />
+                                <input type="text" class="form-control" data-ng-model="locatario.identificador" required="required" readonly />
                                 <div class="input-group-btn" role="group">
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                       <span class="caret"></span>
                                       <span class="sr-only">Toggle Dropdown</span>
                                     </button>
                                     <ul id="locList" class="dropdown-menu" role="menu">
-                                      <li  data-ng-repeat="itemLocatario in clientesList | filter:filter"  data-ng-click="locatario.cpf = itemLocatario.cpf" ><a href="#"data-value="teste">{{itemLocatario.cpf}}</a></li>                                      
+                                      <li  data-ng-repeat="itemCliente in clientesList | filter:filter"  data-ng-click="locatario.identificador = itemCliente.cpf" ><a href="#"data-value="teste">{{itemCliente.cpf}}</a></li>                                      
                                     </ul>
                                     <button data-ng-click="incluirLocatario()" class="btn btn-info" >
                                       <i class="fa fa-upload fa-fw fa-inverse"></i>&nbsp;Incluir
@@ -85,7 +85,7 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">Lista de Locatários</div>
                                 <div class="panel-body">
-                                      <alert ng-repeat="locat in novocontrato.locatarios" type="info" close="removeLocatario($index)">{{$index}} : {{locat.cpf}}</alert>                                      
+                                      <alert ng-repeat="locat in novocontrato.locatarios" type="info" close="removeLocatario($index)">{{if ($index === 0) 'Principal' else 'Adicional'}} : {{locat.identificador}}</alert>                                      
                                 </div>
                             </div>
                           </div>
@@ -162,6 +162,9 @@
                   </div>
           </div>
       </div>
+      
+      <pre>{{novocontrato | json}}</pre>
+      
       <div class="form-group">
             <div class="row">
             <div class="col-xs-offset-2 col-md-offset-2 col-xs-10 col-md-8">			

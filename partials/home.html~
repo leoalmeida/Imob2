@@ -72,12 +72,12 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr data-ng-repeat="item in listViewEventos | ativosFilter | filter: filter | orderBy: sortBy" data-toggle="modal" data-target="#myModal" data-ng-class="{active : isSelected(item)}" data-ng-click="setMaster(item)">				
-                    <td class="title text-center"><h5>{{item.contrato}}</h5></td>
+                  <tr data-ng-repeat="item in listViewEventos | filter: filter | orderBy: sortBy" data-toggle="modal" data-target="#myModal" data-ng-class="{active : isSelected(item)}" data-ng-click="setMaster(item)">				
+                    <td class="title text-center"><h5>{{item.relacionados[0].relacionado}}</h5></td>
                     <td class="text-center	text-capitalize"><h5>{{item.tipo}}</h5></td>
-                    <td class="text-center	text-capitalize"><h5>{{item.acao}}</h5></td>				
-                    <td class="text-center	text-capitalize"><h5>{{item.status}}</h5></td>
-                    <td class="text-center"><h5>{{item.vencimento | dateFormat}}</h5></td>
+                    <td class="text-center	text-capitalize"><h5>{{item.titulo}}</h5></td>				
+                    <td class="text-center	text-capitalize"><h5>{{item.situacao}}</h5></td>
+                    <td class="text-center"><h5>{{item.dataVencimento }}</h5></td>
                   </tr>
                 </tbody>
             </table>

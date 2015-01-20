@@ -24,7 +24,7 @@
 			
 		</ul>
 	</div>
-	<table class="table table-bordered table-striped" id="accordion" ng-init="cliente=true">
+	<table class="table table-bordered table-striped" ng-init="cliente=true">
 		<thead>
 			<tr>
 			  <th class="col-xs-1 col-md-1 text-center">
@@ -48,14 +48,14 @@
 					</a><a data-ng-show="sortBy=='endereco'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
           </h4>					
 				</th>				
-				<th class="col-xs-1 col-md-1 text-center">
+				<th class="col-xs-2 col-md-2 text-center">
 				  <h4>
 					<a data-ng-click="sortBy='proprietario'; reverse=!reverse" role="button">
 					Propriet&aacute;rio 
 					</a><a data-ng-show="sortBy=='proprietario'" data-ng-click="sortBy=''" class="glyphicon glyphicon-remove"></a>
           </h4>					
 				</th>				
-				<th class="col-xs-2 col-md-2 text-center">
+				<th class="col-xs-1 col-md-1 text-center">
 				  <h4>
 					<a data-ng-click="sortBy='updated'; reverse=!reverse" role="button">
 					Altera&ccedil;&atilde;o
@@ -74,10 +74,13 @@
 			<tr data-ng-repeat="item in listView | filter: filter | orderBy: sortBy" data-toggle="modal" data-target="#myModal" data-ng-class="{active : isSelected(item)}" data-ng-click="setMaster(item)">
 								
 				<td class="title text-center">{{item.id}}</td>
-				<td class="text-center">{{item.tipoimovel}}</td>
-				<td class="text-center" >{{item.endereco | enderecoFormat}}</td>
-				<td class="text-center text-capitalize" >{{item.proprietario}}</td>
-				<td class="text-center" >{{item.updated | dateFormat}}</td>
+				<td class="text-center text-capitalize">{{item.tipoImovel}}</td>
+				<td class="text-center">{{item.endereco | enderecoFormat}}</td>
+				<td class="text-center text-capitalize" >
+				  <h4><strong>{{item.proprietarios[0].tipo}}</strong></h4>
+				  <h5>{{item.proprietarios[0].identificador}}</h5>
+				</td>
+				<td class="text-center" >{{item.updated}}</td>
 				<td class="text-center">
 					<a class="btn btn-primary " href="./cadastro/imovel/view/{{item.id}}"><i class="fa fa-pencil-square-o fa-fw fa-inverse"></i>&nbsp; Editar</a> 
 					<a class="btn btn-danger ng-hide" data-ng-click="removeImovel(item.id)"><i class="fa fa-trash-o fa-fw fa-inverse"></i>&nbsp; Remover</a>
