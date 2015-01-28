@@ -17,11 +17,10 @@ var imoveisDbFilters = angular.module('imoveisDbFilters', [])
 			return res;		
 		};
 	})
-	.filter('enderecoFormat', function() {
+	.filter('formatoEndereco', function() {
 		return function(input) {
-			if(!input) return "";
-			
-			return input.tipo + input.rua + input.numero + input.complemento + input.bairro + input.cidade + input.estado;
+			if(!input) return "";			
+			return input.rua + " " + input.numero + "/" + input.complemento + ", " + input.bairro + " - " + input.cidade + "/" + input.estado + " - CEP:" + input.cep;
 		
 		};
 	})

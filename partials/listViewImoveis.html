@@ -78,12 +78,12 @@
 				<td class="text-center">
             <address>
             <strong>{{item.endereco.rua}} {{item.endereco.numero}}/{{item.endereco.complemento}}, {{item.endereco.bairro}} </strong><br>
-            {{item.endereco.cidade}}/{{item.endereco.estado}} - CEP:{{item.endereco.cep}} - {{item.endereco.pais}}
+            {{item.endereco.cidade}}/{{item.endereco.uf}} - CEP:{{item.endereco.cep}} - {{item.endereco.pais}}
             </address>
 				</td>
 				<td class="text-center text-capitalize" >
 				  <h4><strong>{{item.proprietarios[0].tipo}}</strong></h4>
-				  <h5>{{item.proprietarios[0].identificador}}</h5>
+				  <h5>{{item.proprietarios[0].cpf}}</h5>
 				</td>
 				<td class="text-center" >{{item.updated}}</td>
 				<td class="text-center">
@@ -158,7 +158,7 @@
                   <span class="label label-info">Propriet&aacute;rios</span>
                   <ul class="list-group">
                     <li class="list-group-item list-group-item-default" data-ng-repeat="prop in selected.proprietarios">
-                      <p class="bg-default">{{prop.tipo}}: <span class="badge">{{prop.identificador}}</span></p>				
+                      <p class="bg-default">{{prop.tipo}}: <span class="badge">{{prop.cpf}}</span></p>				
                     </li>
                   </ul>
               </div>
@@ -194,7 +194,7 @@
                     <span class="label label-info">Endere&ccedil;o</span>
                     <address class="panel panel-default text-center">
                           <strong>{{selected.endereco.rua}} {{selected.endereco.numero}}/{{selected.endereco.complemento}}, {{selected.endereco.bairro}} </strong><br>
-                          {{selected.endereco.cidade}}/{{selected.endereco.estado}} - CEP:{{selected.endereco.cep}} - {{selected.endereco.pais}}
+                          {{selected.endereco.cidade}}/{{selected.endereco.uf}} - CEP:{{selected.endereco.cep}} - {{selected.endereco.pais}}
                     </address>                    
                  </div>
             </div>

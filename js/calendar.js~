@@ -10,7 +10,7 @@
 
 angular.module('ui.calendar', [])
   .constant('uiCalendarConfig', {calendars: {}})
-  .controller('uiCalendarCtrl', ['$scope', 
+  .controller('uiCalendarModuleCtrl', ['$scope', 
                                  '$timeout', 
                                  '$locale', function(
                                   $scope, 

@@ -1,6 +1,31 @@
 /* global angular,window */
 var imoveisDbServices = angular.module('imoveisDbServices', []);
 
+imoveisDbServices.factory('cepService', ['$rootScope', '$http', '$templateCache', function ($rootScope,$http, $templateCache){
+    var server="https://viacep.com.br/ws/";
+    var callback="/json?callback=JSON_CALLBACK";
+    var method = "JSONP";
+    return {
+        get: function(cep){
+            var dat;  
+            console.log("cep:"+cep); 
+            var url = server+cep+callback;
+            return $http({method: method, url: url, cache: $templateCache}).
+                success(function(data) {
+                    console.log("1");
+                    console.log(data);
+                    return data;
+                }).
+                error(function(data) {
+                    dat = data || "Status:" || status || " - Request failed";
+                    alert("ERROR: Could not get data.");
+                });
+            console.log("2");  
+        }
+    }
+}]);
+
+
 imoveisDbServices.factory('persistanceService', ['$q', function($q) {
 
 	var setUp=false;

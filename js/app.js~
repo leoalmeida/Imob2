@@ -1,5 +1,5 @@
 /* global angular,window */
-var imoveisDbApp = angular.module('imoveisDbApp', ['ngRoute', 'ngResource', 'imoveisDbControllers', 'imoveisDbFilters']);
+var imoveisDbApp = angular.module('imoveisDbApp', ['ngRoute', 'ngResource', 'imoveisDbControllers', 'imoveisDbFilters', 'imoveisDbServices', 'calcController']);
 
 imoveisDbApp.config(['$routeProvider', '$locationProvider', 
 	function($routeProvider ,$locationProvider)
@@ -68,6 +68,10 @@ imoveisDbApp.config(['$routeProvider', '$locationProvider',
 				templateUrl: 'partials/calendario.html',
 				controller: 'CalendarCtrl',
 				css: 'css/fullcalendar.min.css'			
+			}).
+			when('/calculadoras/emprestimo', {  
+				templateUrl: 'partials/calculadoraEmprestimo.html',
+				controller: 'calculadoraCtrl'		
 			}).
 			otherwise({
 				redirectTo: '/'
@@ -153,4 +157,3 @@ imoveisDbApp.directive('contentItem', function ($compile) {
         }
     };
 });
-

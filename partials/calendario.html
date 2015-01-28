@@ -1,19 +1,14 @@
-<script src='./js/moment.min.js'></script>
-<script src='./js/jquery.min.js'></script>
-<script src='./js/fullcalendar.min.js'></script>
-<script src='./js/calendar.js'></script>
 
-  <div id="list">
-    <div div class="col-xs-3 col-md-3 no-float">
+<div id="list">
+    <div class="col-xs-3 col-md-3">
         <div class="panel panel-default">                      
           <div class="panel-heading">            
-            <label>Lista de Eventos <span class="badge">{{eventos.length}}</span></label>           
+            <label>Lista de Eventos <span class="badge">{{newevents.length}}</span></label>           
             
             <div class="btn-group calTools pull-right">
                 <button type="button" class="btn btn-default btn-xs" ng-click="changeLang()">
                       <i class="fa fa-language"></i> {{changeTo}}
-                </button>              
-                <button class="btn" ng-click="addRemoveEventSource(eventSources,eventSource)">Src</button>                
+                </button>           
                 <button type="button" class="btn btn-default btn-xs" ng-click="addEvent()">&nbsp;&nbsp;<i class="fa fa-plus"></i>&nbsp;&nbsp;</button>
             </div>
             
@@ -23,22 +18,19 @@
             </div>            
           </div>
           
-          <div class="panel-footer" class="example-animate-container" id='external-events'>
-          
-              <ul class="unstyled">
-                  <li class="animate-repeat" ng-repeat="evento in eventos | filter:q as results">
-                      <div class="alert alert-info">
-                          <a class="close" ng-click="remove($index)"><i class="icon-remove"></i></a>
-                          <b> <input ng-model="e.title"></b> 
-                          {{e.start | date:"MMM dd"}} - {{e.end | date:"MMM dd"}}
-                      </div>
-                  </li>
-              </ul>
+          <div class="panel-footer" class="example-animate-container" id='external-events'>          
+              <!-- Lista de objetos utilizando apenas o identificador -->
+              <button  class="btn btn-info btn-block text-capitalize animate-repeat" ng-repeat="e in newevents | filter:q" tooltip-placement="top" tooltip="Período: {{e.start | date:'dd MMM yyyy'}} - {{e.end | date:'dd MMM yyyy'}}" tooltip-append-to-body="true" tooltip-trigger="focus">                                
+                  <div class="pull-left" aria-label="Close" data-toggle="modal" data-target="#createEventModal" aria-expanded="false"><i class="fa fa-pencil-square-o fa-inverse fa-lg fa-fw" aria-hidden="true"></i></div>
+                  {{e.title}}
+                  <div class="close" aria-label="Close" data-ng-click="removeEvent($index)"><i class="fa fa-times-circle-o fa-lg fa-fw" aria-hidden="true"></i></div>
+              </button> 
           </div>
         </div>                    
     </div>  
-    
-    <div class="well" select="renderCalender('calendarioEventos');" class="col-xs-9 col-md-9">
+</div>  
+<div class="col-xs-9 col-md-9">
+    <div class="well" select="renderCalender('calendarioEventos');"> 
       <div id="top">
         <div class="left"> 
             <div class="btn-group">
@@ -46,46 +38,44 @@
               <button class="btn btn-success" ng-click="changeView('agendaWeek', 'myCalendar1')">Agenda Semanal</button>
               <button class="btn btn-success" ng-click="changeView('month', 'myCalendar1')">Mensal</button>
             </div>        
-        </div>
-    
+        </div>    
         <div class="right">
           <span id="loading">loading...</span>          
-        </div>
-    
-        <div class="clear"></div>
-    
+        </div>    
+        <div class="clear"></div>    
       </div>
-      <div class="calendar" ng-model="eventSources" calendar="calendarioEventos" ui-calendar="uiConfig.calendar"></div>
-      
-      <div id="createEventModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-          <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-        <h3 id="myModalLabel1">Create Appointment</h3>
-          </div>
-          <div class="modal-body">
-          <form id="createAppointmentForm" class="form-horizontal">
-        <div class="control-group">
-            <label class="control-label" for="inputPatient">Patient:</label>
-            <div class="controls">
-          <input type="text" name="patientName" id="patientName" tyle="margin: 0 auto;" data-provide="typeahead" data-items="4" data-source="[&quot;Value 1&quot;,&quot;Value 2&quot;,&quot;Value 3&quot;]">
-            <input type="hidden" id="apptStartTime"/>
-            <input type="hidden" id="apptEndTime"/>
-            <input type="hidden" id="apptAllDay" />
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label" for="when">When:</label>
-            <div class="controls controls-row" id="when" style="margin-top:5px;">
-            </div>
-        </div>
-          </form>
-          </div>
-          <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-        <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
-          </div>
-      </div><!-- /.modal -->
+      <div ui-calendar="uiConfig.calendar" class="col-xs-8 calendar" data-ng-model="eventSources" calendar="calendarioEventos"></div>
     </div>
+</div>
+
+<div id="createEventModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+  <h3 id="myModalLabel1">Create Appointment</h3>
+    </div>
+    <div class="modal-body">
+    <form id="createAppointmentForm" class="form-horizontal">
+  <div class="control-group">
+      <label class="control-label" for="inputPatient">Patient:</label>
+      <div class="controls">
+    <input type="text" name="patientName" id="patientName" tyle="margin: 0 auto;" data-provide="typeahead" data-items="4" data-source="[&quot;Value 1&quot;,&quot;Value 2&quot;,&quot;Value 3&quot;]">
+      <input type="hidden" id="apptStartTime"/>
+      <input type="hidden" id="apptEndTime"/>
+      <input type="hidden" id="apptAllDay" />
+      </div>
   </div>
+  <div class="control-group">
+      <label class="control-label" for="when">When:</label>
+      <div class="controls controls-row" id="when" style="margin-top:5px;">
+      </div>
+  </div>
+    </form>
+    </div>
+    <div class="modal-footer">
+  <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+  <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
+    </div>
+</div><!-- /.modal -->
+  
 
 

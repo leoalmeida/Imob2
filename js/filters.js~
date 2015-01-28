@@ -12,17 +12,15 @@ var imoveisDbFilters = angular.module('imoveisDbFilters', [])
           
           var minute = input.getMinutes()+1;
           if(minute < 10) minute = "0" + minute;
-          res += hour + ":" + minute + " " + ampm;
+          res += hour + ":" + minute;
 			}
-			return res;
-		
+			return res;		
 		};
 	})
-	.filter('enderecoFormat', function() {
+	.filter('formatoEndereco', function() {
 		return function(input) {
-			if(!input) return "";
-			
-			return input.tipo + input.rua + input.numero + input.complemento + input.bairro + input.cidade + input.estado;
+			if(!input) return "";			
+			return input.rua + " " + input.numero + "/" + input.complemento + ", " + input.bairro + "[" + input.cidade + "/" + input.estado + "]";
 		
 		};
 	})

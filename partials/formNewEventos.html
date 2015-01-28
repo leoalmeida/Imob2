@@ -14,7 +14,7 @@
                         <div class="row">
                           <div class="col-xs-6 col-md-6" role="group">
                             <div class="btn-group btn-group-justified">
-                                <label data-ng-repeat="tprelac in tiposRelacao" class="btn btn-primary text-capitalize" data-ng-click="buscarRelacoes(tprelac)" ng-model="relacao.tiporelacao" btn-radio="'{{tprelac}}'" >{{tprelac}}</label>                    
+                                <label data-ng-repeat="tprelac in tiposRelacao" class="btn btn-primary text-capitalize" data-ng-click="buscarRelacoes(tprelac)" ng-model="relacao.tiporelacao" btn-radio="'{{tprelac.value}}'" ><strong><i data-ng-show="relacao.tiporelacao===tprelac.value" class="fa fa-paw"></i>&nbsp;{{tprelac.text}}</strong></label>                    
                             </div>
                           </div>
                           <div class="col-xs-6 col-md-6 pull-right" role="group">                              
@@ -30,7 +30,7 @@
                                       <li><a href="#"  data-ng-if="relacao.tiporelacao!=='cliente'" data-ng-repeat="item in itemsList" data-value="teste" data-ng-click="relacao.relacionado = item.id">{{item.id}}</a></li>
                                       <li><a href="#"  data-ng-if="relacao.tiporelacao!=='cliente'" data-ng-repeat="item in itemsList" data-value="teste" data-ng-click="relacao.relacionado = item.id">{{item.id}}</a></li>
                                     </ul>
-                                    <button data-ng-click="incluirRelacionado()" class="btn btn-info" >
+                                    <button data-ng-click="incluirRelacionado()" class="btn btn-primary" >
                                       <i class="fa fa-upload fa-fw fa-inverse"></i>&nbsp;Incluir
                                     </button>
                                 </div>
@@ -60,8 +60,8 @@
                     <div class="row">
                     <label for="tipo" class="col-xs-2 col-md-2 control-label">Tipo de Evento</label>
                     <div class="col-xs-9 col-md-9">
-                        <div class="btn-group btn-group-justified">
-                            <label data-ng-repeat="tpevento in tiposEvento" class="btn btn-primary text-capitalize" ng-model="novoevento.tipo" btn-radio="'{{tpevento}}'">{{tpevento}}</label>                    
+                        <div class="btn-group btn-group-justified">                            
+                            <label data-ng-repeat="tpevento in tiposEvento" class="btn btn-primary text-capitalize" ng-model="novoevento.tipo" btn-radio="'{{tpevento.value}}'"><strong><i data-ng-show="novoevento.tipo===tpevento.value" class="fa fa-paw"></i>&nbsp;{{tpevento.text}}</strong></label>                    
                         </div>
                     </div>
                     <div class="col-xs-1 col-md-1">
@@ -76,7 +76,7 @@
                     <label for="tipo" class="col-xs-2 col-md-2 control-label">Situa&ccedil;&atilde;o</label>
                     <div class="col-xs-9 col-md-9">
                         <div class="btn-group btn-group-justified" >
-                            <label data-ng-repeat="tpsituac in tiposSituacao" class="btn btn-primary text-capitalize" ng-model="novoevento.situacao" btn-radio="'{{tpsituac}}'">{{tpsituac}}</label>                    
+                            <label data-ng-repeat="tpsituac in tiposSituacao" class="btn btn-primary text-capitalize" ng-model="novoevento.situacao" btn-radio="'{{tpsituac.value}}'">{{tpsituac.text}}</label>                    
                         </div>
                     </div>
                     <div class="col-xs-1 col-md-1">

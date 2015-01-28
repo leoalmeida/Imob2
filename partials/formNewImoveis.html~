@@ -38,7 +38,7 @@
                                     <ul id="propList" class="dropdown-menu" role="menu">
                                       <li><a href="#" data-ng-repeat="item in itemsList" data-value="teste" data-ng-click="proprietario.identificador = item.cpf">{{item.cpf}}</a></li>
                                     </ul>
-                                    <button data-ng-click="incluirProprietario()" class="btn btn-info" >
+                                    <button data-ng-click="incluirProprietario()" class="btn btn-primary" >
                                       <i class="fa fa-upload fa-fw fa-inverse"></i>&nbsp;Incluir
                                     </button>
                                 </div>
@@ -67,10 +67,10 @@
               <div class="form-group">
                     <div class="row">
                     <label for="tipo" class="col-xs-2 col-md-2 control-label">Tipo de Im&oacute;vel</label>
-                    <div class="col-xs-9 col-md-9">
-                        <div class="btn-group">
-                            <label data-ng-repeat="tipo in tipoImovel" class="btn btn-primary text-capitalize" ng-model="novoimovel.tipoImovel" btn-radio="'{{tipo}}'">{{tipo}}</label>                    
-                        </div>
+                    <div class="col-xs-9 col-md-9">                   
+                            <div class="btn-group btn-group-justified">                            
+                              <label data-ng-repeat="tipo in tipoImovel" class="btn btn-primary text-capitalize" ng-model="novoimovel.tipoImovel" btn-radio="'{{tipo}}'"><strong><i data-ng-show="novoimovel.tipoImovel===tipo" class="fa fa-paw"></i>&nbsp;{{tipo}}</strong></label>
+                            </div>
                     </div>
                     <div class="col-xs-1 col-md-1">
                         <span class="label label-danger" data-ng-show="submitted && myForm.novoimovel.tipo.$error.required">Obrigat&oacute;rio!</span>
@@ -82,10 +82,10 @@
               <div class="form-group">
                     <div class="row">
                     <label for="tipo" class="col-xs-2 col-md-2 control-label">Situa&ccedil;&atilde;o</label>
-                    <div class="col-xs-9 col-md-9">
-                        <div class="btn-group">
-                            <label data-ng-repeat="tipoSituacacao in tiposSituacao" class="btn btn-primary text-capitalize" ng-model="novoimovel.tipoSituacacao" btn-radio="'{{tipoSituacacao}}'">{{tipoSituacacao}}</label>                    
-                        </div>
+                    <div class="col-xs-9 col-md-9">                  
+                            <div class="btn-group btn-group-justified">                            
+                              <label data-ng-repeat="tipoSituacacao in tiposSituacao" class="btn btn-primary text-capitalize" ng-model="novoimovel.tipoSituacacao" btn-radio="'{{tipoSituacacao.value}}'"><strong><i data-ng-show="novoimovel.tipoSituacacao===tipoSituacacao.value" class="fa fa-paw"></i>&nbsp;{{tipoSituacacao.text}}</strong></label>
+                            </div>
                     </div>
                     <div class="col-xs-1 col-md-1">
                         <span class="label label-danger" data-ng-show="submitted && myForm.novoimovel.tipoSituacacao.$error.required">Obrigat&oacute;rio!</span>
@@ -209,8 +209,6 @@
             </div>
          </div>
       </div>
-      
-      <pre>{{novoimovel | json}}</pre>
       
       <div class="form-group">
             <div class="row">

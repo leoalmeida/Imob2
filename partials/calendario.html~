@@ -1,42 +1,61 @@
 <script src='./js/moment.min.js'></script>
 <script src='./js/jquery.min.js'></script>
 <script src='./js/fullcalendar.min.js'></script>
-<script src='./js/gcal.js'></script>
+<script src='./js/calendar.js'></script>
 
   <div id="list">
     <div div class="col-xs-3 col-md-3 no-float">
-        <div class="panel panel-default" ng-init="eventos = [
-                        {name:'evento1', tipo:'boleto', vencimento:'10'},
-                        {name:'evento2', tipo:'boleto', vencimento:'10'},
-                        {name:'evento3', tipo:'boleto', vencimento:'10'},
-                        {name:'evento4', tipo:'boleto', vencimento:'10'},
-                        {name:'evento5', tipo:'boleto', vencimento:'10'},
-                        {name:'evento6', tipo:'boleto', vencimento:'10'},
-                        {name:'evento7', tipo:'boleto', vencimento:'10'},
-                        {name:'evento8', tipo:'boleto', vencimento:'10'},
-                        {name:'evento9', tipo:'boleto', vencimento:'10'},
-                        {name:'evento10', tipo:'boleto', vencimento:'10'}
-                      ]">                      
+        <div class="panel panel-default">                      
           <div class="panel-heading">            
-            <label>Lista de Eventos <span class="badge">{{eventos.length}}</span></label>
-            <button class="btn btn-default btn-xs pull-right">&nbsp;&nbsp;<i class="fa fa-plus"></i>&nbsp;&nbsp;</button>            
+            <label>Lista de Eventos <span class="badge">{{eventos.length}}</span></label>           
+            
+            <div class="btn-group calTools pull-right">
+                <button type="button" class="btn btn-default btn-xs" ng-click="changeLang()">
+                      <i class="fa fa-language"></i> {{changeTo}}
+                </button>              
+                <button class="btn" ng-click="addRemoveEventSource(eventSources,eventSource)">Src</button>                
+                <button type="button" class="btn btn-default btn-xs" ng-click="addEvent()">&nbsp;&nbsp;<i class="fa fa-plus"></i>&nbsp;&nbsp;</button>
+            </div>
+            
             <div class="input-group input-group-sm">                
                 <span class="input-group-addon"><i class="fa fa-search"></i></span>
                 <input type="search" class="form-control" data-ng-model="q" placeholder="filtrar eventos..." />                
             </div>            
           </div>
-          <div class="panel-body" class="example-animate-container">
-              <tabset vertical="true" type="pills">
-                <tab class="animate-repeat" ng-repeat="evento in eventos | filter:q as results" heading="{{evento.name}}: {{evento.tipo}}: {{evento.vencimento}}"></tab>
-              </tabset>
+          
+          <div class="panel-footer" class="example-animate-container" id='external-events'>
+          
+              <ul class="unstyled">
+                  <li class="animate-repeat" ng-repeat="evento in eventos | filter:q as results">
+                      <div class="alert alert-info">
+                          <a class="close" ng-click="remove($index)"><i class="icon-remove"></i></a>
+                          <b> <input ng-model="e.title"></b> 
+                          {{e.start | date:"MMM dd"}} - {{e.end | date:"MMM dd"}}
+                      </div>
+                  </li>
+              </ul>
           </div>
         </div>                    
     </div>  
     
-    <div id="calendar-body" class="col-xs-9 col-md-9">
-      <div id='loading' >loading...</div>
-      
-      <div id='calendar' ></div>
+    <div class="well" select="renderCalender('calendarioEventos');" class="col-xs-9 col-md-9">
+      <div id="top">
+        <div class="left"> 
+            <div class="btn-group">
+              <button class="btn btn-success" ng-click="changeView('agendaDay', 'myCalendar1')">Agenda Dia</button>
+              <button class="btn btn-success" ng-click="changeView('agendaWeek', 'myCalendar1')">Agenda Semanal</button>
+              <button class="btn btn-success" ng-click="changeView('month', 'myCalendar1')">Mensal</button>
+            </div>        
+        </div>
+    
+        <div class="right">
+          <span id="loading">loading...</span>          
+        </div>
+    
+        <div class="clear"></div>
+    
+      </div>
+      <div class="calendar" ng-model="eventSources" calendar="calendarioEventos" ui-calendar="uiConfig.calendar"></div>
       
       <div id="createEventModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
           <div class="modal-header">

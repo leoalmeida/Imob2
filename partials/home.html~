@@ -7,19 +7,21 @@
           
           <div class="container-fluid">
 		<div class="dashboard col-xs-12 col-sm-4 col-md-3 col-lg-2">
-			<div ng-repeat="contrato in listViewContratos | ativosFilter | filter: filter | orderBy: sortBy" class="square img1">
+			<div ng-repeat="contrato in listViewContratos | filter: filter | orderBy: sortBy" class="square img1">
 			    <a href="#" onclick="alert(1)">
 			        <div class="content">
 				    <div class="table">
 				        <div class="table-cell numbers">
 				        	<div  class="title">
-						    <span class="badge alert-info">Status: {{contrato.status}}</span>
+						    <span class="badge alert-info">Situa&ccedil;&atilde;o: {{contrato.situacao}}</span>
 						</div>
 					        <i class="fa fa-home"></i>
 					        <div class="title">
 				        	<h4>Imóvel: {{contrato.imovel}}</h4>
-					        <h5>Locador: {{contrato.locador.Principal}}</h5>					        
+					        <h5>Locador: {{contrato.locadores[0].identificado}}</h5>
+					        <h5>Locat&aacute;rio: {{contrato.locatario[0].cpf}}</h5>					        
 					        <h6>Alteração: {{contrato.updated | dateFormat}}</h6>
+					        <h6>Vencimento: {{contrato.dataVencimento}}</h6>
 					        </div>				        	
 				        </div>
 				    </div>
