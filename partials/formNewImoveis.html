@@ -22,11 +22,11 @@
               <!-- SITUAÇÃO DO IMOVEL -->
               <div class="form-group">
                     <label for="tipo" class="control-label">Situa&ccedil;&atilde;o</label>
-                    <span class="label label-danger" data-ng-show="submitted && myForm.novoimovel.tipoSituacacao.$error.required">Obrigat&oacute;rio!</span>
+                    <span class="label label-danger" data-ng-show="submitted && myForm.novoimovel.tipoSituacao.$error.required">Obrigat&oacute;rio!</span>
                     <div class="row">
                         <div class="col-xs-12">                  
                             <div class="btn-group btn-group-justified">                            
-                              <label data-ng-repeat="tipoSituacacao in tiposSituacao" class="btn btn-primary text-capitalize" ng-model="novoimovel.tipoSituacacao" btn-radio="'{{tipoSituacacao.value}}'"><strong><i data-ng-show="novoimovel.tipoSituacacao===tipoSituacacao.value" class="fa fa-paw"></i>&nbsp;{{tipoSituacacao.text}}</strong></label>
+                              <label data-ng-repeat="tipoSituacao in tiposSituacao" class="btn btn-primary text-capitalize" ng-model="novoimovel.tipoSituacao" btn-radio="'{{tipoSituacao.value}}'"><strong><i data-ng-show="novoimovel.tipoSituacao===tipoSituacao.value" class="fa fa-paw"></i>&nbsp;{{tipoSituacao.text}}</strong></label>
                             </div>
                         </div>                    
                     </div>
@@ -76,7 +76,7 @@
                               <span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <ul id="propList" class="dropdown-menu" role="menu">
-                              <li data-ng-repeat="item in itemsList | filter:filter" data-ng-click="proprietario.obj = item"><a href="#"data-value="{{item.cpf}}">{{item.cpf}}</a></li>
+                              <li data-ng-repeat="item in itemsList | filter:filter" data-ng-click="proprietario.obj = item" >{{item.cpf}}</li>
                             </ul>
                         </div>
                       </div>
@@ -207,12 +207,12 @@
           </div>
         </div>
       </div>
-      <pre>{{novoimovel | json}}</pre>
+      
       <div class="form-group">
             <div class="row">
             <div class="col-xs-offset-2 col-md-offset-2 col-xs-10 col-md-8">			
-              <button data-ng-disabled="progress.active()" data-ng-click="submit(myForm)" class="btn btn-success btn-lg col-xs-offset-2 col-md-offset-2 col-xs-3 col-md-3" ><i class="fa fa-upload fa-fw fa-inverse"></i>&nbsp;Finalizar</button>
-              <button class="btn btn-danger btn-lg col-xs-offset-2 col-md-offset-2 col-xs-3 col-md-3" ><i class="fa fa-times fa-fw fa-inverse"></i>&nbsp;Cancelar</button>
+              <button data-ng-disabled="progress.active()" data-ng-click="submit(myForm)" class="btn btn-success btn-lg col-xs-offset-2 col-md-offset-2 col-xs-3 col-md-3" ><i class="fa fa-upload fa-fw fa-inverse"></i>&nbsp;Finalizar</button>              
+              <a class="btn btn-danger btn-lg col-xs-offset-3 col-md-offset-3 col-xs-3 col-md-3" href="#!/cadastro/imoveis" target="_self"><i class="fa fa-times fa-fw fa-inverse"></i>&nbsp;Cancelar</a>
             </div>
             </div>
       </div>

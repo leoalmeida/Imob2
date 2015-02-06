@@ -1,91 +1,105 @@
 /* global angular */
-
-'use strict';
-
-
-var imobDbCalendar = angular.module('imobDbCalendar', ['ui.calendar' , 'xc.indexedDB']);
-
-function CalendarCtrl($scope,$compile,uiCalendarConfig, $indexedDB) {
-//imobDbCalendar.controller('CalendarCtrl', ['$scope', '$compile', 'uiCalendarConfig', '$indexedDB',		
-		//function($scope,$compile,uiCalendarConfig,$indexedDB) {
+var OBJECT_STORE_EVENTOS = 'evento'; 
+var calendarDbControllers = angular.module('calendarDbControllers', ['ui.calendar', 'ui.bootstrap', 'ngDraggable','ngResource', 'ngAnimate', 'xc.indexedDB'])
+.config(function ($indexedDBProvider) {
+	$indexedDBProvider
+      .connection('imobapp-localdb');
+})
+.controller('CalendarCtrl', ['$scope', '$compile', 'uiCalendarConfig', '$indexedDB',		
+		function($scope,$compile,uiCalendarConfig,$indexedDB) {
     var date = new Date();
     var d = date.getDate();
     var m = date.getMonth();
     var y = date.getFullYear();
+    $scope.imobEventos = [];
+    $scope.language = 'portuguese';
+    $scope.centerAnchor = true;
+    $scope.toggleCenterAnchor = function () {$scope.centerAnchor = !$scope.centerAnchor}
+    $scope.droppedEvents = [];
+    	
+    	  /* event source that pulls from google.com */
+    $scope.eventSource = {            
+            googleCalendarApiKey: "AIzaSyDhqBTU_xzLtyBgfAH-lSsR4QsBfg67-U0",            
+            url: "http://www.google.com/calendar/feeds/brazilian__pt_br%40holiday.calendar.google.com/public/basic ",
+            className: 'gcal-event',
+            backgroundColor: '#E0E0E0',
+            color: 'white',
+            rendering: 'background'
+    };
     
-    $scope.changeTo = 'Portuguese';
-    $scope.entidade = 'Calendário';
-    $scope.eventSources = [];
-    $scope.eventos = [];
-	
+    /* event source that contains custom events on the scope */
+    $scope.newEvents = [
+      {type:'Teste',title: 'Teste: teste',editable: true,backgroundColor: '#CCE5FF', color: 'white',textColor: 'black'},
+      {type:'Teste2',title: 'Teste: teste',editable: true,backgroundColor: '#CCE5FF', color: 'white', textColor: 'black'}
+    ];
+    
+    //$scope.eventSources = [$scope.eventSource,$scope.droppedEvents];
+    $scope.eventSources = [$scope.droppedEvents];
+    
     /**
     * @type {ObjectStore} - OBJECT_STORE_EVENTOS
     */
 	  var eventosObjectStore = $indexedDB.objectStore(OBJECT_STORE_EVENTOS);
-		
-	  /* event source that pulls from google.com */
-    $scope.eventSource = {
-            url: "http://www.google.com/calendar/feeds/usa__en%40holiday.calendar.google.com/public/basic",
-            className: 'gcal-event',           // an option!
-            currentTimezone: 'America/Rio_de_Janeiro' // an option!
-    };
-    /* event source that contains custom events on the scope */
-    $scope.newevents = [
-      {title: 'All Day Event',start: new Date(y, m, 1)},
-      {title: 'Long Event',start: new Date(y, m, d - 5),end: new Date(y, m, d - 2)},
-      {id: 999,title: 'Repeating Event',start: new Date(y, m, d - 3, 16, 0),allDay: false},
-      {id: 999,title: 'Repeating Event',start: new Date(y, m, d + 4, 16, 0),allDay: false},
-      {title: 'Birthday Party',start: new Date(y, m, d + 1, 19, 0),end: new Date(y, m, d + 1, 22, 30),allDay: false},
-      {title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
-    ];
-    /* event source that calls a function on every view switch */
-    $scope.eventsF = function (start, end, timezone, callback) {
-      var s = new Date(start).getTime() / 1000;
-      var e = new Date(end).getTime() / 1000;
-      var m = new Date(start).getMonth();
-      var events = [{title: 'Feed Me ' + m,start: s + (50000),end: s + (100000),allDay: false, className: ['customFeed']}];
-      callback(events);
-    };
-
-    $scope.calEventsExt = {
-       color: '#f00',
-       textColor: 'yellow',
-       events: [ 
-          {type:'party',title: 'Lunch',start: new Date(y, m, d, 12, 0),end: new Date(y, m, d, 14, 0),allDay: false},
-          {type:'party',title: 'Lunch 2',start: new Date(y, m, d, 12, 0),end: new Date(y, m, d, 14, 0),allDay: false},
-          {type:'party',title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
-        ]
-    };
-    
-    function buscaEventos() {
-        eventosObjectStore.getAll().then(function(eventosList) {          
-            angular.forEach(eventosList, function(value, key){					    
+	  
+	  function buscaEventos() {
+        eventosObjectStore.getAll().then(function(eventosList) {            
+            angular.forEach(eventosList, function(value, key){
                 this.push({
-                    type:'Imob',
+                    id: value.id,
                     title: value.relacionados[0].relacionado + ": " + value.titulo,
-                    start: new Date(value.dataVencimento),                    
-                    allDay: true
+                    editable: true,  
+                    start: moment(value.dataVencimento, "DD/MM/YYYY"),
+                    editable: true,
+                    backgroundColor: '#004C99',
+                    allDay: true,
+                    color: 'white'
                 });
-            }, $scope.eventos);
+            }, $scope.imobEventos);   
+            $scope.eventSources.push($scope.imobEventos);
         });		
-    }	
-  
-    if($indexedDB.onDatabaseError) {
-      $location.path('/unsupported');
-    } else {
-       buscaEventos();
     }
     
+    if($indexedDB.onDatabaseError) {
+      $location.path('/unsupported');
+    } else {	
+      buscaEventos();
+    }
+    
+    
+        $scope.eventDropCompleteList=function(data,evt){
+            console.log("130","$scope","eventDropComplete", "", evt);
+            var index = $scope.newEvents.indexOf(data);
+            if (index == -1)
+            $scope.newEvents.push(data);                     
+        }
+        $scope.eventDragSuccessList=function(data,evt){
+            console.log("131","$scope","eventDropSuccess", "", evt);
+            var index = $scope.newEvents.indexOf(data);
+            if (index > -1) {
+                $scope.newEvents.splice(index, 1);
+            }
+            
+        }
+        $scope.eventDropCompleteCal=function(data,evt){
+            console.log("132","$scope","eventDropComplete", "", evt);
+            var index = $scope.droppedEvents.indexOf(data);
+            if (index == -1)
+            $scope.droppedEvents.push(data);                     
+        }
+        $scope.eventDragSuccessCal=function(data,evt){
+            console.log("133","$scope","eventDropSuccess", "", evt);
+            var index = $scope.droppedEvents.indexOf(data);
+            if (index > -1) {
+                $scope.droppedEvents.splice(index, 1);
+            }
+            
+        }
     
     
     /* alert on eventClick */
     $scope.alertOnEventClick = function( date, jsEvent, view){
         $scope.alertMessage = (date.title + ' was clicked ');
-    };
-    /* alert on Drop */
-     $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
-       $scope.alertMessage = ('Event Droped to make dayDelta ' + delta);
-    };
+    }; 
     /* alert on Resize */
     $scope.alertOnResize = function(event, delta, revertFunc, jsEvent, ui, view ){
        $scope.alertMessage = ('Event Resized to make dayDelta ' + delta);
@@ -105,23 +119,24 @@ function CalendarCtrl($scope,$compile,uiCalendarConfig, $indexedDB) {
     };
     /* add custom event*/
     $scope.addEvent = function() {
-      $scope.newevents.push({
-        title: 'Open Sesame',
-        start: new Date(y, m, 28),
-        end: new Date(y, m, 29),
-        className: ['openSesame']
+      $scope.newEvents.push({
+        title: 'Test new',
+        editable: true,  
+        start: new Date(y, m, d),
+        end: new Date(y, m, d),
+        className: ['customFeed']
       });
     };
     /* remove event */
-    $scope.remove = function(index) {
-      $scope.newevents.splice(index,1);
+    $scope.removeEvent = function(index) {
+      $scope.newEvents.splice(index,1);
     };
     /* Change View */
     $scope.changeView = function(view,calendar) {
       uiCalendarConfig.calendars[calendar].fullCalendar('changeView',view);
     };
     /* Change View */
-    $scope.renderCalender = function(calendar) {
+    $scope.renderCalendar = function(calendar) {
       if(uiCalendarConfig.calendars[calendar]){
         uiCalendarConfig.calendars[calendar].fullCalendar('render');
       }
@@ -131,38 +146,34 @@ function CalendarCtrl($scope,$compile,uiCalendarConfig, $indexedDB) {
         element.attr({'tooltip': event.title,
                      'tooltip-append-to-body': true});
         $compile(element)($scope);
-    };
+    };    
+        
     /* config object */
     $scope.uiConfig = {
       calendar:{
-        height: 450,
+        height: "auto",
         editable: true,
+        droppable: true, // this allows items to be dropped onto the calendar
         header:{
           left: 'title',
           center: '',
           right: 'today prev,next'
         },
-        eventClick: $scope.alertOnEventClick,
-        eventDrop: $scope.alertOnDrop,
+        lang: 'pt-br',
+        defaultView: 'month',
+        eventClick: $scope.alertOnEventClick,       
         eventResize: $scope.alertOnResize,
-        eventRender: $scope.eventRender
+        eventRender: $scope.eventRender,                
       }
     };
-
-    $scope.changeLang = function() {
-      if($scope.changeTo === 'Portuguese'){
-        $scope.uiConfig.calendar.dayNames = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
-        $scope.uiConfig.calendar.dayNamesShort = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
-        $scope.changeTo= 'English';
-      } else {
-        $scope.uiConfig.calendar.dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        $scope.uiConfig.calendar.dayNamesShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-        $scope.changeTo = 'Portuguese';
-      }
-    };
-    /* event sources array*/    
-    $scope.eventSources = [$scope.eventos];    
     
-};
-//]);
+    $scope.outrosImobEvents = {
+       color: '#f00',
+       textColor: 'yellow',
+       events: [ 
+          $scope.newEvents
+        ]
+    };    
+}
+]);
 /* EOF */

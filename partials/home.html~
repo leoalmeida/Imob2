@@ -1,39 +1,27 @@
 <div class="container-fluid">
-      <div class="row">        
-        <div class="main">
-          <h1 class="page-header">Dashboard</h1>
-
-          <h2 class="sub-header">Contratos </h2>
-          
-          <div class="container-fluid">
-		<div class="dashboard col-xs-12 col-sm-4 col-md-3 col-lg-2">
-			<div ng-repeat="contrato in listViewContratos | filter: filter | orderBy: sortBy" class="square img1">
-			    <a href="#" onclick="alert(1)">
-			        <div class="content">
-				    <div class="table">
-				        <div class="table-cell numbers">
-				        	<div  class="title">
-						    <span class="badge alert-info">Situa&ccedil;&atilde;o: {{contrato.situacao}}</span>
-						</div>
-					        <i class="fa fa-home"></i>
-					        <div class="title">
-				        	<h4>Imóvel: {{contrato.imovel}}</h4>
-					        <h5>Locador: {{contrato.locadores[0].identificado}}</h5>
-					        <h5>Locat&aacute;rio: {{contrato.locatario[0].cpf}}</h5>					        
-					        <h6>Alteração: {{contrato.updated | dateFormat}}</h6>
-					        <h6>Vencimento: {{contrato.dataVencimento}}</h6>
-					        </div>				        	
-				        </div>
-				    </div>
-			        </div>
-			    </a>
-			</div>
-		</div>
-		</div>
-	  </div>	  
+    <div class="row">        
+          <div class="main">
+              <h1 class="page-header">Dashboard</h1>
+    
+              <h2 class="sub-header">Contratos </h2>
+              
+              <div class="container-fluid">
+                  <div class="dashboard col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                        <div ng-repeat="contrato in listViewContratos | filter: filter | orderBy: sortBy" >
+                            <button class="square imgdash" onclick="alert(1)">
+                                <div class="contentdash">                                      
+                                      <span class="badge alert-info squaretitle">Situa&ccedil;&atilde;o: {{contrato.situacao}}</span>                                                                                    
+                                      <i class="fa fa-home icon"></i>                                          
+                                      <p>Imóvel: {{contrato.imovel}}</p>
+                                </div>
+                            </button>
+                        </div>
+                  </div>
+              </div>
+          </div>	  
           <h2 class="sub-header">Pr&oacute;ximas Atividades</h2>
           <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="table table-striped tabledash">
                 <thead>
                   <tr>
                     <th class="col-xs-1 col-md-1 text-center">
@@ -84,6 +72,5 @@
                 </tbody>
             </table>
           </div>
-        </div>
-      </div>
     </div>
+</div>

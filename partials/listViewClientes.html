@@ -56,11 +56,11 @@
 		<tbody>
 			<!--  <tr data-ng-repeat-start="item in listView | filter: filter | orderBy: sortBy" data-toggle="collapse"  class="accordion-toggle" data-target="#collapse{{item.cpf}}" > -->
 			<tr data-ng-repeat="item in listView | filter: filter | orderBy: sortBy" data-ng-class="{active : isSelected(item)}" data-ng-click="setMaster(item)">							  
-          <td class="text-center"  class="title" data-toggle="modal" data-target="#myModal"><h5>{{item.cpf}}</h5></td>				
-          <td class="text-center	text-capitalize"  data-toggle="modal" data-target="#myModal"><h5>{{item.nome}}</h5></td>				
-          <td class="text-center	text-capitalize"  data-toggle="modal" data-target="#myModal"><h5>{{item.updated | dateFormat}}</h5></td>
-          <td class="text-center">
-            <a class="btn btn-primary " href="./cadastro/cliente/edit/{{item.cpf}}"><i class="fa fa-pencil-square-o fa-fw fa-inverse"></i>&nbsp; Editar</a>
+          <td class="text-center clickpointer"  class="title" data-toggle="modal" data-target="#myModal"><h5>{{item.cpf}}</h5></td>				
+          <td class="text-center	text-capitalize clickpointer"  data-toggle="modal" data-target="#myModal"><h5>{{item.nome}}</h5></td>				
+          <td class="text-center	text-capitalize clickpointer"  data-toggle="modal" data-target="#myModal"><h5>{{item.updated | dateFormat}}</h5></td>
+          <td class="text-center">            
+            <a class="btn btn-primary " href="./cadastro/clientes/edit/{{item.cpf}}"><i class="fa fa-pencil-square-o fa-fw fa-inverse"></i>&nbsp; Editar</a>
             <a class="btn btn-danger ng-hide" data-ng-click="removeCliente(item.cpf)"><i class="fa fa-trash-o fa-fw fa-inverse"></i>&nbsp; Remover</a>					
           </td>
 			</tr>

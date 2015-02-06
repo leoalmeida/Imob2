@@ -5,7 +5,7 @@
 
 .nav, .pagination, .carousel, .panel-title a. .square { cursor: pointer; }
 
-th a{ cursor: pointer; }
+th a, .clickpointer{ cursor: pointer; }
 
 .disabledbutton {
     pointer-events: none;

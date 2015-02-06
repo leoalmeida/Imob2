@@ -26,9 +26,9 @@
                                       <span class="sr-only">Toggle Dropdown</span>
                                     </button>
                                     <ul id="relList" class="dropdown-menu" role="menu">
-                                      <li><a href="#"  data-ng-if="relacao.tiporelacao==='cliente'" data-ng-repeat="item in itemsList" data-value="teste" data-ng-click="relacao.relacionado = item.cpf">{{item.cpf}}</a></li>
-                                      <li><a href="#"  data-ng-if="relacao.tiporelacao!=='cliente'" data-ng-repeat="item in itemsList" data-value="teste" data-ng-click="relacao.relacionado = item.id">{{item.id}}</a></li>
-                                      <li><a href="#"  data-ng-if="relacao.tiporelacao!=='cliente'" data-ng-repeat="item in itemsList" data-value="teste" data-ng-click="relacao.relacionado = item.id">{{item.id}}</a></li>
+                                      <li data-ng-if="relacao.tiporelacao==='cliente'" data-ng-repeat="item in itemsList" data-ng-click="relacao.relacionado = item.cpf">{{item.cpf}}</li>
+                                      <li data-ng-if="relacao.tiporelacao!=='cliente'" data-ng-repeat="item in itemsList" data-ng-click="relacao.relacionado = item.id">{{item.id}}</li>
+                                      <li data-ng-if="relacao.tiporelacao!=='cliente'" data-ng-repeat="item in itemsList" data-ng-click="relacao.relacionado = item.id">{{item.id}}</li>
                                     </ul>
                                     <button data-ng-click="incluirRelacionado()" class="btn btn-primary" >
                                       <i class="fa fa-upload fa-fw fa-inverse"></i>&nbsp;Incluir
@@ -126,7 +126,7 @@
             <div class="row">
             <div class="col-xs-offset-2 col-md-offset-2 col-xs-10 col-md-8">			
               <button data-ng-disabled="progress.active()" data-ng-click="submit(myForm)" class="btn btn-success btn-lg col-xs-offset-2 col-md-offset-2 col-xs-3 col-md-3" ><i class="fa fa-upload fa-fw fa-inverse"></i>&nbsp;Finalizar</button>
-              <button class="btn btn-danger btn-lg col-xs-offset-2 col-md-offset-2 col-xs-3 col-md-3" ><i class="fa fa-times fa-fw fa-inverse"></i>&nbsp;Cancelar</button>
+              <a class="btn btn-danger btn-lg col-xs-offset-3 col-md-offset-3 col-xs-3 col-md-3" href="#!/cadastro/eventos" target="_self"><i class="fa fa-times fa-fw fa-inverse"></i>&nbsp;Cancelar</a>
             </div>
             </div>
       </div>

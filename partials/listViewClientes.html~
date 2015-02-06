@@ -59,8 +59,8 @@
           <td class="text-center"  class="title" data-toggle="modal" data-target="#myModal"><h5>{{item.cpf}}</h5></td>				
           <td class="text-center	text-capitalize"  data-toggle="modal" data-target="#myModal"><h5>{{item.nome}}</h5></td>				
           <td class="text-center	text-capitalize"  data-toggle="modal" data-target="#myModal"><h5>{{item.updated | dateFormat}}</h5></td>
-          <td class="text-center">
-            <a class="btn btn-primary " href="./cadastro/cliente/edit/{{item.cpf}}"><i class="fa fa-pencil-square-o fa-fw fa-inverse"></i>&nbsp; Editar</a>
+          <td class="text-center">            
+            <a class="btn btn-primary " href="./cadastro/clientes/edit/{{item.cpf}}"><i class="fa fa-pencil-square-o fa-fw fa-inverse"></i>&nbsp; Editar</a>
             <a class="btn btn-danger ng-hide" data-ng-click="removeCliente(item.cpf)"><i class="fa fa-trash-o fa-fw fa-inverse"></i>&nbsp; Remover</a>					
           </td>
 			</tr>
@@ -126,7 +126,7 @@
                       <span class="label label-info">Tipo</span>
                       <br>
                       <ul class="list-inline">
-                        <li data-ng-repeat="tp in selected.tipo"><span class="badge">{{tp}}</span></li>
+                        <li data-ng-repeat="tp in selected.tipoCliente"><label>{{tp.titulo}}:</label> <span class="badge">{{tp.situacao}}</span></li>
                       </ul>
                   </div>
                   <div>

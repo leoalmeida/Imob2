@@ -82,13 +82,16 @@ imoveisDbControllers.controller('HomeCtrl', ['$scope', '$indexedDB',
 	*/
 	var eventosObjectStore = $indexedDB.objectStore(OBJECT_STORE_EVENTOS);
 	
-    	function buscaEventos() {
+  function buscaEventos() {
 		eventosObjectStore.getAll().then(function(eventosList) {  
 		//persistanceService.buscaImoveis().then(function(imoveisList) {
 			$scope.listViewEventos = eventosList;
 		});		
 	}	
 	
+	$scope.setMaster = function(section) {
+	    $scope.selected = section;
+	};
 	   
 	function init() {
 		/**
@@ -528,7 +531,7 @@ imoveisDbControllers.controller('ClientesCtrl', ['$scope', '$indexedDB',
 imoveisDbControllers.controller('ClientesEditCtrl', ['$scope', '$log', '$rootScope', '$routeParams', '$location',  '$indexedDB', 'cepService', 
 		function($scope, $log, $rootScope, $routeParams, $location, $indexedDB, cepService) {
 		
-	if ($rootScope == "view") {$scope.entidade = "Alterar Cliente";}
+	if ($routeParams.type === "edit") {$scope.entidade = "Alterar Cliente";}
 	else {$scope.entidade = "Incluir Cliente";}
 	/**
 	* @type {ObjectStore}
@@ -589,40 +592,38 @@ imoveisDbControllers.controller('ClientesEditCtrl', ['$scope', '$log', '$rootSco
  	};
 	
 	$scope.submit = function() {
-      //if($scope.cpf == "") $scope.cpf = 1;
-      //alert($scope.myForm.serializeArray());
       
       $scope.novocliente.updated = new Date();
             
-      //alert($scope.novocliente.tipoCliente);
-      //alert(JSON.stringify($scope.novocliente));
-      
       clientesObjectStore
       .upsert($scope.novocliente)
       .then(function(e){
           $log.info('Cliente' + $scope.novocliente.nome + 'included with CPF:'+  $scope.novocliente.cpf +  ' at:' + new Date());
-          $location.path('/cadastro/cliente').replace();
+          $location.path('#!/cadastro/clientes').replace();
       });
 		
 	};
 	
-	function buscaInfo(key) {
-		
-		if(key) {
-			var myQuery = $indexedDB.queryBuilder().$eq(key).$asc().compile();
+	function buscaInfo() {		
+		if($routeParams.id) {
+			var myQuery = $indexedDB.queryBuilder().$eq($routeParams.id).$asc().compile();
 			clientesObjectStore.each(
 				function(cliente){
-					$scope.cpf = cliente.value.cpf;
-					//if (_.contains(cliente.value.tipo,"Locador")) {$scope.locador.active}
-					$scope.locatario = _.contains(cliente.value.tipo,"Locatario");
-					$scope.dono = _.contains(cliente.value.tipo,"Dono");
-					$scope.fiador = _.contains(cliente.value.tipo,"Fiador");
-					$scope.nome = cliente.value.nome;
-					$scope.email = cliente.value.email;
-					//$scope.telefones = _.(cliente.value.telefones))
-					$scope.enderecos = cliente.value.enderecos;
-					//$scope.locadorSelected=true;
-					//$location.path('#/locadores/edit/'+key);
+				      
+					/*angular.forEach(cliente.value.tipoCliente, function(key, value) {
+					   if (this.value.situacao) {
+					      if (value.tipo==="proprietario"){$scope.proprietario.active};
+					      if (value.tipo==="locatario"){$scope.locatario.active};
+					      if (value.tipo==="fiador"){$scope.fiador.active};
+					   }
+          });*/
+          
+          $scope.novocliente.cpf = cliente.value.cpf;
+					$scope.novocliente.nome = cliente.value.nome;
+					$scope.novocliente.email = cliente.value.email;
+					$scope.novocliente.tipoCliente = cliente.value.tipoCliente;
+					$scope.novocliente.telefones = cliente.value.telefones;
+					$scope.novocliente.enderecos = cliente.value.enderecos;
 				}
 			,myQuery);
 		}
@@ -633,7 +634,7 @@ imoveisDbControllers.controller('ClientesEditCtrl', ['$scope', '$log', '$rootSco
 	if($indexedDB.onDatabaseError) {
 		$location.path('/unsupported');
 	} else {
-		buscaInfo($routeParams.id);
+		buscaInfo();
 	}
 	
 }]);
@@ -716,13 +717,13 @@ imoveisDbControllers.controller('ImoveisCtrl', ['$scope', '$indexedDB',
 imoveisDbControllers.controller('ImoveisEditCtrl', ['$scope', '$log', '$rootScope', '$routeParams', '$location',  '$indexedDB', '$filter','cepService',
     function($scope, $log, $rootScope, $routeParams, $location, $indexedDB, $filter, cepService) {
       
-    if ($rootScope == "view") {$scope.entidade = "Alterar Imóvel";}
+    if ($routeParams.type === "edit") {$scope.entidade = "Alterar Imóvel";}
     else {$scope.entidade = "Incluir Imóvel";}
     /**
     * @type {ObjectStore}
     */
-    var clientesObjectStore = $indexedDB.objectStore(OBJECT_STORE_CLIENTES);    
     var imoveisObjectStore = $indexedDB.objectStore(OBJECT_STORE_IMOVEIS);
+    var clientesObjectStore = $indexedDB.objectStore(OBJECT_STORE_CLIENTES);
     
     $scope.novoimovel = {};
     $scope.novoimovel.proprietarios = [];
@@ -786,38 +787,41 @@ imoveisDbControllers.controller('ImoveisEditCtrl', ['$scope', '$log', '$rootScop
                    $location.path('/cadastro/imoveis').replace();
         });
       
-    };
-	
-	
-    function buscaInfo(key) {
-      
-      if(key) {
-        var myQuery = $indexedDB.queryBuilder().$eq(key).$asc().compile();
-        clientesObjectStore.each(
-          function(cliente){
-            $scope.cpf = cliente.value.cpf;
-            //if (_.contains(cliente.value.tipo,"Eventos")) $scope.locador.active
-            $scope.locatario = _.contains(cliente.value.tipo,"Locatario");
-            $scope.dono = _.contains(cliente.value.tipo,"Dono");
-            $scope.fiador = _.contains(cliente.value.tipo,"Fiador");
-            $scope.nome = cliente.value.nome;
-            $scope.email = cliente.value.email;
-            //$scope.telefones = _.(cliente.value.telefones))
-            $scope.enderecos = cliente.value.enderecos;
-            //$scope.locadorSelected=true;
-            //$location.path('#/locadores/edit/'+key);
-          }
-        ,myQuery);
-      }
+    };    
+    function buscaInfo() {		
+        if($routeParams.id) {
+          var myQuery = $indexedDB.queryBuilder().$eq(Number($routeParams.id)).$asc().compile();
+          imoveisObjectStore.each(
+            function(imovel){
+                  
+              /*angular.forEach(cliente.value.tipoCliente, function(key, value) {
+                 if (this.value.situacao) {
+                    if (value.tipo==="proprietario"){$scope.proprietario.active};
+                    if (value.tipo==="locatario"){$scope.locatario.active};
+                    if (value.tipo==="fiador"){$scope.fiador.active};
+                 }
+              });*/
+              
+              $scope.novoimovel.id = imovel.value.id;              
+              $scope.novoimovel.descricao = imovel.value.descricao;
+              $scope.novoimovel.titulo = imovel.value.titulo;
+              $scope.novoimovel.proprietarios = imovel.value.proprietarios;
+              $scope.novoimovel.tipoImovel = imovel.value.tipoImovel;
+              $scope.novoimovel.tipoSituacao = imovel.value.tipoSituacao;
+              $scope.novoimovel.endereco = imovel.value.endereco;
+              $scope.novoimovel.documentos = imovel.value.documentos;
+            }
+          ,myQuery);
+        }
     }
     
   
   
     if($indexedDB.onDatabaseError) {
       $location.path('/unsupported');
-    } else {
-      buscaInfo($routeParams.id);
-      buscarClientes();
+    } else {      
+      buscaInfo();
+      buscarClientes();      
     }
 			
 }]);
@@ -899,7 +903,7 @@ imoveisDbControllers.controller('ContratosCtrl', ['$scope', '$indexedDB',
 imoveisDbControllers.controller('ContratosEditCtrl', ['$scope', '$log', '$rootScope', '$routeParams', '$location',  '$indexedDB', '$filter',
     function($scope, $log, $rootScope, $routeParams, $location, $indexedDB, $filter) {
       
-    if ($rootScope == "view") {$scope.entidade = "Alterar Contrato";}
+    if ($routeParams.type === "edit") {$scope.entidade = "Alterar Contrato";}
     else {$scope.entidade = "Incluir Contrato";}
     /**
     * @type {ObjectStore}
@@ -998,32 +1002,31 @@ imoveisDbControllers.controller('ContratosEditCtrl', ['$scope', '$log', '$rootSc
       
     };
 	
-    function buscaInfo(key) {
-      
-      if(key) {
-        var myQuery = $indexedDB.queryBuilder().$eq(key).$asc().compile();
-        clientesObjectStore.each(
-          function(cliente){
-            $scope.cpf = cliente.value.cpf;
-            //if (_.contains(cliente.value.tipo,"Eventos")) $scope.locador.active
-            $scope.locatario = _.contains(cliente.value.tipo,"Locatario");
-            $scope.dono = _.contains(cliente.value.tipo,"Dono");
-            $scope.fiador = _.contains(cliente.value.tipo,"Fiador");
-            $scope.nome = cliente.value.nome;
-            $scope.email = cliente.value.email;
-            //$scope.telefones = _.(cliente.value.telefones))
-            $scope.enderecos = cliente.value.enderecos;
-            //$scope.locadorSelected=true;
-            //$location.path('#/locadores/edit/'+key);
-          }
-        ,myQuery);
-      }
+    function buscaInfo() {
+        if($routeParams.id) {
+          var myQuery = $indexedDB.queryBuilder().$eq(Number($routeParams.id)).$asc().compile();
+          contratosObjectStore.each(
+            function(contrato){
+              
+              $scope.novocontrato.id = contrato.value.id;
+              $scope.novocontrato.dataInicio = contrato.value.dataInicio;              
+              $scope.novocontrato.dataVencimento = contrato.value.dataVencimento;
+              $scope.novocontrato.imovel = contrato.value.imovel;
+              $scope.novocontrato.fiadores = contrato.value.fiadores;
+              $scope.novocontrato.locadores = contrato.value.locadores;
+              $scope.novocontrato.locatarios = contrato.value.locatarios;
+              $scope.novocontrato.situacao = contrato.value.situacao;
+              $scope.novocontrato.tipoContrato = contrato.value.tipoContrato
+              $scope.novocontrato.documentos = contrato.value.documentos;
+            }
+          ,myQuery);
+        }
     }
     
     if($indexedDB.onDatabaseError) {
       $location.path('/unsupported');
     } else {
-      //buscaInfo($routeParams.id);
+      buscaInfo();
       buscarClientes();
       buscarImoveis();
     }
@@ -1072,7 +1075,7 @@ imoveisDbControllers.controller('EventosCtrl', ['$scope', '$indexedDB',
 imoveisDbControllers.controller('EventosEditCtrl', ['$scope', '$log', '$rootScope', '$routeParams', '$location',  '$indexedDB', '$filter',
     function($scope, $log, $rootScope, $routeParams, $location, $indexedDB, $filter) {
       
-    if ($rootScope == "view") {$scope.entidade = "Alterar Evento";}
+    if ($routeParams.type === "edit") {$scope.entidade = "Alterar Evento";}
     else {$scope.entidade = "Incluir Evento";}
       
     /**
@@ -1181,23 +1184,20 @@ imoveisDbControllers.controller('EventosEditCtrl', ['$scope', '$log', '$rootScop
       
     };
   
-    function buscaInfo(key) {
+    function buscaInfo() {
       
-      if(key) {
-        var myQuery = $indexedDB.queryBuilder().$eq(key).$asc().compile();
-        clientesObjectStore.each(
-          function(cliente){
-            $scope.cpf = cliente.value.cpf;
-            //if (_.contains(cliente.value.tipo,"Eventos")) $scope.locador.active
-            $scope.locatario = _.contains(cliente.value.tipo,"Locatario");
-            $scope.dono = _.contains(cliente.value.tipo,"Dono");
-            $scope.fiador = _.contains(cliente.value.tipo,"Fiador");
-            $scope.nome = cliente.value.nome;
-            $scope.email = cliente.value.email;
-            //$scope.telefones = _.(cliente.value.telefones))
-            $scope.enderecos = cliente.value.enderecos;
-            //$scope.locadorSelected=true;
-            //$location.path('#/locadores/edit/'+key);
+      if($routeParams.id) {
+        var myQuery = $indexedDB.queryBuilder().$eq(Number($routeParams.id)).$asc().compile();
+        eventosObjectStore.each(
+          function(evento){
+            $scope.novoevento.id = evento.value.id;
+            $scope.novoevento.relacionados = evento.value.relacionados;
+            $scope.novoevento.situacao = evento.value.situacao;
+            $scope.novoevento.dataInicio = evento.value.dataInicio;
+            $scope.novoevento.dataVencimento = evento.value.dataVencimento;
+            $scope.novoevento.descricao = evento.value.descricao;
+            $scope.novoevento.tipo = evento.value.tipo;
+            $scope.novoevento.titulo = evento.value.titulo;
           }
         ,myQuery);
       }
@@ -1206,7 +1206,7 @@ imoveisDbControllers.controller('EventosEditCtrl', ['$scope', '$log', '$rootScop
     if($indexedDB.onDatabaseError) {
       $location.path('/unsupported');
     } else {
-      buscaInfo($routeParams.id);
+      buscaInfo();
     }
 }]);
 

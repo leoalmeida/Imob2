@@ -1,8 +1,8 @@
 /* global angular,window */
-var imobDbApp = angular.module('imobDbApp', ['ngRoute', 'ngResource', 'imoveisDbControllers', 'imoveisDbFilters', 'imoveisDbServices', 'calcController', 'imobDbCalendar']);
+var imobDbApp = angular.module('imobDbApp', ['angular-gestures', 'ngRoute', 'ngResource', 'imoveisDbControllers', 'imoveisDbFilters', 'imoveisDbServices', 'calcController', 'calendarDbControllers']);
 
-imobDbApp.config(['$routeProvider', '$locationProvider', 
-	function($routeProvider ,$locationProvider)
+imobDbApp.config(['$routeProvider', '$locationProvider', 'hammerDefaultOptsProvider',
+	function($routeProvider , $locationProvider, hammerDefaultOptsProvider)
 	{			
 		$routeProvider.
 			when('/', {
@@ -13,11 +13,11 @@ imobDbApp.config(['$routeProvider', '$locationProvider',
 				templateUrl: 'partials/listViewClientes.html',
 				controller: 'ClientesCtrl'
 			}).
-			when('/cadastro/clientes/new', {  
+			when('/cadastro/clientes/:type', {  
 				templateUrl: 'partials/formNewClientes.html',
 				controller: 'ClientesEditCtrl'			
 			}).
-			when('/cadastro/clientes/edit/:id', { 
+			when('/cadastro/clientes/:type/:id', { 
 				templateUrl: 'partials/formNewClientes.html',
 				controller: 'ClientesEditCtrl'			
 			}).
@@ -25,11 +25,11 @@ imobDbApp.config(['$routeProvider', '$locationProvider',
 				templateUrl: 'partials/listViewImoveis.html',
 				controller: 'ImoveisCtrl'			
 			}).
-			when('/cadastro/imoveis/new', {  
+			when('/cadastro/imoveis/:type', {  
 				templateUrl: 'partials/formNewImoveis.html',
 				controller: 'ImoveisEditCtrl'			
 			}).
-			when('/cadastro/imoveis/edit/:key', {
+			when('/cadastro/imoveis/:type/:id', {
 				templateUrl: 'partials/formNewImoveis.html',
 				controller: 'ImoveisEditCtrl'
 			}).
@@ -37,11 +37,11 @@ imobDbApp.config(['$routeProvider', '$locationProvider',
 				templateUrl: 'partials/listViewContratos.html',
 				controller: 'ContratosCtrl'			
 			}).
-			when('/cadastro/contratos/new', {  
+			when('/cadastro/contratos/:type', {  
 				templateUrl: 'partials/formNewContratos.html',
 				controller: 'ContratosEditCtrl'			
 			}).
-			when('/cadastro/contratos/edit/:key', {
+			when('/cadastro/contratos/:type/:id', {
 				templateUrl: 'partials/formNewContratos.html',
 				controller: 'ContratosEditCtrl'
 			}).
@@ -49,11 +49,11 @@ imobDbApp.config(['$routeProvider', '$locationProvider',
 				templateUrl: 'partials/listViewEventos.html',
 				controller: 'EventosCtrl'			
 			}).
-			when('/cadastro/eventos/new', {  
+			when('/cadastro/eventos/:type', {  
 				templateUrl: 'partials/formNewEventos.html',
 				controller: 'EventosEditCtrl'			
 			}).
-			when('/cadastro/eventos/edit/:key', {
+			when('/cadastro/eventos/:type/:id', {
 				templateUrl: 'partials/formNewEventos.html',
 				controller: 'EventosEditCtrl'
 			}).						
@@ -66,8 +66,8 @@ imobDbApp.config(['$routeProvider', '$locationProvider',
 			}).
 			when('/calendario', {  
 				templateUrl: 'partials/calendario.html',
-				controller: 'uiCalendarModuleCtrl',
-				css: 'css/fullcalendar.min.css'			
+				controller: 'CalendarCtrl',
+				css: 'css/calendar.css'
 			}).
 			when('/calculadoras/emprestimo', {  
 				templateUrl: 'partials/calculadoraEmprestimo.html',
@@ -77,7 +77,10 @@ imobDbApp.config(['$routeProvider', '$locationProvider',
 				redirectTo: '/'
 			});
 			
-		$locationProvider.html5Mode(true).hashPrefix('!');		
+		$locationProvider.html5Mode(true).hashPrefix('!');
+		hammerDefaultOptsProvider.set({
+        recognizers: [[Hammer.Tap, {time: 100}]]
+    });		
 	
 		//$controllerProvider.register('HomeCtrl', function($scope)
 		//{

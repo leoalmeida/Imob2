@@ -256,10 +256,7 @@
                       <div class="well" data-ng-show="submitted && myForm.endereco.$error">
                         <span class="label label-danger" data-ng-show="submitted && myForm.endereco.tipo.$error.required">Obrigat&oacute;rio!</span>
                         <span class="label label-danger" data-ng-show="submitted && myForm.endereco.tipoImovel.$error.required">Obrigat&oacute;rio!</span>
-                      </div>
-                      <pre>{{tpcliente | json}}</pre>
-                      <pre>{{novocliente | json}}</pre>
-                      
+                      </div>                      
                 </div>                            
             </div>                
           </div>
@@ -270,7 +267,7 @@
             <div class="row">
             <div class="col-xs-offset-2 col-md-offset-2 col-xs-10 col-md-8">			
               <button data-ng-disabled="progress.active()" data-ng-click="submit(myForm)" class="btn btn-success btn-lg col-xs-offset-2 col-md-offset-2 col-xs-3 col-md-3" ><i class="fa fa-upload fa-fw fa-inverse"></i>&nbsp;Finalizar</button>
-              <button class="btn btn-danger btn-lg col-xs-offset-3 col-md-offset-3 col-xs-3 col-md-3" ><i class="fa fa-times fa-fw fa-inverse"></i>&nbsp;Cancelar</button>
+              <a class="btn btn-danger btn-lg col-xs-offset-3 col-md-offset-3 col-xs-3 col-md-3" href="#!/cadastro/clientes" target="_self"><i class="fa fa-times fa-fw fa-inverse"></i>&nbsp;Cancelar</a>
             </div>
             </div>
       </div>

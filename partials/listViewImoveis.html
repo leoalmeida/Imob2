@@ -71,23 +71,23 @@
 		</thead>
 		<tbody>
 			<!--  <tr data-ng-repeat-start="item in listView | filter: filter | orderBy: sortBy" data-toggle="collapse"  class="accordion-toggle" data-target="#collapse{{item.cpf}}" > -->
-			<tr data-ng-repeat="item in listView | filter: filter | orderBy: sortBy" data-toggle="modal" data-target="#myModal" data-ng-class="{active : isSelected(item)}" data-ng-click="setMaster(item)">
+			<tr data-ng-repeat="item in listView | filter: filter | orderBy: sortBy" data-ng-class="{active : isSelected(item)}" data-ng-click="setMaster(item)">
 								
-				<td class="title text-center">{{item.id}}</td>
-				<td class="text-center text-capitalize">{{item.tipoImovel}}</td>
-				<td class="text-center">
+				<td class="text-center clickpointer" data-toggle="modal" data-target="#myModal">{{item.id}}</td>
+				<td class="text-center text-capitalize clickpointer" data-toggle="modal" data-target="#myModal">{{item.tipoImovel}}</td>
+				<td class="text-center clickpointer" data-toggle="modal" data-target="#myModal">
             <address>
             <strong>{{item.endereco.rua}} {{item.endereco.numero}}/{{item.endereco.complemento}}, {{item.endereco.bairro}} </strong><br>
             {{item.endereco.cidade}}/{{item.endereco.uf}} - CEP:{{item.endereco.cep}} - {{item.endereco.pais}}
             </address>
 				</td>
-				<td class="text-center text-capitalize" >
+				<td class="text-center text-capitalize clickpointer"  data-toggle="modal" data-target="#myModal">
 				  <h4><strong>{{item.proprietarios[0].tipo}}</strong></h4>
 				  <h5>{{item.proprietarios[0].cpf}}</h5>
 				</td>
-				<td class="text-center" >{{item.updated}}</td>
+				<td class="text-center clickpointer" data-toggle="modal" data-target="#myModal">{{item.updated}}</td>
 				<td class="text-center">
-					<a class="btn btn-primary " href="./cadastro/imovel/view/{{item.id}}"><i class="fa fa-pencil-square-o fa-fw fa-inverse"></i>&nbsp; Editar</a> 
+					<a class="btn btn-primary " href="./cadastro/imoveis/edit/{{item.id}}"><i class="fa fa-pencil-square-o fa-fw fa-inverse"></i>&nbsp; Editar</a> 
 					<a class="btn btn-danger ng-hide" data-ng-click="removeImovel(item.id)"><i class="fa fa-trash-o fa-fw fa-inverse"></i>&nbsp; Remover</a>
 				</td>
 				
@@ -155,7 +155,7 @@
       	<div class="container-fluid">
       	   <div class="well">		
               <div>
-                  <span class="label label-info">Propriet&aacute;rios</span>
+                  <span><strong>Propriet&aacute;rios</strong></span>
                   <ul class="list-group">
                     <li class="list-group-item list-group-item-default" data-ng-repeat="prop in selected.proprietarios">
                       <p class="bg-default">{{prop.tipo}}: <span class="badge">{{prop.cpf}}</span></p>				
@@ -165,33 +165,36 @@
               
               <div class="row text-center text-capitalize">              
                   <div class="col-xs-6 col-md-6">
-                    <span class="label label-info">Tipo do Im&oacute;vel</span>
+                    <span><strong>Tipo do Im&oacute;vel</strong></span>
                     <br>
-                    {{selected.tipoImovel}}              
+                    <div class="panel panel-default text-center">
+                      <strong>{{selected.tipoImovel}}</strong>           
+                    </div>
                   </div>
                   <div class="col-xs-6 col-md-6">
-                    <span class="label label-info">Situação do Im&oacute;ivel</span>
+                    <span><strong>Situação do Im&oacute;vel</strong></span>
                     <br>
-                    <p data-ng-class="{bg-danger: (selected.tipoSituacacao === 'indisponivel'), bg-warning: (selected.tipoSituacacao === 'aliberar'), bg-success: (selected.tipoSituacacao === 'liberado')}"> <strong>{{selected.tipoSituacacao}}</strong></p>
+                    <div class="panel panel-default text-center">
+                      <div data-ng-class="{'bg-danger': (selected.tipoSituacao === 'indisponivel'), 'bg-warning': (selected.tipoSituacao === 'aliberar'), 'bg-success': (selected.tipoSituacao === 'liberado')}">
+                      <strong>{{selected.tipoSituacao}}</strong>
+                      </div>
+                    </div>
                   </div>
               </div>
-           </div>
-           
-          <div class="well">
-             <div class="row">
+              <div class="row text-center text-capitalize">  
                  <div class="col-xs-6 col-md-6">                 
-                      <span class="label label-info">Título do Im&oacute;vel</span>                      
+                      <span><strong>Título do Im&oacute;vel</strong></span>                      
                       <div class="panel panel-default text-center">
-                          <label>{{selected.titulo}}</label>
+                          <strong>{{selected.titulo}}</strong>
                       </div>
                     
-                      <span class="label label-info">Descri&ccedil;&atilde;o Completa</span>
+                      <span><strong>Descri&ccedil;&atilde;o Completa</strong></span>     
                       <div class="panel panel-default text-center">
                           {{selected.descricao}}
                       </div>                 
                  </div>
                  <div class="col-xs-6 col-md-6">
-                    <span class="label label-info">Endere&ccedil;o</span>
+                    <span><strong>Endere&ccedil;o</strong></span>
                     <address class="panel panel-default text-center">
                           <strong>{{selected.endereco.rua}} {{selected.endereco.numero}}/{{selected.endereco.complemento}}, {{selected.endereco.bairro}} </strong><br>
                           {{selected.endereco.cidade}}/{{selected.endereco.uf}} - CEP:{{selected.endereco.cep}} - {{selected.endereco.pais}}

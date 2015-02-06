@@ -108,7 +108,7 @@
       
       <!-- Endereço -->
       <div class="row">
-        <div class="col-xs-12 col-lg-12">
+        <div class="col-xs-12">
           <!-- Form Name -->
           <div class="form-group">
             <div class="panel panel-body panel-default">                
@@ -132,7 +132,7 @@
                         
                         <!-- Tipo de Imóvel -->
                         <div class="form-group">
-                              <label for="tpImovel" class="control-label">Tipo de Im&oacute;vel:</label>
+                              <label for="tpImovel" class="control-label">Tipo de Residência:</label>
                               <div class="row">                              
                                   <div class="col-xs-12">                   
                                       <div class="btn-group btn-group-justified">
