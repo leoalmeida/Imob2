@@ -63,7 +63,7 @@
                 </thead>
                 <tbody>
                   <tr data-ng-repeat="item in listViewEventos | filter: filter | orderBy: sortBy" class="clickpointer" data-toggle="modal" data-target="#eventoModal" data-ng-class="{active : isSelected(item), danger: (item.situacao === 'vencido'), warning: (item.situacao === 'avencer')}" data-ng-click="setMaster(item)">        
-                    <td class="title text-center	text-capitalize">				    
+                    <td class="text-center	text-capitalize">				    
                         <h4><strong>{{item.relacionados[0].tiporelacao}}</strong></h4> 
                         <h5>{{item.relacionados[0].relacionado}}</h5>
                     </td>

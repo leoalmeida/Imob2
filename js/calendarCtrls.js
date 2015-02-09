@@ -46,13 +46,15 @@ var calendarDbControllers = angular.module('calendarDbControllers', ['ui.calenda
             angular.forEach(eventosList, function(value, key){
                 this.push({
                     id: value.id,
-                    title: value.relacionados[0].relacionado + ": " + value.titulo,
+                    title: value.titulo,
                     editable: true,  
                     start: moment(value.dataVencimento, "DD/MM/YYYY"),
                     editable: true,
                     backgroundColor: '#004C99',
                     allDay: true,
-                    color: 'white'
+                    color: 'white',
+                    detail: value.descricao,
+                    owner: value.relacionados
                 });
             }, $scope.imobEventos);   
             $scope.eventSources.push($scope.imobEventos);
@@ -98,7 +100,7 @@ var calendarDbControllers = angular.module('calendarDbControllers', ['ui.calenda
     
     /* alert on eventClick */
     $scope.alertOnEventClick = function( date, jsEvent, view){
-        $scope.alertMessage = (date.title + ' was clicked ');
+        $scope.alertMessage = (date.owner[0].relacionado + "- " + date.title + ": " + date.detail);
     }; 
     /* alert on Resize */
     $scope.alertOnResize = function(event, delta, revertFunc, jsEvent, ui, view ){

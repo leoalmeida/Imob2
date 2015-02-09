@@ -709,7 +709,7 @@ imoveisDbControllers.controller('ImoveisCtrl', ['$scope', '$indexedDB',
 	} else {
 		buscaImoveis();
 	}
-
+ex
 			
 }]);
 
@@ -1127,7 +1127,7 @@ imoveisDbControllers.controller('EventosEditCtrl', ['$scope', '$log', '$rootScop
     
     $scope.buscarRelacoes = function(escolha){
       
-      switch (escolha){
+      switch (escolha.value){
           case "cliente":
             clientesObjectStore.getAll().then(function(itemsList) {
               $scope.itemsList = itemsList;

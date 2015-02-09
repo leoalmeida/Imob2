@@ -41,18 +41,17 @@
                               <tab-heading>
                                <i class="glyphicon glyphicon-bell"></i> Calend&aacute;rio Imobili&aacute;ria
                               </tab-heading>
-                              <div class="alert-success calAlert" ng-show="alertMessage != undefined && alertMessage != ''">
+                              <div class="alert alert-success" role="alert" ng-show="alertMessage != undefined && alertMessage != ''">
                                 <h4>{{alertMessage}}</h4>
                               </div>
-                              <div class="btn-toolbar">
-                                <p class="pull-right lead">Calend&aacute;rio 1 Op&ccedil;&otilde;es</p>
+                              <div class="btn-toolbar">                                
                                 <div class="btn-group">
                                     <button class="btn btn-success" ng-click="changeView('agendaDay', 'myCalendar1')">Agenda Di&aacute;ria</button>
                                     <button class="btn btn-success" ng-click="changeView('agendaWeek', 'myCalendar1')">Agenda Semanal</button>
                                     <button class="btn btn-success" ng-click="changeView('month', 'myCalendar1')">Mensal</button>
                                 </div>
                               </div>                              
-                            <div class="calendar" ng-drop="true" ng-drop-success="eventDropCompleteCal($data,$event)" ng-model="eventSources" calendar="myCalendar1" ui-calendar="uiConfig.calendar"></div>
+                              <div class="calendar" ng-drop="true" ng-drop-success="eventDropCompleteCal($data,$event)" ng-model="eventSources" calendar="myCalendar1" ui-calendar="uiConfig.calendar"></div>
                            </tab>
                         </tabset>
                     </div>
