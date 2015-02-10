@@ -2,23 +2,12 @@
 var imoveisDbServices = angular.module('imoveisDbServices', []);
 
 imoveisDbServices.factory('AuthenticationService', function() {
-    var auth = {
-        isLogged: false
+    var auth = {        
+        isAuthenticated: false,
+        isAdmin: false
     }
  
     return auth;
-});
-
-imoveisDbServices.factory('UserService', function($http) {
-    return {
-        logIn: function(username, password) {
-            return $http.post(options.api.base_url + '/login', {username: username, password: password});
-        },
- 
-        logOut: function() {
- 
-        }
-    }
 });
 
 imoveisDbServices.factory('TokenInterceptor', function ($q, $window, $location, AuthenticationService) {
@@ -54,6 +43,73 @@ imoveisDbServices.factory('TokenInterceptor', function ($q, $window, $location, 
             return $q.reject(rejection);
         }
     };
+});
+
+appServices.factory('PostService', function($http) {
+    return {
+        findAllPublished: function() {
+            return $http.get(options.api.base_url + '/post');
+        },
+
+        findByTag: function(tag) {
+            return $http.get(options.api.base_url + '/tag/' + tag);
+        },
+
+        read: function(id) {
+            return $http.get(options.api.base_url + '/post/' + id);
+        },
+        
+        findAll: function() {
+            return $http.get(options.api.base_url + '/post/all');
+        },
+
+        changePublishState: function(id, newPublishState) {
+            return $http.put(options.api.base_url + '/post', {'post': {_id: id, is_published: newPublishState}});
+        },
+
+        delete: function(id) {
+            return $http.delete(options.api.base_url + '/post/' + id);
+        },
+
+        create: function(post) {
+            return $http.post(options.api.base_url + '/post', {'post': post});
+        },
+
+        update: function(post) {
+            return $http.put(options.api.base_url + '/post', {'post': post});
+        },
+
+        like: function(id) {
+            return $http.post(options.api.base_url  + '/post/like', {'id': id});
+        },
+
+        unlike: function(id) {
+            return $http.post(options.api.base_url  + '/post/unlike', {'id': id}); 
+        }
+    };
+});
+
+
+imoveisDbServices.factory('UserService', function($http) {
+    return {
+        signIn: function(username, password) {
+            return $http.post(options.api.base_url + '/signin', {username: username, password: password});
+        },
+
+        logOut: function() {
+            return $http.get(options.api.base_url + '/logout');
+        },
+
+        register: function(username, password, passwordConfirmation) {
+            return $http.post(options.api.base_url + '/register', {username: username, password: password, passwordConfirmation: passwordConfirmation });
+        }
+    }
+});
+
+imoveisDbServices.factory('PostService', function($http) {
+    return {
+        
+    }
 });
 
 imoveisDbServices.factory('cepService', ['$rootScope', '$http', '$templateCache', function ($rootScope,$http, $templateCache){

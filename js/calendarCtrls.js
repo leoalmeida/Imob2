@@ -5,8 +5,9 @@ var calendarDbControllers = angular.module('calendarDbControllers', ['ui.calenda
 	$indexedDBProvider
       .connection('imobapp-localdb');
 })
-.controller('CalendarCtrl', ['$scope', '$compile', 'uiCalendarConfig', '$indexedDB',		
-		function($scope,$compile,uiCalendarConfig,$indexedDB) {
+.controller('CalendarCtrl', ['$scope', '$compile', 'uiCalendarConfig', '$sce', 'PostService', '$indexedDB',		
+		function($scope,$compile,uiCalendarConfig, $sce, PostService ,$indexedDB) {
+		  
     var date = new Date();
     var d = date.getDate();
     var m = date.getMonth();
@@ -35,6 +36,20 @@ var calendarDbControllers = angular.module('calendarDbControllers', ['ui.calenda
     
     //$scope.eventSources = [$scope.eventSource,$scope.droppedEvents];
     $scope.eventSources = [$scope.droppedEvents];
+    
+    $scope.remoteEvents = [];
+
+    PostService.findAllPublished().success(function(data) {
+        for (var postKey in data) {
+            data[postKey].content = $sce.trustAsHtml(data[postKey].content);
+        }
+
+        $scope.remoteEvents = data;            
+    }).error(function(data, status) {
+        console.log(status);
+        console.log(data);
+    });
+    
     
     /**
     * @type {ObjectStore} - OBJECT_STORE_EVENTOS
