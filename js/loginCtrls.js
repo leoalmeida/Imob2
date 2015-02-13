@@ -1,14 +1,14 @@
-var loginDbControllers = angular.module('loginDbControllers', ['imoveisDbServices']);
+var loginDbControllers = angular.module('loginDbControllers', []);
 
-loginDbControllers.controller('AdminUserCtrl', ['$scope', '$location', '$window', 'UserService', 'AuthenticationService',
+loginDbControllers.controller('AdminUserCtrl', ['$scope', '$location', '$window', 'UserService', 'AuthenticationService',  
     function AdminUserCtrl($scope, $location, $window, UserService, AuthenticationService) {
  
-        //Admin User Controller (login, logout)
-        $scope.logIn = function logIn(username, password) {
-            if (username !== undefined && password !== undefined) {
- 
-                UserService.logIn(username, password).success(function(data) {
-                    AuthenticationService.isLogged = true;
+        //User Controller (register, login, logout)
+        $scope.signIn = function signIn(username, password) {
+            if (username != null && password != null) {
+
+                UserService.signIn(username, password).success(function(data) {
+                    AuthenticationService.isAuthenticated = true;
                     $window.sessionStorage.token = data.token;
                     $location.path("/home");
                 }).error(function(status, data) {
@@ -18,11 +18,34 @@ loginDbControllers.controller('AdminUserCtrl', ['$scope', '$location', '$window'
             }
         }
  
-        $scope.logout = function logout() {
-            if (AuthenticationService.isLogged) {
-                AuthenticationService.isLogged = false;
-                delete $window.sessionStorage.token;
-                $location.path("/");
+        $scope.logOut = function logOut() {
+            if (AuthenticationService.isAuthenticated) {
+                
+                UserService.logOut().success(function(data) {
+                    AuthenticationService.isAuthenticated = false;
+                    delete $window.sessionStorage.token;
+                    $location.path("/");
+                }).error(function(status, data) {
+                    console.log(status);
+                    console.log(data);
+                });
+            }
+            else {
+                $location.path("/login");
+            }
+        }
+        
+        $scope.register = function register(username, password, passwordConfirm) {
+            if (AuthenticationService.isAuthenticated) {
+                $location.path("/home");
+            }
+            else {
+                UserService.register(username, password, passwordConfirm).success(function(data) {
+                    $location.path("/login");
+                }).error(function(status, data) {
+                    console.log(status);
+                    console.log(data);
+                });
             }
         }
     }
