@@ -31,30 +31,30 @@ imoveisDbControllers.config(function ($indexedDBProvider) {
       			osTipoDocumentos.createIndex("formato_idx", "tipo", { unique: false });
       		}
       		if(!db.objectStoreNames.contains(OBJECT_STORE_CONTRATOS)) {
-            var osContratos = db.createObjectStore(OBJECT_STORE_CONTRATOS, { keyPath: "id", autoIncrement:true });
-            osContratos.createIndex("cpfLocador_idx", "cpfLocador", { unique: false , multientry: true });
-            osContratos.createIndex("cpfLocatario_idx", "cpfLocatario", { unique: false , multientry: true });
-            osContratos.createIndex("idImovel_idx", "idImovel", { unique: false });
-          }
+			var osContratos = db.createObjectStore(OBJECT_STORE_CONTRATOS, { keyPath: "id", autoIncrement:true });
+			osContratos.createIndex("cpfLocador_idx", "cpfLocador", { unique: false , multientry: true });
+			osContratos.createIndex("cpfLocatario_idx", "cpfLocatario", { unique: false , multientry: true });
+			osContratos.createIndex("idImovel_idx", "idImovel", { unique: false });
+		}
       		if(!db.objectStoreNames.contains(OBJECT_STORE_IMOVEIS)) {
-            var osImoveis = db.createObjectStore(OBJECT_STORE_IMOVEIS, { keyPath: "id", autoIncrement:true });
-            osImoveis.createIndex("cpfLocador_idx", "cpfLocador", { unique: false});
-            osImoveis.createIndex("cpfLocatario_idx", "cpfLocatario", { unique: false });
-            osImoveis.createIndex("bairro_idx","bairro", 	{unique:false});
-          }
-          if(!db.objectStoreNames.contains(OBJECT_STORE_CLIENTES)) {
-            var osLocatarios = db.createObjectStore(OBJECT_STORE_CLIENTES, { keyPath: "cpf"});
-            //osLocatarios.createIndex("cpf_idx", "cpfCliente", { unique: false });	
-            osLocatarios.createIndex("tipo_idx", "tipo", { unique: false, multientry: true });			
-            osLocatarios.createIndex("doc_idx", "docs", { unique: false, multientry: true });
-          }
-          if(!db.objectStoreNames.contains(OBJECT_STORE_EVENTOS)) {
-            var osEventos = db.createObjectStore(OBJECT_STORE_EVENTOS, { keyPath: "id", autoIncrement:true });
-            osEventos.createIndex("idContrato_idx", "idContrato", { unique: false });
-            osEventos.createIndex("tipoEvento_idx", "tipoEvento", { unique: false });
-            osEventos.createIndex("acaoEvento_idx", "acaoEvento", { unique: false });
-          }
-      });       
+			var osImoveis = db.createObjectStore(OBJECT_STORE_IMOVEIS, { keyPath: "id", autoIncrement:true });
+			osImoveis.createIndex("cpfLocador_idx", "cpfLocador", { unique: false});
+			osImoveis.createIndex("cpfLocatario_idx", "cpfLocatario", { unique: false });
+			osImoveis.createIndex("bairro_idx","bairro", 	{unique:false});
+		}
+		if(!db.objectStoreNames.contains(OBJECT_STORE_CLIENTES)) {
+			var osLocatarios = db.createObjectStore(OBJECT_STORE_CLIENTES, { keyPath: "cpf"});
+			//osLocatarios.createIndex("cpf_idx", "cpfCliente", { unique: false });	
+			osLocatarios.createIndex("tipo_idx", "tipo", { unique: false, multientry: true });			
+			osLocatarios.createIndex("doc_idx", "docs", { unique: false, multientry: true });
+		}
+		if(!db.objectStoreNames.contains(OBJECT_STORE_EVENTOS)) {
+			var osEventos = db.createObjectStore(OBJECT_STORE_EVENTOS, { keyPath: "id", autoIncrement:true });
+			osEventos.createIndex("idContrato_idx", "idContrato", { unique: false });
+			osEventos.createIndex("tipoEvento_idx", "tipoEvento", { unique: false });
+			osEventos.createIndex("acaoEvento_idx", "acaoEvento", { unique: false });
+		}
+      });
 });
 
 imoveisDbControllers.controller('HomeCtrl', ['$scope', '$indexedDB', 
@@ -709,6 +709,7 @@ imoveisDbControllers.controller('ImoveisCtrl', ['$scope', '$indexedDB',
 	} else {
 		buscaImoveis();
 	}
+ex
 			
 }]);
 

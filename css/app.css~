@@ -5,5 +5,3 @@ body {
 .notetitle,.tagLookup {
     cursor:pointer;
 }
-
-

@@ -27,7 +27,7 @@ imoveisDbServices.factory('TokenInterceptor', function ($q, $window, $location, 
         /* Set Authentication.isAuthenticated to true if 200 received */
         response: function (response) {
             if (response != null && response.status == 200 && $window.sessionStorage.token && !AuthenticationService.isAuthenticated) {
-                AuthenticationService.isAuthenticated = true;
+                AuthenticationService.isAuthenticated = true;                
             }
             return response || $q.when(response);
         },
@@ -103,12 +103,6 @@ imoveisDbServices.factory('UserService', function($http) {
         register: function(username, password, passwordConfirmation) {
             return $http.post(options.api.base_url + '/users/register', {username: username, password: password, passwordConfirmation: passwordConfirmation });
         }
-    }
-});
-
-imoveisDbServices.factory('PostService', function($http) {
-    return {
-        
     }
 });
 

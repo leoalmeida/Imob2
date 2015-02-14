@@ -10,7 +10,7 @@ loginDbControllers.controller('AdminUserCtrl', ['$scope', '$location', '$window'
                 UserService.signIn(username, password).success(function(data) {
                     AuthenticationService.isAuthenticated = true;
                     $window.sessionStorage.token = data.token;
-                    $location.path("/home");
+                    $location.path("/");
                 }).error(function(status, data) {
                     console.log(status);
                     console.log(data);

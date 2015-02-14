@@ -9,90 +9,84 @@ var options = {};
 options.api = {};
 options.api.base_url = "http://localhost:3001";
 
-
-imobDbApp.config(function ($httpProvider) {
-    $httpProvider.interceptors.push('TokenInterceptor');
-});
-
 imobDbApp.config(['$routeProvider', '$locationProvider', 'hammerDefaultOptsProvider',
 	function($routeProvider , $locationProvider, hammerDefaultOptsProvider)
 	{			
 		$routeProvider.
-			when('/home', {
+		  when('/', {
 				templateUrl: 'partials/home.html',
 				controller: 'HomeCtrl',
-				access: { requiredLogin: true }
+				access: { requiredAuthentication: true }
 			}).
       when('/login', {
         templateUrl: 'partials/login.html',
         controller: 'AdminUserCtrl',
         css: 'css/login.css',
-        access: { requiredLogin: false }
       }).
       when('/logout', {
           templateUrl: 'partials/logout.html',
           controller: 'AdminUserCtrl',
-          access: { requiredLogin: true }
+          access: { requiredAuthentication: true  }
       }).
 			when('/cadastro/clientes', { 
 				templateUrl: 'partials/listViewClientes.html',
 				controller: 'ClientesCtrl',
-				access: { requiredLogin: true }
+				access: { requiredAuthentication: true }
 			}).
 			when('/cadastro/clientes/:type', {  
 				templateUrl: 'partials/formNewClientes.html',
 				controller: 'ClientesEditCtrl',
-				access: { requiredLogin: true }
+				access: { requiredAuthentication: true }
 			}).
 			when('/cadastro/clientes/:type/:id', { 
 				templateUrl: 'partials/formNewClientes.html',
 				controller: 'ClientesEditCtrl',	
-				access: { requiredLogin: true }
+				access: { requiredAuthentication: true }
 			}).
 			when('/cadastro/imoveis', { 
 				templateUrl: 'partials/listViewImoveis.html',
 				controller: 'ImoveisCtrl',
-				access: { requiredLogin: true }
+				access: { requiredAuthentication: true }
 			}).
 			when('/cadastro/imoveis/:type', {  
 				templateUrl: 'partials/formNewImoveis.html',
 				controller: 'ImoveisEditCtrl',
-				access: { requiredLogin: true }	
+				access: { requiredAuthentication: true }	
 			}).
 			when('/cadastro/imoveis/:type/:id', {
 				templateUrl: 'partials/formNewImoveis.html',
 				controller: 'ImoveisEditCtrl',
-				access: { requiredLogin: true }
+				access: { requiredAuthentication: true }
 			}).
 			when('/cadastro/contratos', { 
 				templateUrl: 'partials/listViewContratos.html',
 				controller: 'ContratosCtrl',
-				access: { requiredLogin: true }
+				access: { requiredAuthentication: true }
 			}).
 			when('/cadastro/contratos/:type', {  
 				templateUrl: 'partials/formNewContratos.html',
 				controller: 'ContratosEditCtrl',
-				access: { requiredLogin: true }			
+				access: { requiredAuthentication: true }			
 			}).
 			when('/cadastro/contratos/:type/:id', {
 				templateUrl: 'partials/formNewContratos.html',
 				controller: 'ContratosEditCtrl',
-				access: { requiredLogin: true }
+				access: { requiredAuthentication: true }
 			}).
 			when('/cadastro/eventos', { 
 				templateUrl: 'partials/listViewEventos.html',
 				controller: 'EventosCtrl',
-				access: { requiredLogin: true }
+				access: { requiredAuthentication: true }
 			}).
 			when('/cadastro/eventos/:type', {  
 				templateUrl: 'partials/formNewEventos.html',
 				controller: 'EventosEditCtrl',
-				access: { requiredLogin: true }	
+				access: { requiredAuthentication: true }	
 			}).
 			when('/cadastro/eventos/:type/:id', {
 				templateUrl: 'partials/formNewEventos.html',
 				controller: 'EventosEditCtrl',
-				access: { requiredLogin: true }
+				access: { requiredAuthentication: true }
 			}).						
 			when('/unsupported', {
 				templateUrl: 'partials/unsupported.html'
@@ -100,18 +94,18 @@ imobDbApp.config(['$routeProvider', '$locationProvider', 'hammerDefaultOptsProvi
 			when('/dashboard', {  
 				templateUrl: 'partials/home.html',
 				controller: 'ClientesCtrl',
-				access: { requiredLogin: true }
+				access: { requiredAuthentication: true }
 			}).
 			when('/calendario', {  
 				templateUrl: 'partials/calendario.html',
 				controller: 'CalendarCtrl',
 				css: 'css/calendar.css',
-				access: { requiredLogin: true }
+				access: { requiredAuthentication: true }
 			}).
 			when('/calculadoras/emprestimo', {  
 				templateUrl: 'partials/calculadoraEmprestimo.html',
 				controller: 'calculadoraCtrl',
-				access: { requiredLogin: false }
+				access: { requiredAuthentication: false }
 			}).
 			otherwise({
 				redirectTo: '/login'
@@ -130,10 +124,16 @@ imobDbApp.config(['$routeProvider', '$locationProvider', 'hammerDefaultOptsProvi
 	}
 ]);
 
-imobDbApp.run(function($rootScope, $location, AuthenticationService) {
+imobDbApp.config(function ($httpProvider) {
+    $httpProvider.interceptors.push('TokenInterceptor');
+});
+
+imobDbApp.run(function($rootScope, $location, $window, AuthenticationService) {
     $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
-        if (nextRoute.access.requiredLogin && !AuthenticationService.isLogged) {
+         if (nextRoute != null && nextRoute.access != null && nextRoute.access.requiredAuthentication 
+            && !AuthenticationService.isAuthenticated && !$window.sessionStorage.token) {
             $location.path("/login").replace();
+            $rootScope.hidemenu = true;
         }
     });
 });

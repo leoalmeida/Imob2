@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <!-- <html lang="en" manifest="cache.manifest" ng-app="imobDbApp"> -->
-<html lang="en" ng-app="imobDbApp">
+<html lang="pt-br" ng-app="imobDbApp">
 <head>    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <base href="/Imobcat2/index.html">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
-    <meta name="author" content="">    
+    <meta name="author" content="Leonardo Almeida">
+    <meta name="fragment" content="!">
+    
 
     <title>Imob</title>
 
@@ -103,7 +106,7 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">	
           <ul class="nav navbar-nav">				  
-            <li class="active"><a href="./home"><i class="fa fa-home fa-fw"></i>&nbsp; Dashboard <span class="sr-only">(current)</span></a></li>					
+            <li class="active"><a href="./"><i class="fa fa-home fa-fw"></i>&nbsp; Dashboard <span class="sr-only">(current)</span></a></li>					
             <li class="dropdown">
               <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-archive fa-fw"></i>&nbsp; Cadastro <span class="caret"></span></a>					  
               <ul class="dropdown-menu" role="menu">
@@ -116,13 +119,8 @@
                 <li><a href="#!/relatorios" target="_self"><i class="fa fa-file-pdf-o fa-fw"></i>&nbsp;&nbsp;&nbsp;&nbsp;Relat&oacute;rios</a></li>
               </ul>
             </li>
-          </ul>                  
-          <ul class="nav navbar-nav">
-                <li><a href="#!/calendario" target="_self"><i class="fa fa-calendar fa-fw"></i>&nbsp; Calendário</a></li>                
-                <!--  <li><a href="#!/profile" target="_self"><i class="fa fa-users fa-fw"></i>&nbsp; Profile</a></li>-->          
-          </ul>
-          
-          <ul class="nav navbar-nav">            				
+            <li><a href="#!/calendario" target="_self"><i class="fa fa-calendar fa-fw"></i>&nbsp; Calendário</a></li>                
+            <!--  <li><a href="#!/profile" target="_self"><i class="fa fa-users fa-fw"></i>&nbsp; Profile</a></li>-->
             <li class="dropdown">
               <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-calculator fa-fw"></i>&nbsp; Calculadoras <span class="caret"></span></a>					  
               <ul class="dropdown-menu" role="menu">                		                
@@ -132,7 +130,7 @@
             </li>
           </ul>
           
-          <ul class="nav navbar-nav navbar-right">
+          <ul class="nav navbar-nav navbar-right" data-ng-hide="hidemenu">
             <li>
             <form class="navbar-form navbar-left" role="search">
               <div class="form-group">
@@ -141,11 +139,9 @@
               </div>
             </form>				
             </li>
-             <!--  <li>
-              <a href="" data-toggle="modal" data-target="#login-overlay" aria-expanded="false">
-                <i class="fa fa-user fa-fw"></i>&nbsp; Login
-              </a>					  
-            </li>-->
+            <li>              
+              <a href="#!/logout" target="_self"><i class="fa fa-user fa-fw"></i>&nbsp; Logout</a>					  
+            </li>
           </ul>
 			</div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
