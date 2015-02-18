@@ -1,5 +1,4 @@
 /* global angular,window */
-var imoveisDbServices = angular.module('imoveisDbServices', []);
 
 imoveisDbServices.factory('AuthenticationService', function() {
     var auth = {        
@@ -45,46 +44,34 @@ imoveisDbServices.factory('TokenInterceptor', function ($q, $window, $location, 
     };
 });
 
-appServices.factory('PostService', function($http) {
+imoveisDbServices.factory('PostService', function($http) {
     return {
         findAllPublished: function() {
-            return $http.get(options.api.base_url + '/post');
-        },
-
-        findByTag: function(tag) {
-            return $http.get(options.api.base_url + '/tag/' + tag);
-        },
-
-        read: function(id) {
-            return $http.get(options.api.base_url + '/post/' + id);
+            return $http.get(options.api.base_url + '/syncs/items');
         },
         
         findAll: function() {
-            return $http.get(options.api.base_url + '/post/all');
+            return $http.get(options.api.base_url + '/syncs/items/all');
+        },        
+
+        find: function(id) {
+            return $http.get(options.api.base_url + '/syncs/item/' + id);
+        },
+        
+        findByTag: function(tag) {
+            return $http.get(options.api.base_url + '/syncs/items/tag/' + tag);
+        },
+        
+        publish: function(post) {
+            return $http.post(options.api.base_url + '/syncs/items', {'post': post});
         },
 
-        changePublishState: function(id, newPublishState) {
-            return $http.put(options.api.base_url + '/post', {'post': {_id: id, is_published: newPublishState}});
+        publishUpdate: function(post) {
+            return $http.put(options.api.base_url + '/syncs/items', {'post': post});
         },
-
-        delete: function(id) {
-            return $http.delete(options.api.base_url + '/post/' + id);
-        },
-
-        create: function(post) {
-            return $http.post(options.api.base_url + '/post', {'post': post});
-        },
-
-        update: function(post) {
-            return $http.put(options.api.base_url + '/post', {'post': post});
-        },
-
-        like: function(id) {
-            return $http.post(options.api.base_url  + '/post/like', {'id': id});
-        },
-
-        unlike: function(id) {
-            return $http.post(options.api.base_url  + '/post/unlike', {'id': id}); 
+                
+        publishDelete: function(id) {
+            return $http.delete(options.api.base_url + '/syncs/item/' + id);
         }
     };
 });

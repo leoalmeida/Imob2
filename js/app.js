@@ -1,13 +1,23 @@
 /* global angular,window */
-var imobDbApp = angular.module('imobDbApp', ['angular-gestures', 'ngRoute', 'ngResource', 'loginDbControllers','imoveisDbControllers', 'imoveisDbFilters', 'imoveisDbServices', 'calcController', 'calendarDbControllers', 'imoveisDbDirectives']);
+var imobDbApp = angular.module('imobDbApp', ['angular-gestures', 'ngRoute', 'ngResource', 'loginDbControllers','imoveisDbControllers', 'imoveisDbFilters', 'imoveisDbServices', 'calcController', 'calendarDbControllers', 'syncDbControllers', 'imoveisDbDirectives']);
 
-var appServices = angular.module('imoveisDbServices', []);
-var appControllers = angular.module('imoveisDbControllers', []);
-var appDirectives = angular.module('imoveisDbDirectives', []);
+ 
+var loginDbControllers = angular.module('loginDbControllers', []);
+var syncDbControllers = angular.module('syncDbControllers', ['ui.bootstrap', 'ngAnimate', 'xc.indexedDB']);
+var calendarDbControllers = angular.module('calendarDbControllers', ['ui.calendar', 'ui.bootstrap', 'ngDraggable', 'ngAnimate', 'xc.indexedDB']);
+var calcController = angular.module('calcController', []);
+var imoveisDbControllers = angular.module('imoveisDbControllers', ['ui.bootstrap', 'ngResource', 'ngAnimate', 'xc.indexedDB']);
+var imoveisDbDirectives = angular.module('imoveisDbDirectives', []);
+var imoveisDbServices = angular.module('imoveisDbServices', []);
+var imoveisDbFilters = angular.module('imoveisDbFilters', []);
+
 
 var options = {};
 options.api = {};
 options.api.base_url = "http://localhost:3001";
+options.api.msgs = {"nottosync":"Não há informações para sincronizar", 
+                    "syncing":"Aguarde, estamos em sincronização com o servidor!!"};
+options.api.equipid = "default";
 
 imobDbApp.config(['$routeProvider', '$locationProvider', 'hammerDefaultOptsProvider',
 	function($routeProvider , $locationProvider, hammerDefaultOptsProvider)
@@ -21,13 +31,18 @@ imobDbApp.config(['$routeProvider', '$locationProvider', 'hammerDefaultOptsProvi
       when('/login', {
         templateUrl: 'partials/login.html',
         controller: 'AdminUserCtrl',
-        css: 'css/login.css',
+        css: 'css/login.css'
       }).
       when('/logout', {
           templateUrl: 'partials/logout.html',
           controller: 'AdminUserCtrl',
           access: { requiredAuthentication: true  }
       }).
+      when('/sync', {
+				templateUrl: 'partials/sync.html',
+				controller: 'syncCtrl',
+				access: { requiredAuthentication: true }
+			}).
 			when('/cadastro/clientes', { 
 				templateUrl: 'partials/listViewClientes.html',
 				controller: 'ClientesCtrl',
@@ -132,8 +147,15 @@ imobDbApp.run(function($rootScope, $location, $window, AuthenticationService) {
     $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
          if (nextRoute != null && nextRoute.access != null && nextRoute.access.requiredAuthentication 
             && !AuthenticationService.isAuthenticated && !$window.sessionStorage.token) {
-            $location.path("/login").replace();
             $rootScope.hidemenu = true;
+            $location.path("/login").replace();            
         }
-    });
+        
+        if (nextRoute.access.requiredAuthentication 
+            && AuthenticationService.isAuthenticated 
+            && $window.sessionStorage.token){        
+            $rootScope.hidemenu = false;
+            options.api.equipid = $window.sessionStorage.equipid;
+        }
+    });    
 });

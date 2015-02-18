@@ -19,8 +19,6 @@ var OBJECT_STORE_IMOVEIS = 'imovel';
 var OBJECT_STORE_CONTRATOS = 'contrato';
 var OBJECT_STORE_DOCUMENTOS = 'documento';
 var OBJECT_STORE_TIPODOC = 'tipoDocumento';
-//var imoveisDbControllers = angular.module('imoveisDbControllers', ['imoveisDbServices']);
-var imoveisDbControllers = angular.module('imoveisDbControllers', ['ui.bootstrap', 'ngResource', 'ngAnimate', 'xc.indexedDB']);
 
 imoveisDbControllers.config(function ($indexedDBProvider) {
 	$indexedDBProvider
@@ -599,7 +597,7 @@ imoveisDbControllers.controller('ClientesEditCtrl', ['$scope', '$log', '$rootSco
       .upsert($scope.novocliente)
       .then(function(e){
           $log.info('Cliente' + $scope.novocliente.nome + 'included with CPF:'+  $scope.novocliente.cpf +  ' at:' + new Date());
-          $location.path('#!/cadastro/clientes').replace();
+          $location.path("/cadastro/clientes").replace();
       });
 		
 	};

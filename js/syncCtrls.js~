@@ -1,0 +1,63 @@
+var OBJECT_STORE_EVENTOS = 'evento';
+
+syncDbControllers.config(function ($indexedDBProvider) {
+	$indexedDBProvider
+      .connection('imobapp-localdb');
+});
+
+syncDbControllers.controller('syncCtrl', ['$scope', '$location', 'PostService', '$indexedDB',		
+		function($scope, $location, PostService, $indexedDB) {
+		      
+    $scope.syncedItems = [];
+    $scope.syncedQtd = 0;
+    $scope.syncSize = 0;
+    $scope.percDone = 0;
+ 
+    /**
+    * @type {ObjectStore} - OBJECT_STORE_EVENTOS
+    */
+	  var eventosObjectStore = $indexedDB.objectStore(OBJECT_STORE_EVENTOS);
+	  
+	  function sincronizaEventos() {
+        eventosObjectStore.getAll().then(function(eventosList) {
+            $scope.syncSize = eventosList.length;
+            if ($scope.syncSize == 0) {
+                $scope.msgInformativa = options.api.msgs.nottosync;                
+                console.log("Não há informações para sincronizar");
+                return;
+            }
+            $scope.msgInformativa = options.api.msgs.syncing;
+            $scope.showDetalhes = false;
+              
+            angular.forEach(eventosList, function(value, key){               
+                
+                PostService.publish(value).success(function(data) {
+                    console.log(status);
+                    console.log(data);
+                    this.push({
+                        type: "Evento",
+                        id: value.id,
+                        title: value.titulo,
+                        detail: value.descricao
+                    });
+                    $scope.syncedQtd++;
+                }).error(function(status, data) {
+                    console.log(status);
+                    console.log(data);
+                });
+                $scope.percDone = 100*$scope.syncedQtd/$scope.syncSize;               
+            }, $scope.syncedItems);            
+            $scope.percDone = 100;
+            console.log(status);
+            console.log("Sincronização finalizada");
+        });		
+    }
+    
+    if($indexedDB.onDatabaseError) {
+      $location.path('/unsupported');
+    } else {	
+        sincronizaEventos();
+    }
+  
+}
+]);

@@ -39,7 +39,7 @@
                                         <span class="sr-only">Toggle Dropdown</span>
                                       </button>
                                       <ul id="imovelList" class="dropdown-menu" role="menu">
-                                        <li class="text-capitalize" data-ng-repeat="imvl in imoveisList"><a href="#"  data-value="" data-ng-click="imovel.obj = imvl" >{{imvl.id}}: {{imvl.tipoImovel}}/{{imvl.endereco.bairro}}</a></li>                                     
+                                        <li class="text-capitalize" data-ng-repeat="imvl in imoveisList" data-ng-click="imovel.obj = imvl">{{imvl.id}}: {{imvl.tipoImovel}}/{{imvl.endereco.bairro}}</li>                                     
                                       </ul>
                                   </div>
                                 </div>
@@ -84,7 +84,7 @@
                                         <span class="sr-only">Toggle Dropdown</span>
                                       </button>
                                       <ul id="locList" class="dropdown-menu" role="menu">                                        
-                                        <li  data-ng-repeat="itemCliente in clientesList | filter:filter"  data-ng-click="locatario.obj = itemCliente" ><a href="#"data-value="teste">{{itemCliente.cpf}}</a></li>                                        
+                                        <li data-ng-repeat="itemCliente in clientesList | filter:filter"  data-ng-click="locatario.obj = itemCliente" >{{itemCliente.cpf}}</li>                                        
                                       </ul>
                                   </div>
                                 </div>
@@ -132,7 +132,7 @@
                                             <span class="sr-only">Toggle Dropdown</span>
                                         </button>
                                         <ul id="fiaList" class="dropdown-menu" role="menu">
-                                            <li><a href="#"  data-ng-repeat="itemFiador in clientesList | filter:filter"  data-value="teste" data-ng-click="fiador.obj = itemFiador">{{itemFiador.cpf}}</a></li>                                                                          
+                                            <li data-ng-repeat="itemFiador in clientesList | filter:filter"  data-ng-click="fiador.obj = itemFiador">{{itemFiador.cpf}}</li>                                                                          
                                         </ul>
                                     </div>
                                   </div>
@@ -192,14 +192,12 @@
                   </div>
           </div>
       </div>
-      
-      <pre>{{novocontrato | json}}</pre>
-      
+           
       <div class="form-group">
             <div class="row">
             <div class="col-xs-offset-2 col-md-offset-2 col-xs-10 col-md-8">			
               <button data-ng-disabled="progress.active()" data-ng-click="submit(myForm)" class="btn btn-success btn-lg col-xs-offset-2 col-md-offset-2 col-xs-3 col-md-3" ><i class="fa fa-upload fa-fw fa-inverse"></i>&nbsp;Finalizar</button>
-              <button class="btn btn-danger btn-lg col-xs-offset-2 col-md-offset-2 col-xs-3 col-md-3" ><i class="fa fa-times fa-fw fa-inverse"></i>&nbsp;Cancelar</button>
+              <a class="btn btn-danger btn-lg col-xs-offset-3 col-md-offset-3 col-xs-3 col-md-3" href="#!/cadastro/contratos" target="_self"><i class="fa fa-times fa-fw fa-inverse"></i>&nbsp;Cancelar</a>
             </div>
             </div>
       </div>

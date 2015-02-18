@@ -27,7 +27,7 @@ imoveisDbServices.factory('TokenInterceptor', function ($q, $window, $location, 
         /* Set Authentication.isAuthenticated to true if 200 received */
         response: function (response) {
             if (response != null && response.status == 200 && $window.sessionStorage.token && !AuthenticationService.isAuthenticated) {
-                AuthenticationService.isAuthenticated = true;
+                AuthenticationService.isAuthenticated = true;                
             }
             return response || $q.when(response);
         },
@@ -37,7 +37,7 @@ imoveisDbServices.factory('TokenInterceptor', function ($q, $window, $location, 
             if (rejection != null && rejection.status === 401 && ($window.sessionStorage.token || AuthenticationService.isAuthenticated)) {
                 delete $window.sessionStorage.token;
                 AuthenticationService.isAuthenticated = false;
-                $location.path("/admin/login");
+                $location.path("/login");
             }
  
             return $q.reject(rejection);
@@ -93,22 +93,16 @@ appServices.factory('PostService', function($http) {
 imoveisDbServices.factory('UserService', function($http) {
     return {
         signIn: function(username, password) {
-            return $http.post(options.api.base_url + '/signin', {username: username, password: password});
+            return $http.post(options.api.base_url + '/users/signin', {username: username, password: password});
         },
 
         logOut: function() {
-            return $http.get(options.api.base_url + '/logout');
+            return $http.get(options.api.base_url + '/users/logout');
         },
 
         register: function(username, password, passwordConfirmation) {
-            return $http.post(options.api.base_url + '/register', {username: username, password: password, passwordConfirmation: passwordConfirmation });
+            return $http.post(options.api.base_url + '/users/register', {username: username, password: password, passwordConfirmation: passwordConfirmation });
         }
-    }
-});
-
-imoveisDbServices.factory('PostService', function($http) {
-    return {
-        
     }
 });
 

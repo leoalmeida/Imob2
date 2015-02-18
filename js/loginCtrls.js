@@ -1,4 +1,3 @@
-var loginDbControllers = angular.module('loginDbControllers', []);
 
 loginDbControllers.controller('AdminUserCtrl', ['$scope', '$location', '$window', 'UserService', 'AuthenticationService',  
     function AdminUserCtrl($scope, $location, $window, UserService, AuthenticationService) {
@@ -10,7 +9,10 @@ loginDbControllers.controller('AdminUserCtrl', ['$scope', '$location', '$window'
                 UserService.signIn(username, password).success(function(data) {
                     AuthenticationService.isAuthenticated = true;
                     $window.sessionStorage.token = data.token;
-                    $location.path("/");
+                    if (!$window.sessionStorage.equipid){
+                        $window.sessionStorage.equipid="teste1";
+                    }                    
+                    $location.path("/").replace();
                 }).error(function(status, data) {
                     console.log(status);
                     console.log(data);
@@ -24,7 +26,7 @@ loginDbControllers.controller('AdminUserCtrl', ['$scope', '$location', '$window'
                 UserService.logOut().success(function(data) {
                     AuthenticationService.isAuthenticated = false;
                     delete $window.sessionStorage.token;
-                    $location.path("/");
+                    $location.path("/").replace();
                 }).error(function(status, data) {
                     console.log(status);
                     console.log(data);
@@ -37,7 +39,7 @@ loginDbControllers.controller('AdminUserCtrl', ['$scope', '$location', '$window'
         
         $scope.register = function register(username, password, passwordConfirm) {
             if (AuthenticationService.isAuthenticated) {
-                $location.path("/home");
+                $location.path("/").replace();
             }
             else {
                 UserService.register(username, password, passwordConfirm).success(function(data) {
