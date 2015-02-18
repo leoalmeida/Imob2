@@ -28,6 +28,10 @@ syncDbControllers.controller('syncCtrl', ['$scope', '$location', 'PostService', 
         sincronizaContratos();
         sincronizaClientes();
         sincronizaImoveis();
+        if ($scope.syncSize == 0) {
+            $scope.percDone = 100;
+            $scope.msgInformativa = options.api.msgs.finalsync;
+        }
     }
     
 	  function sincronizaEventos() {
@@ -36,8 +40,7 @@ syncDbControllers.controller('syncCtrl', ['$scope', '$location', 'PostService', 
             var objtags = "Eventos";
             $scope.syncSize = $scope.syncSize + itemsList.length;
             if ($scope.syncSize == 0) {
-                $scope.msgInformativa = options.api.msgs.nottosync;                
-                console.log("Não há informações para sincronizar");
+                $scope.msgInformativa = options.api.msgs.nottosync;    
                 return;
             }
             $scope.msgInformativa = options.api.msgs.syncing;
@@ -63,6 +66,9 @@ syncDbControllers.controller('syncCtrl', ['$scope', '$location', 'PostService', 
                     $scope.syncedItems.push(data.content);
                     $scope.syncedQtd++;
                     $scope.percDone = 100*$scope.syncedQtd/$scope.syncSize;
+                    if ($scope.percDone == 100) {
+                        $scope.msgInformativa = options.api.msgs.finalsync;
+                    }
                 }).error(function(status, data) {
                     console.log(status);
                     console.log(data);
@@ -80,7 +86,7 @@ syncDbControllers.controller('syncCtrl', ['$scope', '$location', 'PostService', 
             $scope.syncSize = $scope.syncSize + itemsList.length;
             if ($scope.syncSize == 0) {
                 $scope.msgInformativa = options.api.msgs.nottosync;                
-                console.log("Não há informações para sincronizar");
+                console.log("Não há informações para sincronizar");                                
                 return;
             }
             $scope.msgInformativa = options.api.msgs.syncing;
@@ -106,6 +112,9 @@ syncDbControllers.controller('syncCtrl', ['$scope', '$location', 'PostService', 
                     $scope.syncedItems.push(data.content);
                     $scope.syncedQtd++;
                     $scope.percDone = 100*$scope.syncedQtd/$scope.syncSize;
+                    if ($scope.percDone == 100) {
+                        $scope.msgInformativa = options.api.msgs.finalsync;
+                    }
                 }).error(function(status, data) {
                     console.log(status);
                     console.log(data);
@@ -149,6 +158,9 @@ syncDbControllers.controller('syncCtrl', ['$scope', '$location', 'PostService', 
                     $scope.syncedItems.push(data.content);
                     $scope.syncedQtd++;
                     $scope.percDone = 100*$scope.syncedQtd/$scope.syncSize;
+                    if ($scope.percDone == 100) {
+                        $scope.msgInformativa = options.api.msgs.finalsync;
+                    }
                 }).error(function(status, data) {
                     console.log(status);
                     console.log(data);
@@ -192,6 +204,9 @@ syncDbControllers.controller('syncCtrl', ['$scope', '$location', 'PostService', 
                     $scope.syncedItems.push(data.content);
                     $scope.syncedQtd++;
                     $scope.percDone = 100*$scope.syncedQtd/$scope.syncSize;
+                    if ($scope.percDone == 100) {
+                        $scope.msgInformativa = options.api.msgs.finalsync;
+                    }
                 }).error(function(status, data) {
                     console.log(status);
                     console.log(data);

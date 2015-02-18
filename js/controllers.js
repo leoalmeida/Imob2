@@ -31,26 +31,28 @@ imoveisDbControllers.config(function ($indexedDBProvider) {
       		if(!db.objectStoreNames.contains(OBJECT_STORE_CONTRATOS)) {
             var osContratos = db.createObjectStore(OBJECT_STORE_CONTRATOS, { keyPath: "id", autoIncrement:true });
             osContratos.createIndex("cpfLocador_idx", "cpfLocador", { unique: false , multientry: true });
-            osContratos.createIndex("cpfLocatario_idx", "cpfLocatario", { unique: false , multientry: true });
-            osContratos.createIndex("idImovel_idx", "idImovel", { unique: false });
+            osContratos.createIndex("lastsyncdate_idx", "lastsyncdate", { unique: false });
           }
       		if(!db.objectStoreNames.contains(OBJECT_STORE_IMOVEIS)) {
             var osImoveis = db.createObjectStore(OBJECT_STORE_IMOVEIS, { keyPath: "id", autoIncrement:true });
             osImoveis.createIndex("cpfLocador_idx", "cpfLocador", { unique: false});
             osImoveis.createIndex("cpfLocatario_idx", "cpfLocatario", { unique: false });
             osImoveis.createIndex("bairro_idx","bairro", 	{unique:false});
+            osImoveis.createIndex("lastsyncdate_idx", "lastsyncdate", { unique: false });
           }
           if(!db.objectStoreNames.contains(OBJECT_STORE_CLIENTES)) {
             var osLocatarios = db.createObjectStore(OBJECT_STORE_CLIENTES, { keyPath: "cpf"});
-            //osLocatarios.createIndex("cpf_idx", "cpfCliente", { unique: false });	
+            osLocatarios.createIndex("cpf_idx", "cpfCliente", { unique: false });	
             osLocatarios.createIndex("tipo_idx", "tipo", { unique: false, multientry: true });			
             osLocatarios.createIndex("doc_idx", "docs", { unique: false, multientry: true });
+            osLocatarios.createIndex("lastsyncdate_idx", "lastsyncdate", { unique: false });
           }
           if(!db.objectStoreNames.contains(OBJECT_STORE_EVENTOS)) {
             var osEventos = db.createObjectStore(OBJECT_STORE_EVENTOS, { keyPath: "id", autoIncrement:true });
             osEventos.createIndex("idContrato_idx", "idContrato", { unique: false });
             osEventos.createIndex("tipoEvento_idx", "tipoEvento", { unique: false });
             osEventos.createIndex("acaoEvento_idx", "acaoEvento", { unique: false });
+            osEventos.createIndex("lastsyncdate_idx", "lastsyncdate", { unique: false });
           }
       });       
 });
@@ -91,309 +93,7 @@ imoveisDbControllers.controller('HomeCtrl', ['$scope', '$indexedDB',
 	    $scope.selected = section;
 	};
 	   
-	function init() {
-		/**
-		* @type {ObjectStore} CLIENTES
-		*/
-		var ObjectStore = $indexedDB.objectStore(OBJECT_STORE_CLIENTES);
-		ObjectStore.clear();
-		ObjectStore
-			.insert({	"cpf": "05171062722",
-				"tipo": {"locador":true,"locatario":true,"dono":true,"fiador":true},
-				"nome": "Leonardo Almeida Silva Ferreira",
-				"email": "teste@teste.com",
-				"telefones": {"celular": "21987662612","fixo": "2122058301"},
-				"documentos":{	"1":{	"id":"1",
-							"nome": "Archi User Guide PDF",
-							"tipo": "PDF",
-							"descricao": "Archi User Guide in PDF format (this is already included in the application download)", 
-							"link": "http://www.archimatetool.com/downloads/latest/Archi%20User%20Guide.pdf",
-							"versao": "1",
-							"historico": {},
-							"updated":new Date()},
-						"2":{	"id":"2",
-							"nome": "Archi User Guide eBook",
-							"tipo": "PDF",
-							"descricao": "Archi User Guide in ePub format", 
-							"link": "http://www.archimatetool.com/downloads/latest/Archi%20User%20Guide.epub",
-							"versao": "1",
-							"historico": {},
-							"updated":new Date()},
-						"3":{	"id":"3",
-							"nome": "Desenvolvimento de Softwares",
-							"tipo": "PDF",
-							"descricao": "Manual de Procedimentos para Desenvolvimento de Softwares", 
-							"link": "http://www.sin.ufscar.br/manual-procedimento-desenvolvimento-software",
-							"versao": "1",
-							"historico": {},
-							"updated":new Date()},
-						"4":{	"id":"4",
-							"nome": "Partitura Walpaper",
-							"tipo": "IMG",
-							"descricao": "Papel de parede no estilo de partitura", 
-							"link": "http://files.partiturasearranjos1.webnode.com/200000058-b6a6cb79de/partitura-wallpaper-11944.jpg",
-							"versao": "1",
-							"historico": {},
-							"updated":new Date()}},
-				"enderecos": {"Principal":{"tipoimovel": "casa",
-						"tipo":"Rua",
-						"rua": "Buarque de Macedo", 
-						"numero": 32,
-						"complemento": "202",
-						"bairro": "Flamengo",
-						"cidade": "Rio de Janeiro",
-						"estado": "RJ",
-						"pais": "Brasil"},"Adicional":{"tipoimovel": "casa",
-						"tipo":"Rua",
-						"rua": "Buarque de Macedo", 
-						"numero": 32,
-						"complemento": "202",
-						"bairro": "Flamengo",
-						"cidade": "Rio de Janeiro",
-						"estado": "RJ",
-						"pais": "Brasil"}},
-				"updated":new Date()});
-		ObjectStore
-			.insert({"cpf": "3140486819",
-				"tipo": {"locador":true,"locatario":true,"dono":true,"fiador":true},
-				"nome": "Thais de Moura Cardoso",
-				"email": "teste@teste.com",
-				"telefones": {"celular": "21984369758","fixo": "2122058301"}, 
-				"documentos":{},
-				"enderecos": {"Principal":{"tipoimovel": "casa",
-						"tipo":"Rua",
-						"rua": "Buarque de Macedo", 
-						"numero": 32,
-						"complemento": "202",
-						"bairro": "Flamengo",
-						"cidade": "Rio de Janeiro",
-						"estado": "RJ",
-						"pais": "Brasil"},"Adicional":{"tipoimovel": "casa",
-						"tipo":"Rua",
-						"rua": "Buarque de Macedo", 
-						"numero": 32,
-						"complemento": "202",
-						"bairro": "Flamengo",
-						"cidade": "Rio de Janeiro",
-						"estado": "RJ",
-						"pais": "Brasil"}},
-				"updated":new Date()});
-		ObjectStore
-			.insert({"cpf": "49300008749",
-				"tipo": {"locador":true,"locatario":true,"dono":true,"fiador":true},
-				"nome": "Sandra Lucia dos Santos",
-				"email": "teste@teste.com",
-				"telefones": {"celular": "21988488175","fixo": "2122058301"}, 
-				"documentos":{},
-				"enderecos": {"Principal":{"tipoimovel": "casa",
-						"tipo":"Rua",
-						"rua": "Buarque de Macedo", 
-						"numero": 32,
-						"complemento": "202",
-						"bairro": "Flamengo",
-						"cidade": "Rio de Janeiro",
-						"estado": "RJ",
-						"pais": "Brasil"},"Adicional":{"tipoimovel": "casa",
-						"tipo":"Rua",
-						"rua": "Buarque de Macedo", 
-						"numero": 32,
-						"complemento": "202",
-						"bairro": "Flamengo",
-						"cidade": "Rio de Janeiro",
-						"estado": "RJ",
-						"pais": "Brasil"}},
-				"updated":new Date()});
-		ObjectStore
-			.insert({"cpf": "12345678900",
-				"tipo": {"locador":false,"locatario":false,"dono":true,"fiador":false},
-				"nome": "Américo Guagliardi",
-				"email": "teste@teste.com",
-				"telefones": {"celular": "21988488175","fixo": "2122058301"}, 
-				"documentos":{},
-				"enderecos": {"Principal":{"tipoimovel": "casa",
-						"tipo":"Rua",
-						"rua": "Buarque de Macedo", 
-						"numero": 32,
-						"complemento": "202",
-						"bairro": "Flamengo",
-						"cidade": "Rio de Janeiro",
-						"estado": "RJ",
-						"pais": "Brasil"},"Adicional":{"tipoimovel": "casa",
-						"tipo":"Rua",
-						"rua": "Buarque de Macedo", 
-						"numero": 32,
-						"complemento": "202",
-						"bairro": "Flamengo",
-						"cidade": "Rio de Janeiro",
-						"estado": "RJ",
-						"pais": "Brasil"}},
-				"updated":new Date()});
-		ObjectStore
-			.insert({"cpf": "23456789100",
-				"tipo": {"locador":false,"locatario":false,"dono":true,"fiador":false},
-				"nome": "Alone Maria dos Santos Almeida",
-				"email": "teste@teste.com",
-				"telefones": {"celular": "21988488175","fixo": "2122058301"}, 
-				"documentos":{},
-				"enderecos": {"Principal":{"tipoimovel": "casa",
-						"tipo":"Rua",
-						"rua": "Buarque de Macedo", 
-						"numero": 32,
-						"complemento": "202",
-						"bairro": "Flamengo",
-						"cidade": "Rio de Janeiro",
-						"estado": "RJ",
-						"pais": "Brasil"},"Adicional":{"tipoimovel": "casa",
-						"tipo":"Rua",
-						"rua": "Buarque de Macedo", 
-						"numero": 32,
-						"complemento": "202",
-						"bairro": "Flamengo",
-						"cidade": "Rio de Janeiro",
-						"estado": "RJ",
-						"pais": "Brasil"}},
-				"updated":new Date()});
-		ObjectStore
-			.insert({"cpf": "34567891200",
-				"tipo": {"locador":false,"locatario":false,"dono":false,"fiador":true},
-				"nome": "José Amorim",
-				"email": "teste@teste.com",
-				"telefones": {"celular": "21988488175","fixo": "2122058301"}, 
-				"documentos":{},
-				"enderecos": {"Principal":{"tipoimovel": "casa",
-						"tipo":"Rua",
-						"rua": "Buarque de Macedo", 
-						"numero": 32,
-						"complemento": "202",
-						"bairro": "Flamengo",
-						"cidade": "Rio de Janeiro",
-						"estado": "RJ",
-						"pais": "Brasil"},"Adicional":{"tipoimovel": "casa",
-						"tipo":"Rua",
-						"rua": "Buarque de Macedo", 
-						"numero": 32,
-						"complemento": "202",
-						"bairro": "Flamengo",
-						"cidade": "Rio de Janeiro",
-						"estado": "RJ",
-						"pais": "Brasil"}},
-				"updated":new Date()});
-		
-		       		
-		/**
-		* @type {ObjectStore} IMOVEIS
-		*/
-		
-		ObjectStore = $indexedDB.objectStore(OBJECT_STORE_IMOVEIS);
-		ObjectStore.clear();		
-		
-		ObjectStore
-			.insert({"proprietarios": {"Principal":"05171062722", "Adicional":"31404860819"},
-				"tipoimovel": "Apartamento",
-				"endereco":{"tipo": "Rua",
-						"rua": "Almirante Baltazar", 
-						"numero": 194,
-						"complemento": "apt 1105 bl 1",
-						"bairro": "São Cristóvão",
-						"cidade": "Rio de Janeiro",
-						"estado": "RJ",
-						"pais": "Brasil"},
-				"status": "Alugado",
-				"documentos":{	"1":{	"id":"1",
-							"nome": "Archi User Guide PDF",
-							"tipo": "PDF",
-							"descricao": "Archi User Guide in PDF format (this is already included in the application download)", 
-							"link": "http://www.archimatetool.com/downloads/latest/Archi%20User%20Guide.pdf",
-							"versao": "1",
-							"historico": {},
-							"updated":new Date()},
-						"2":{	"id":"2",
-							"nome": "Archi User Guide eBook",
-							"tipo": "PDF",
-							"descricao": "Archi User Guide in ePub format", 
-							"link": "http://www.archimatetool.com/downloads/latest/Archi%20User%20Guide.epub",
-							"versao": "1",
-							"historico": {},
-							"updated":new Date()},
-						"3":{	"id":"3",
-							"nome": "Desenvolvimento de Softwares",
-							"tipo": "PDF",
-							"descricao": "Manual de Procedimentos para Desenvolvimento de Softwares", 
-							"link": "http://www.sin.ufscar.br/manual-procedimento-desenvolvimento-software",
-							"versao": "1",
-							"historico": {},
-							"updated":new Date()},
-						"4":{	"id":"4",
-							"nome": "Partitura Walpaper",
-							"tipo": "IMG",
-							"descricao": "Papel de parede no estilo de partitura", 
-							"link": "http://files.partiturasearranjos1.webnode.com/200000058-b6a6cb79de/partitura-wallpaper-11944.jpg",
-							"versao": "1",
-							"historico": {},
-							"updated":new Date()}},
-				"vencimento": new Date()+10,				
-				"updated":new Date()});
-		
-		/**
-		* @type {ObjectStore} CONTRATOS
-		*/
-		
-		ObjectStore = $indexedDB.objectStore(OBJECT_STORE_CONTRATOS);
-		ObjectStore.clear();
-		
-		ObjectStore
-			.insert({	"imovel": "1",
-				"locador": {"Principal":"05171062722", "Adicional":"49300008749"},
-				"locatario": {"Principal":"12345678900","Adicional":"23456789100"},								
-				"status": "Ativo",
-				"vencimento": new Date()+10,				
-				"updated":new Date()});
-		
-		/**
-		* @type {ObjectStore} ATIVIDADES/EVENTOS
-		*/
-		
-		ObjectStore = $indexedDB.objectStore(OBJECT_STORE_EVENTOS);
-		ObjectStore.clear();
-		
-		ObjectStore
-			.insert({	"contrato": "1",
-				"tipo": "BOLETO",
-				"descricao": "Envio de boleto de cobrança ao locatario", 
-				"title": "Emitir boleto e envio por email",
-				"status": "Ativo",
-				"start": new Date()+10,
-				"end": new Date()+10,					
-				"updated":new Date()});
-		ObjectStore
-			.insert({	"contrato": "1",
-				"tipo": "CONTRATO",
-				"descricao": "Assinatura de contrato pelo locador", 
-				"title": "Enviar contrato para assinatura do locador",
-				"status": "Ativo",
-				"start": new Date()+10,
-				"end": new Date()+10,				
-				"updated":new Date()});
-		ObjectStore
-			.insert({	"contrato": "1",
-				"tipo": "RENOVACAO",
-				"descricao": "Contrato próximo da data de expiração.", 
-				"title": "Enviar renovação para locador e locatário",
-				"status": "Ativo",
-				"start": new Date()+10,
-				"end": new Date()+10,					
-				"updated":new Date()});
-			
-		ObjectStore
-			.insert({	"contrato": "1",
-				"tipo": "",
-				"descricao": "Contrato próximo da data de expiração.", 
-				"title": "Enviar renovação para locador e locatário",
-				"status": "Fechado",
-				"start": new Date()+10,
-				"end": new Date()+10,					
-				"updated":new Date()});
-			
+	function init(){		
 		/**
 		* @type {ObjectStore} TIPOS DE DOCUMENTOS
 		*/
@@ -447,8 +147,8 @@ imoveisDbControllers.controller('HomeCtrl', ['$scope', '$indexedDB',
 	if($indexedDB.onDatabaseError) {
 		$location.path('/unsupported');
 	} else {
-		buscaContratos();
-		buscaEventos();
+		  buscaContratos();
+		  buscaEventos();
 	}
 			
 }]);
@@ -591,7 +291,12 @@ imoveisDbControllers.controller('ClientesEditCtrl', ['$scope', '$log', '$rootSco
 	
 	$scope.submit = function() {
       
-      $scope.novocliente.updated = new Date();
+      $scope.novocliente.updated = $filter('dateFormat')(new Date(),false);
+      
+      if ($routeParams.type !== "edit")
+          $scope.novocliente.created = $filter('dateFormat')(new Date(),false);
+          $scope.novocliente.synced = null;
+      }
             
       clientesObjectStore
       .upsert($scope.novocliente)
@@ -774,6 +479,10 @@ imoveisDbControllers.controller('ImoveisEditCtrl', ['$scope', '$log', '$rootScop
         
         $scope.novoimovel.updated = $filter('dateFormat')(new Date(),false);
         
+        if ($routeParams.type !== "edit")
+            $scope.novoimovel.created = $filter('dateFormat')(new Date(),false);
+            $scope.novocliente.synced = null;
+        }
        
         //alert($filter('json')($scope.novoimovel));
         
@@ -981,6 +690,11 @@ imoveisDbControllers.controller('ContratosEditCtrl', ['$scope', '$log', '$rootSc
         
         $scope.novocontrato.updated = new Date();
         
+        if ($routeParams.type !== "edit")
+            $scope.novocontrato.created = $filter('dateFormat')(new Date(),false);
+            $scope.novocontrato.synced = null;
+        }
+        
         $scope.novocontrato.situacao = "pendente";       
         
         $scope.novocontrato.dataInicio = $filter('dateFormat')($scope.novocontrato.updated, true);
@@ -1153,6 +867,11 @@ imoveisDbControllers.controller('EventosEditCtrl', ['$scope', '$log', '$rootScop
     $scope.submit = function() {
         
         $scope.novoevento.updated = new Date();
+        
+        if ($routeParams.type !== "edit")
+            $scope.novoevento.created = $filter('dateFormat')(new Date(),false);
+            $scope.novoevento.synced = null;
+        }
         
         var dtAvencer = new Date();
         dtAvencer.setDate(dtAvencer + 7);

@@ -17,6 +17,7 @@ options.api = {};
 options.api.base_url = "http://localhost:3001";
 options.api.msgs = {"nottosync":"Não há informações para sincronizar", 
                     "syncing":"Aguarde, estamos em sincronização com o servidor!!"};
+options.api.equipid = "default";
 
 imobDbApp.config(['$routeProvider', '$locationProvider', 'hammerDefaultOptsProvider',
 	function($routeProvider , $locationProvider, hammerDefaultOptsProvider)
@@ -154,6 +155,7 @@ imobDbApp.run(function($rootScope, $location, $window, AuthenticationService) {
             && AuthenticationService.isAuthenticated 
             && $window.sessionStorage.token){        
             $rootScope.hidemenu = false;
+            options.api.equipid = $window.sessionStorage.equipid;
         }
     });    
 });

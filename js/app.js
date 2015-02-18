@@ -15,8 +15,11 @@ var imoveisDbFilters = angular.module('imoveisDbFilters', []);
 var options = {};
 options.api = {};
 options.api.base_url = "http://localhost:3001";
-options.api.msgs = {"nottosync":"Não há informações para sincronizar", 
-                    "syncing":"Aguarde, estamos em sincronização com o servidor!!"};
+options.api.msgs = {"nottosync":{text:"Não há informações para sincronizar",type:"info"},
+                    "syncing":{text:"Aguarde, estamos em sincronização com o servidor!!",type:"warning"},
+                    "failtosync":{text:"Falha na sincronização com o servidor!!",type:"danger"},
+                    "finalsync":{text:"Sincronização finalizada",type:"success"}
+                   };
 options.api.equipid = "default";
 
 imobDbApp.config(['$routeProvider', '$locationProvider', 'hammerDefaultOptsProvider',

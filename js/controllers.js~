@@ -597,7 +597,7 @@ imoveisDbControllers.controller('ClientesEditCtrl', ['$scope', '$log', '$rootSco
       .upsert($scope.novocliente)
       .then(function(e){
           $log.info('Cliente' + $scope.novocliente.nome + 'included with CPF:'+  $scope.novocliente.cpf +  ' at:' + new Date());
-          $location.path('#!/cadastro/clientes').replace();
+          $location.path("/cadastro/clientes").replace();
       });
 		
 	};
